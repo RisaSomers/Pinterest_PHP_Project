@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<?php
+include_once ("classes/user.php");
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>

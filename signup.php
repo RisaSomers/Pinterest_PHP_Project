@@ -1,40 +1,51 @@
 <?php
-
+    
+try{
     // if geregistreerd
     if( !empty( $_POST ) ) {
-        // checken of velden ingevuld zijn
-        $FullName = $_POST['FullName'];
-        $UserName = $_POST['UserName'];
-        $Email = $_POST['Email'];
-        $Password = $_POST['Password'];
-        $Passwordcon = $_POST['Password_confirmation'];
-
-        $options = [
-            'cost' => 12,
-        ];
-
-        $Password = password_hash($Password, PASSWORD_DEFAULT, $options);
-
-        // connectie met databank
-        try {
-            $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', '');
-
-            $statement = $conn->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
-            $statement->bindValue(":FullName", $FullName);
-            $statement->bindValue(":UserName", $UserName);
-            $statement->bindValue(":Email", $Email);
-            $statement->bindValue(":Password", $Password);
 
 
+                // checken of velden ingevuld zijn
+                $FullName = $_POST['FullName'];
+                $UserName = $_POST['UserName'];
+                $Email = $_POST['Email'];
+                $Password = $_POST['Password'];
+                $Passwordcon = $_POST['Password_confirmation'];
 
 
-        } catch (Exception $e) {
-            $error = $e->getMessage();
-            echo $error;
+        if($_POST['Password'] == $_POST['Password_confirmation']){
+            echo "OK";
         }
 
-    }
+        else{
+            throw new Exception("Paswoord komt niet overeen");
+        }
 
+                $options = [
+                    'cost' => 12,
+                ];
+
+                $Password = password_hash($Password, PASSWORD_DEFAULT, $options);
+
+                // connectie met databank
+
+                    $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', '');
+
+                    $statement = $conn->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
+                    $statement->bindValue(":FullName", $FullName);
+                    $statement->bindValue(":UserName", $UserName);
+                    $statement->bindValue(":Email", $Email);
+                    $statement->bindValue(":Password", $Password);
+
+                    $res = $statement->execute();
+                    return ($res);
+
+
+
+    }}catch (Exception $e){
+    $error = $e->getMessage();
+
+}
 
 
 ?><!DOCTYPE html>
@@ -63,9 +74,21 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
+    <style>
+
+        .error{
+            color: red;
+        }
+
+    </style>
+
+
 </head>
 
 <body>
+
+
 
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -108,7 +131,9 @@
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                 <form role="form" method="post">
-                    <h2>Please Sign Up <small>It's free and always will be.</small></h2>
+                    <h2>Please Sign Up <?php if( isset( $error ) ): ?>
+                                <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
+                            <?php endif; ?></h2>
                     <hr class="colorgraph">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6">
