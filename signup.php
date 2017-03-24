@@ -11,7 +11,7 @@ try {
         $Email = $_POST['Email'];
         $Password = $_POST['Password'];
         $Passwordcon = $_POST['Password_confirmation'];
-
+        $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', '');
 
         if ($_POST['Password'] == $_POST['Password_confirmation']) {
 
@@ -21,7 +21,13 @@ try {
                     //formulier is verzonden, controleer formulier
                     if (empty($_POST['FullName'])) $veldfout['FullName'] = TRUE;
 
+                    $sameEmail = $conn->prepare("SELECT Email FROM Users WHERE Email = :Email ");
+                    $sameEmail->bindValue(':Email', $Email);
+                    $sameEmail->execute();
 
+                    if($sameEmail->fetch(PDO::FETCH_ASSOC) == $Email){
+                        throw new Exception("Email bestaat al");
+                    }
                     //afhandeling
                     if (!empty($veldfout)) {
                         //formulier incorrect ingevuld
@@ -33,25 +39,19 @@ try {
                     }
 
 
-                    $sameEmail = new PDO("SELECT Email FROM Users WHERE Email = :Email ");
-                    $sameEmail->bindValue(':Email', $Email);
-                    if($sameEmail){
-                        throw new Exception("Email bestaat al");
-                    }
 
-                    else{
-                        header("Location: index.php");
-                    }
+
+
 
 
 
 
                 } else {
-                    throw new Exception("Passwoord moet minstens 6 karakters hebben");
+                    throw new Exception("Paswoord komt niet overeen");
                 }
 
             } else {
-                throw new Exception("Paswoord komt niet overeen");
+                throw new Exception("Passwoord moet minstens 6 karakters hebben");
             }
 
 
@@ -63,7 +63,7 @@ try {
 
             // connectie met databank
 
-            $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', '');
+
 
             $statement = $conn->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
             $statement->bindValue(":FullName", $FullName);
