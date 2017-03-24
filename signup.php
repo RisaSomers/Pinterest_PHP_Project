@@ -28,38 +28,20 @@ try {
                         throw new Exception("Vul alle velden in");
                     } else {
                         //formulier correct
+                        header("Location: index.php");
 
                     }
 
 
-                    //$sameEmail = new PDO ("SELECT Email FROM Users WHERE Email = :Email ");
-                    //$sameEmail->bindValue(':Email', $Email);
-                    //if($sameEmail){
-                    //  echo "Email bestaat al";
-                    //}
+                    $sameEmail = new PDO("SELECT Email FROM Users WHERE Email = :Email ");
+                    $sameEmail->bindValue(':Email', $Email);
+                    if($sameEmail){
+                        throw new Exception("Email bestaat al");
+                    }
 
-                    //$query = "SELECT Email FROM Users WHERE Email = '$Email'";
-
-                    //$lees = ($query);
-
-                    //$check = mysqli_num_rows($lees);
-
-                    //if ($check > 0) {
-                        //echo "U bent al aangemeld met dit emailadres";
-                    //} else {
-                        //verder met de registratie };
-
-
-                    //}
-
-
-
-
-                    //$search = mysqli_query("SELECT Email FROM Users WHERE Email = $Email");
-                    //$verify = mysql_num_rows($search);
-                    //if ($verify >0 ) {
-                      //  echo "E-mail adres bestaat al in de database ";
-                    //} else {}
+                    else{
+                        header("Location: index.php");
+                    }
 
 
 
