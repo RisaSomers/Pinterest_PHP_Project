@@ -1,5 +1,5 @@
 <?php
-
+include_once ("classes/user.php");
     // if geregistreerd
     if( !empty( $_POST ) ) {
         // checken of velden ingevuld zijn
