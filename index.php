@@ -1,5 +1,9 @@
 <?php
-include_once ("classes/user.php");
+include_once("classes/user.php");
+include_once("session.php");
+
+session_start();
+
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +57,7 @@ include_once ("classes/user.php");
                         <a href="#">Services</a>
                     </li>
                     <li>
-                        <a href="#">Logout</a>
+                        <a href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
