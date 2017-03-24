@@ -17,7 +17,7 @@
 
         // connectie met databank
         try {
-            $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', '');
+            $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', 'root');
 
             $statement = $conn->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
             $statement->bindValue(":FullName", $FullName);
@@ -48,7 +48,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Thumbnail Gallery - Start Bootstrap Template</title>
+    <title>Sign up or log in</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
