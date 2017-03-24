@@ -1,48 +1,102 @@
 <?php
-    
-try{
+
+try {
     // if geregistreerd
-    if( !empty( $_POST ) ) {
+    if (!empty($_POST)) {
 
 
-                // checken of velden ingevuld zijn
-                $FullName = $_POST['FullName'];
-                $UserName = $_POST['UserName'];
-                $Email = $_POST['Email'];
-                $Password = $_POST['Password'];
-                $Passwordcon = $_POST['Password_confirmation'];
+        // checken of velden ingevuld zijn
+        $FullName = $_POST['FullName'];
+        $UserName = $_POST['UserName'];
+        $Email = $_POST['Email'];
+        $Password = $_POST['Password'];
+        $Passwordcon = $_POST['Password_confirmation'];
 
 
-        if($_POST['Password'] == $_POST['Password_confirmation']){
-            echo "OK";
+        if ($_POST['Password'] == $_POST['Password_confirmation']) {
+
+            if (strlen($Password) >= 6) {
+
+                if (!empty($_POST)) {
+                    //formulier is verzonden, controleer formulier
+                    if (empty($_POST['FullName'])) $veldfout['FullName'] = TRUE;
+
+
+                    //afhandeling
+                    if (!empty($veldfout)) {
+                        //formulier incorrect ingevuld
+                        throw new Exception("Vul alle velden in");
+                    } else {
+                        //formulier correct
+
+                    }
+
+
+                    //$sameEmail = new PDO ("SELECT Email FROM Users WHERE Email = :Email ");
+                    //$sameEmail->bindValue(':Email', $Email);
+                    //if($sameEmail){
+                    //  echo "Email bestaat al";
+                    //}
+
+                    //$query = "SELECT Email FROM Users WHERE Email = '$Email'";
+
+                    //$lees = ($query);
+
+                    //$check = mysqli_num_rows($lees);
+
+                    //if ($check > 0) {
+                        //echo "U bent al aangemeld met dit emailadres";
+                    //} else {
+                        //verder met de registratie };
+
+
+                    //}
+
+
+
+
+                    //$search = mysqli_query("SELECT Email FROM Users WHERE Email = $Email");
+                    //$verify = mysql_num_rows($search);
+                    //if ($verify >0 ) {
+                      //  echo "E-mail adres bestaat al in de database ";
+                    //} else {}
+
+
+
+
+                } else {
+                    throw new Exception("Passwoord moet minstens 6 karakters hebben");
+                }
+
+            } else {
+                throw new Exception("Paswoord komt niet overeen");
+            }
+
+
+            $options = [
+                'cost' => 12,
+            ];
+
+            $Password = password_hash($Password, PASSWORD_DEFAULT, $options);
+
+            // connectie met databank
+
+            $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', '');
+
+            $statement = $conn->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
+            $statement->bindValue(":FullName", $FullName);
+            $statement->bindValue(":UserName", $UserName);
+            $statement->bindValue(":Email", $Email);
+            $statement->bindValue(":Password", $Password);
+
+            $res = $statement->execute();
+            return ($res);
+
+
         }
+    }
 
-        else{
-            throw new Exception("Paswoord komt niet overeen");
-        }
-
-                $options = [
-                    'cost' => 12,
-                ];
-
-                $Password = password_hash($Password, PASSWORD_DEFAULT, $options);
-
-                // connectie met databank
-
-                    $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', '');
-
-                    $statement = $conn->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
-                    $statement->bindValue(":FullName", $FullName);
-                    $statement->bindValue(":UserName", $UserName);
-                    $statement->bindValue(":Email", $Email);
-                    $statement->bindValue(":Password", $Password);
-
-                    $res = $statement->execute();
-                    return ($res);
-
-
-
-    }}catch (Exception $e){
+    }catch (Exception $e){
     $error = $e->getMessage();
 
 }
