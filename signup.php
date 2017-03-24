@@ -5,6 +5,7 @@
         // checken of velden ingevuld zijn
         $FullName = $_POST['FullName'];
         $UserName = $_POST['UserName'];
+        $Email = $_POST['Email'];
         $Password = $_POST['Password'];
         $Passwordcon = $_POST['Password_confirmation'];
 
@@ -12,25 +13,25 @@
             'cost' => 12,
         ];
 
-        $Password = password_hash($password, PASSWORD_DEFAULT, $options);
+        $Password = password_hash($Password, PASSWORD_DEFAULT, $options);
 
         // connectie met databank
         try {
-            $conn = new PDO('mysql:host=localhost;dbname=Users', 'root', '');
+            $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', '');
+
+            $statement = $conn->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
+            $statement->bindValue(":FullName", $FullName);
+            $statement->bindValue(":UserName", $UserName);
+            $statement->bindValue(":Email", $Email);
+            $statement->bindValue(":Password", $Password);
+
+
+
+
         } catch (Exception $e) {
             $error = $e->getMessage();
             echo $error;
         }
-
-        $statement = $conn->prepare("INSERT INTO Users (FullName, Username, Email, Password) VALUES(:FullName, :username, :Email, :Password)");
-        $statement->bindValue(":FullName", $this->$FullName);
-        $statement->bindValue(":UserName", $this->$UserName);
-        $statement->bindValue(":Email", $this->$Email);
-        $statement->bindValue(":Password", $this->$Password);
-
-        $res = $statement->execute();
-        return ($res);
-        
 
     }
 
