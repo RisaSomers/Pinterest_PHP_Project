@@ -53,7 +53,7 @@ include_once ("classes/user.php");
                         <a href="#">Services</a>
                     </li>
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="#">Logout</a>
                     </li>
                 </ul>
             </div>
