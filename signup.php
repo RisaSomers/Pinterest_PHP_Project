@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+require 'connect.php';
+
+
 try {
     // if geregistreerd
     if (!empty($_POST)) {
@@ -12,7 +15,7 @@ try {
         $Email = $_POST['Email'];
         $Password = $_POST['Password'];
         $Passwordcon = $_POST['Password_confirmation'];
-        $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', 'root');
+
 
         if ($_POST['Password'] == $_POST['Password_confirmation']) {
 
@@ -22,7 +25,7 @@ try {
                     //formulier is verzonden, controleer formulier
                     if (empty($_POST['FullName'])) $veldfout['FullName'] = TRUE;
 
-                    $sameEmail = $conn->prepare("SELECT Email FROM Users WHERE Email = :Email ");
+                    $sameEmail = $pdo->prepare("SELECT Email FROM Users WHERE Email = :Email ");
                     $sameEmail->bindValue(':Email', $Email);
                     $sameEmail->execute();
 
@@ -48,21 +51,17 @@ try {
             }
 
 
-            $options = [
-                'cost' => 12,
-            ];
-
-            $Password = password_hash($Password, PASSWORD_BCRYPT, $options);
+            $PasswordHash = password_hash($Password, PASSWORD_BCRYPT, array("cost" => 12) );
 
             // connectie met databank
 
 
 
-            $statement = $conn->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
+            $statement = $pdo->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
             $statement->bindValue(":FullName", $FullName);
             $statement->bindValue(":UserName", $UserName);
             $statement->bindValue(":Email", $Email);
-            $statement->bindValue(":Password", $Password);
+            $statement->bindValue(":Password", $PasswordHash);
 
             $res = $statement->execute();
             return ($res);
@@ -78,56 +77,8 @@ try {
 }
 
 //login
-try {
-    // if geregistreerd
-    if (!empty($_POST['SignIn'])) {
-
-        $errMsg = '';
 
 
-        // checken of velden ingevuld zijn
-        $UserNameLogin = $_POST['UserNameLogin'];
-        $PasswordLogin = $_POST['PasswordLogin'];
-        $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', 'root');
-
-        if($UserNameLogin == '')
-            $errMsg = 'Enter username';
-        if($PasswordLogin == '')
-            $errMsg = 'Enter password';
-
-        if ($errMsg == '') {
-            try {
-
-                $stmt = $conn->prepare('SELECT id, UserName, Password FROM Users WHERE UserName = :username');
-                $stmt->execute(array(
-                    ':username' => $UserNameLogin
-                ));
-                $data = $stmt->fetch(PDO::FETCH_ASSOC);
-                if($data == false){
-                    $errMsg = "User $UserNameLogin not found.";
-                }
-                else {
-                    if($PasswordLogin == $data['PasswordLogin']) {
-                        $_SESSION['username'] = $data['username'];
-                        $_SESSION['password'] = $data['password'];
-                        header('Location: index.php');
-                        exit;
-                    }
-                    else
-                        $errMsg = 'Password not match.';
-                }
-
-            } catch (PDOException $err){
-                $errMsg = $err->getMessage();
-            }
-        }
-
-    }
-
-}catch (Exception $err){
-    $errMsg = $err->getMessage();
-
-}
 
 
 
@@ -254,29 +205,21 @@ try {
                         </div>
                     </div>
                     <br/>
-                    <h2>Login<?php if( isset( $errMsg ) ): ?>
-                            <div class="error"> <?php echo '<small>' . $errMsg . '</small>' ?> </div>
-                        <?php endif; ?></h2>
-                    <hr class="colorgraph">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <input type="text" name="UserNameLogin" id="usernamelogin" class="form-control input-lg" placeholder="Gebruikersnaam" tabindex="8">
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <input type="password" name="PasswordLogin" id="passwordlogin" class="form-control input-lg" placeholder="Password" tabindex="9">
-                            </div>
-                        </div>
-                    </div>
+
 
 
                     <hr class="colorgraph">
                     <div class="row">
-                        <div class="col-xs-12 col-md-6"><input name="Registration" type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
-                        <div class="col-xs-12 col-md-6"><input name="SignIn" type="submit" value="SignIn" class="btn btn-primary btn-block btn-lg" tabindex="10"></div>
-                    </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                            <input name="Registration" type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7">
+                            </div>
+                        </div>
+                        
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <a href="login.php"><input name="SignIn"  value="Sign In" class="btn btn-primary btn-block btn-lg" tabindex="10"></a>
+                        </div>
+                        </div>
                 </form>
             </div>
         </div>
