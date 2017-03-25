@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 try {
     // if geregistreerd
@@ -11,7 +12,7 @@ try {
         $Email = $_POST['Email'];
         $Password = $_POST['Password'];
         $Passwordcon = $_POST['Password_confirmation'];
-        $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', '');
+        $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', 'root');
 
         if ($_POST['Password'] == $_POST['Password_confirmation']) {
 
@@ -37,14 +38,6 @@ try {
                         header("Location: index.php");
 
                     }
-
-
-
-
-
-
-
-
 
                 } else {
                     throw new Exception("Paswoord komt niet overeen");
@@ -73,6 +66,7 @@ try {
 
             $res = $statement->execute();
             return ($res);
+            header('Location: signup.php');
 
 
         }
@@ -82,6 +76,39 @@ try {
     $error = $e->getMessage();
 
 }
+
+//login
+
+if(isset($_POST['SignIn'])){
+    $errMsg = '';
+    //username and password sent from Form
+    $username = trim($_POST['UserNameLogin']);
+    $password = trim($_POST['PasswordLogin']);
+
+    if($username == '')
+        $errMsg .= 'You must enter your Username<br>';
+
+    if($password == '')
+        $errMsg .= 'You must enter your Password<br>';
+
+
+    if($errMsg == ''){
+        $records = $conn->prepare('SELECT id,UserName,Password FROM Users WHERE Username = :username');
+        $records->bindParam(':username', $username);
+        $records->execute();
+        $results = $records->fetch(PDO::FETCH_ASSOC);
+        if(count($results) > 0 && password_verify($password, $results['password'])){
+            $_SESSION['username'] = $results['username'];
+            header('location:index.php');
+            exit;
+        }else{
+            $errMsg .= 'Username and Password are not found<br>';
+        }
+    }
+}
+
+
+
 
 
 ?><!DOCTYPE html>
@@ -116,6 +143,10 @@ try {
         .error{
             color: red;
         }
+        small{
+            color: #fff;
+            background-color: red;
+        }
 
     </style>
 
@@ -137,7 +168,7 @@ try {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <a class="navbar-brand" href="#">IMDterest</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -167,7 +198,7 @@ try {
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                 <form role="form" method="post">
-                    <h2>Please Sign Up <?php if( isset( $error ) ): ?>
+                    <h2>Please Sign Up<?php if( isset( $error ) ): ?>
                                 <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
                             <?php endif; ?></h2>
                     <hr class="colorgraph">
@@ -198,6 +229,21 @@ try {
                             </div>
                         </div>
                     </div>
+                    <br/>
+                    <h2>Login</h2>
+                    <hr class="colorgraph">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="UserNameLogin" id="usernamelogin" class="form-control input-lg" placeholder="Gebruikersnaam" tabindex="8">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="password" name="PasswordLogin" id="passwordlogin" class="form-control input-lg" placeholder="Password" tabindex="9">
+                            </div>
+                        </div>
+                    </div>
 
 
                     <hr class="colorgraph">
@@ -216,7 +262,7 @@ try {
 <footer>
     <div class="row">
         <div class="col-lg-12">
-            <p>Copyright &copy; Your Website 2014</p>
+            <p>Copyright &copy; IMDterest 2017</p>
         </div>
     </div>
 </footer>
