@@ -52,7 +52,7 @@ try {
                 'cost' => 12,
             ];
 
-            $Password = password_hash($Password, PASSWORD_DEFAULT, $options);
+            $Password = password_hash($Password, PASSWORD_BCRYPT, $options);
 
             // connectie met databank
 
@@ -78,34 +78,58 @@ try {
 }
 
 //login
+try {
+    // if geregistreerd
+    if (!empty($_POST['SignIn'])) {
 
-if(isset($_POST['SignIn'])){
-    $errMsg = '';
-    //username and password sent from Form
-    $username = trim($_POST['UserNameLogin']);
-    $password = trim($_POST['PasswordLogin']);
-
-    if($username == '')
-        $errMsg .= 'You must enter your Username<br>';
-
-    if($password == '')
-        $errMsg .= 'You must enter your Password<br>';
+        $errMsg = '';
 
 
-    if($errMsg == ''){
-        $records = $conn->prepare('SELECT id,UserName,Password FROM Users WHERE Username = :username');
-        $records->bindParam(':username', $username);
-        $records->execute();
-        $results = $records->fetch(PDO::FETCH_ASSOC);
-        if(count($results) > 0 && password_verify($password, $results['password'])){
-            $_SESSION['username'] = $results['username'];
-            header('location:index.php');
-            exit;
-        }else{
-            $errMsg .= 'Username and Password are not found<br>';
+        // checken of velden ingevuld zijn
+        $UserNameLogin = $_POST['UserNameLogin'];
+        $PasswordLogin = $_POST['PasswordLogin'];
+        $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', 'root');
+
+        if($UserNameLogin == '')
+            $errMsg = 'Enter username';
+        if($PasswordLogin == '')
+            $errMsg = 'Enter password';
+
+        if ($errMsg == '') {
+            try {
+
+                $stmt = $conn->prepare('SELECT id, UserName, Password FROM Users WHERE UserName = :username');
+                $stmt->execute(array(
+                    ':username' => $UserNameLogin
+                ));
+                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+                if($data == false){
+                    $errMsg = "User $UserNameLogin not found.";
+                }
+                else {
+                    if($PasswordLogin == $data['PasswordLogin']) {
+                        $_SESSION['username'] = $data['username'];
+                        $_SESSION['password'] = $data['password'];
+                        header('Location: index.php');
+                        exit;
+                    }
+                    else
+                        $errMsg = 'Password not match.';
+                }
+
+            } catch (PDOException $err){
+                $errMsg = $err->getMessage();
+            }
         }
+
     }
+
+}catch (Exception $err){
+    $errMsg = $err->getMessage();
+
 }
+
+
 
 
 
@@ -230,7 +254,9 @@ if(isset($_POST['SignIn'])){
                         </div>
                     </div>
                     <br/>
-                    <h2>Login</h2>
+                    <h2>Login<?php if( isset( $errMsg ) ): ?>
+                            <div class="error"> <?php echo '<small>' . $errMsg . '</small>' ?> </div>
+                        <?php endif; ?></h2>
                     <hr class="colorgraph">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6">
@@ -249,7 +275,7 @@ if(isset($_POST['SignIn'])){
                     <hr class="colorgraph">
                     <div class="row">
                         <div class="col-xs-12 col-md-6"><input name="Registration" type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
-                        <div class="col-xs-12 col-md-6"><a href="#" name="SignIn" class="btn btn-success btn-block btn-lg">Sign In</a></div>
+                        <div class="col-xs-12 col-md-6"><input name="SignIn" type="submit" value="SignIn" class="btn btn-primary btn-block btn-lg" tabindex="10"></div>
                     </div>
                 </form>
             </div>
