@@ -1,57 +1,25 @@
 <?php
 
-session_start();
-
-include 'connect.php';
-
-if(isset($_POST['SignIn'])){
-
-    //Retrieve the field values from our login form.
-    $username = !empty($_POST['username']) ? trim($_POST['username']) : null;
-    $passwordAttempt = !empty($_POST['password']) ? trim($_POST['password']) : null;
-
-    //Retrieve the user account information for the given username.
-    $sql = "SELECT id, UserName, Password FROM Users WHERE username = :username";
-    $stmt = $pdo->prepare($sql);
-
-    //Bind value.
-    $stmt->bindValue(':username', $username);
-
-    //Execute.
-    $stmt->execute();
-
-    //Fetch row.
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    //If $row is FALSE.
-    if($user === false){
-        //Could not find a user with that username!
-        //PS: You might want to handle this error in a more user-friendly manner!
-        die('Incorrect username / password combination!');
-    } else{
-        //User account found. Check to see if the given password matches the
-        //password hash that we stored in our users table.
-
-        //Compare the passwords.
-        $validPassword = password_verify($passwordAttempt, $user['password']);
-
-        //If $validPassword is TRUE, the login has been successful.
-        if($validPassword){
-
-            //Provide the user with a login session.
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['logged_in'] = time();
 
 
-            header('Location: profile.php');
-            exit;
+if($user->is_loggedin()!="")
+{
+    $user->redirect('index.php');
+}
 
-        } else{
-            //$validPassword was FALSE. Passwords do not match.
-            die('Incorrect username / password combination!');
-        }
+if(isset($_POST['btn-login']))
+{
+    $username = strip_tags($_POST['username']);
+    $password = strip_tags($_POST['password']);
+
+    if($user->doLogin($username,$password))
+    {
+        $user->redirect('index.php');
     }
-
+    else
+    {
+        $error = "Wrong Details !";
+    }
 }
 ?><!DOCTYPE html>
 <html lang="en">
@@ -78,20 +46,6 @@ if(isset($_POST['SignIn'])){
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-
-    <style>
-
-        .error{
-            color: red;
-        }
-        small{
-            color: #fff;
-            background-color: red;
-        }
-
-    </style>
-
 
 </head>
 
@@ -137,19 +91,28 @@ if(isset($_POST['SignIn'])){
 
     <div class="container">
 
-                    <h2>Log In<?php if( isset( $errMsg ) ): ?>
-                            <div class="error"> <?php echo '<small>' . $errMsg . '</small>' ?> </div>
-                        <?php endif; ?></h2>
+                    <h2>Log In</h2>
+        <?php
+        if(isset($error))
+        {
+            ?>
+            <div class="alert alert-danger">
+                <i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?> !
+            </div>
+            <?php
+        }
+        ?>
                     <hr class="colorgraph">
+        <form role="form" method="post">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <input type="text" name="username" id="usernamelogin" class="form-control input-lg" placeholder="Gebruikersnaam" tabindex="8">
+                                <input type="text" name="username" id="username" class="form-control input-lg" placeholder="Gebruikersnaam" tabindex="1">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <input type="password" name="password" id="passwordlogin" class="form-control input-lg" placeholder="Password" tabindex="9">
+                                <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="2">
                             </div>
                         </div>
                     </div>
@@ -158,7 +121,7 @@ if(isset($_POST['SignIn'])){
                     <hr class="colorgraph">
                     <div class="form-group">
 
-                            <input name="SignIn" type="submit" value="Sign In" class="btn btn-primary btn-block btn-lg" tabindex="10">
+                            <input name="btn-login" type="submit" value="Sign In" class="btn btn-primary btn-block btn-lg" tabindex="3">
 
                     </div>
                 </form>

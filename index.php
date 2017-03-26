@@ -1,6 +1,5 @@
 <?php
-include_once("classes/user.php");
-//include_once("session.php");
+
 
 ?><!DOCTYPE html>
 <html lang="en">
