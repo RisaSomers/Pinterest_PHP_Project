@@ -1,7 +1,7 @@
 <?php
 include_once("classes/user.php");
 //include_once("session.php");
-
+session_start();
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +52,7 @@ include_once("classes/user.php");
                         <a href="#">About</a>
                     </li>
                     <li>
-                        <a href="#">Services</a>
+                        <a href="profile.php">Profile</a>
                     </li>
                     <li>
                         <a href="logout.php">Logout</a>
@@ -63,6 +63,8 @@ include_once("classes/user.php");
         </div>
         <!-- /.container -->
     </nav>
+
+
 
     <!-- Page Content -->
     <div class="container">

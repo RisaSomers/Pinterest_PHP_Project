@@ -79,6 +79,17 @@ class users
         $this->m_sPassword = $m_sPassword;
     }
 
+    public function save() {
+        $pdo = Db::getInstance();
+        $stmt = $pdo->prepare("INSERT INTO users (FullName, UserName, Password, Email) VALUES (:fullname, :username, :password, :email)");
+        print_r($this);
+        $stmt->bindValue(":fullname", $this->m_sFullName);
+        $stmt->bindValue(":username", $this->m_sUserName);
+        $stmt->bindValue(":password", $this->m_sPassword);
+        $stmt->bindValue(":email", $this->m_sEmail);
+        return $stmt->execute();
+    }
+
 }
 
 

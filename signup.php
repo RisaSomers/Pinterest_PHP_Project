@@ -53,11 +53,10 @@ require 'connect.php';
                 $error = "Your password has to be at least 6 characters long";
             }
 
-            $users->FullName = $_POST['FullName'];
-            $users->UserName = $_POST['UserName'];
-            $users->Email = $_POST['Email'];
-            $users->Password = password_hash($_POST['Password'], PASSWORD_DEFAULT, $options);
-            $users->Passwordcon = $_POST['Password_confirmation'];
+            $users->setMSFullName($_POST['FullName']);
+            $users->setMSUserName($_POST['UserName']);
+            $users->setMSEmail($_POST['Email']);
+            $users->setMSPassword(password_hash($_POST['Password'], PASSWORD_DEFAULT, $options));
         
             if ($_POST['Password'] != $_POST['Password_confirmation']){
                 throw new exception("Password and confirmation password are not the same!");
@@ -67,7 +66,7 @@ require 'connect.php';
 
             if(!isset($error)){
                 $statement = $conn->prepare("SELECT * FROM Users WHERE Email = :Email");
-                $statement->bindValue(":Email", $users->Email);
+                $statement->bindValue(":Email", $users->getMSEmail());
 
                 if($statement->execute() && $statement->rowCount() != 0){
                     $resultaat = $statement->fetch(PDO::FETCH_ASSOC);
@@ -78,13 +77,19 @@ require 'connect.php';
                 else{
                     if($res != false){
                         $succes = "Welcome, you are registered";
-                        $users->Save();
-                        header("Location: topics.php");
+                        $register = new users();
+                        $register->setMSFullName($_POST['FullName']);
+                        $register->setMSUserName($_POST['UserName']);
+                        $register->setMSEmail($_POST['Email']);
+                        $register->setMSPassword(password_hash($_POST['Password'], PASSWORD_DEFAULT, $options));
+                        $register->save();
+
                         session_start();
 
                         $_SESSION['Email'] = $users->Email;
                         $_SESSION['UserName'] = $users->UserName;
                         $_SESSION['FullName'] = $users->FullName;
+                        header("Location: topics.php");
                     }
 
                     else{
