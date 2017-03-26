@@ -1,5 +1,10 @@
 <?php
+session_start();
 
+require 'connect.php';
+
+
+<<<<<<< HEAD
     include_once ("classes/user.php");
     include_once("classes/Db.class.php");
     // als we submitten gaan we velden uitlezen
@@ -8,6 +13,20 @@
             $options = [
                 'cost' => 12
             ];
+=======
+try {
+    // if geregistreerd
+    if (!empty($_POST)) {
+
+
+        // checken of velden ingevuld zijn
+        $FullName = $_POST['FullName'];
+        $UserName = $_POST['UserName'];
+        $Email = $_POST['Email'];
+        $Password = $_POST['Password'];
+        $Passwordcon = $_POST['Password_confirmation'];
+
+>>>>>>> origin/master
 
             //lezen de velden uit en steken die waarden in class user
             $users = new users();
@@ -20,9 +39,15 @@
                 $error = "Fullname can not be empty.";
             }
 
+<<<<<<< HEAD
             elseif(empty($users->UserName = $_POST['UserName'])){
                 $error = "Username can not be empty";
             }
+=======
+                    $sameEmail = $pdo->prepare("SELECT Email FROM Users WHERE Email = :Email ");
+                    $sameEmail->bindValue(':Email', $Email);
+                    $sameEmail->execute();
+>>>>>>> origin/master
 
             elseif(empty($users->Email = $_POST['Email'])){
                 $error = "Email can not be empty";
@@ -32,6 +57,7 @@
                 $error = "Password can not be empty";
             }
 
+<<<<<<< HEAD
             elseif(empty($users->Passwordcon = $_POST['Password_confirmation'])){
                 $error = "Password confirmation can not be empty";
             }
@@ -77,15 +103,57 @@
                         header("Location: signup.php");
                     }
 
+=======
+                } else {
+                    throw new Exception("Paswoord komt niet overeen");
+>>>>>>> origin/master
                 }
             }
         }
 
+<<<<<<< HEAD
         catch(Exception $e){
             $error = $e->getMessage();
         }
     }
 
+=======
+
+            $PasswordHash = password_hash($Password, PASSWORD_BCRYPT, array("cost" => 12) );
+
+            // connectie met databank
+
+
+
+            $statement = $pdo->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
+            $statement->bindValue(":FullName", $FullName);
+            $statement->bindValue(":UserName", $UserName);
+            $statement->bindValue(":Email", $Email);
+            $statement->bindValue(":Password", $PasswordHash);
+
+            $res = $statement->execute();
+            return ($res);
+            header('Location: signup.php');
+
+
+        }
+    }
+
+    }catch (Exception $e){
+    $error = $e->getMessage();
+
+}
+
+//login
+
+
+
+
+
+
+
+
+>>>>>>> origin/master
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -119,6 +187,10 @@
         .error{
             color: red;
         }
+        small{
+            color: #fff;
+            background-color: red;
+        }
 
     </style>
 
@@ -140,7 +212,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <a class="navbar-brand" href="#">IMDterest</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -170,7 +242,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                 <form role="form" method="post">
-                    <h2>Please Sign Up <?php if( isset( $error ) ): ?>
+                    <h2>Please Sign Up<?php if( isset( $error ) ): ?>
                                 <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
                             <?php endif; ?></h2>
                     <hr class="colorgraph">
@@ -201,13 +273,22 @@
                             </div>
                         </div>
                     </div>
+                    <br/>
+
 
 
                     <hr class="colorgraph">
                     <div class="row">
-                        <div class="col-xs-12 col-md-6"><input name="Registration" type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
-                        <div class="col-xs-12 col-md-6"><a href="#" name="SignIn" class="btn btn-success btn-block btn-lg">Sign In</a></div>
-                    </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                            <input name="Registration" type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7">
+                            </div>
+                        </div>
+                        
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <a href="login.php"><input name="SignIn"  value="Sign In" class="btn btn-primary btn-block btn-lg" tabindex="10"></a>
+                        </div>
+                        </div>
                 </form>
             </div>
         </div>
@@ -219,7 +300,7 @@
 <footer>
     <div class="row">
         <div class="col-lg-12">
-            <p>Copyright &copy; Your Website 2014</p>
+            <p>Copyright &copy; IMDterest 2017</p>
         </div>
     </div>
 </footer>
