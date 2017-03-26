@@ -4,29 +4,20 @@ session_start();
 require 'connect.php';
 
 
-<<<<<<< HEAD
+
     include_once ("classes/user.php");
     include_once("classes/Db.class.php");
+
     // als we submitten gaan we velden uitlezen
     if(!empty($_POST)){
         try{
             $options = [
                 'cost' => 12
             ];
-=======
-try {
-    // if geregistreerd
-    if (!empty($_POST)) {
 
 
-        // checken of velden ingevuld zijn
-        $FullName = $_POST['FullName'];
-        $UserName = $_POST['UserName'];
-        $Email = $_POST['Email'];
-        $Password = $_POST['Password'];
-        $Passwordcon = $_POST['Password_confirmation'];
 
->>>>>>> origin/master
+
 
             //lezen de velden uit en steken die waarden in class user
             $users = new users();
@@ -39,15 +30,11 @@ try {
                 $error = "Fullname can not be empty.";
             }
 
-<<<<<<< HEAD
+
             elseif(empty($users->UserName = $_POST['UserName'])){
                 $error = "Username can not be empty";
             }
-=======
-                    $sameEmail = $pdo->prepare("SELECT Email FROM Users WHERE Email = :Email ");
-                    $sameEmail->bindValue(':Email', $Email);
-                    $sameEmail->execute();
->>>>>>> origin/master
+
 
             elseif(empty($users->Email = $_POST['Email'])){
                 $error = "Email can not be empty";
@@ -57,12 +44,12 @@ try {
                 $error = "Password can not be empty";
             }
 
-<<<<<<< HEAD
+
             elseif(empty($users->Passwordcon = $_POST['Password_confirmation'])){
                 $error = "Password confirmation can not be empty";
             }
 
-            elseif(strlen($users->Password) <= $MinLength){
+            elseif(strlen($users->Password) < $MinLength){
                 $error = "Your password has to be at least 6 characters long";
             }
 
@@ -71,9 +58,11 @@ try {
             $users->Email = $_POST['Email'];
             $users->Password = password_hash($_POST['Password'], PASSWORD_DEFAULT, $options);
             $users->Passwordcon = $_POST['Password_confirmation'];
+        
             if ($_POST['Password'] != $_POST['Password_confirmation']){
                 throw new exception("Password and confirmation password are not the same!");
             }
+            
             $conn= Db::getInstance();
 
             if(!isset($error)){
@@ -103,58 +92,22 @@ try {
                         header("Location: signup.php");
                     }
 
-=======
-                } else {
-                    throw new Exception("Paswoord komt niet overeen");
->>>>>>> origin/master
-                }
+
+                } 
+                
+                
             }
+
         }
 
-<<<<<<< HEAD
-        catch(Exception $e){
+
+    
+                catch(Exception $e){
             $error = $e->getMessage();
         }
-    }
-
-=======
-
-            $PasswordHash = password_hash($Password, PASSWORD_BCRYPT, array("cost" => 12) );
-
-            // connectie met databank
-
-
-
-            $statement = $pdo->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
-            $statement->bindValue(":FullName", $FullName);
-            $statement->bindValue(":UserName", $UserName);
-            $statement->bindValue(":Email", $Email);
-            $statement->bindValue(":Password", $PasswordHash);
-
-            $res = $statement->execute();
-            return ($res);
-            header('Location: signup.php');
-
-
-        }
-    }
-
-    }catch (Exception $e){
-    $error = $e->getMessage();
+            
 
 }
-
-//login
-
-
-
-
-
-
-
-
->>>>>>> origin/master
-
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -189,7 +142,7 @@ try {
         }
         small{
             color: #fff;
-            background-color: red;
+            
         }
 
     </style>
