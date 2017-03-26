@@ -72,7 +72,7 @@ try {
             $users->Password = password_hash($_POST['Password'], PASSWORD_DEFAULT, $options);
             $users->Passwordcon = $_POST['Password_confirmation'];
             if ($_POST['Password'] != $_POST['Password_confirmation']){
-                throw new exception("Passwoorden komen niet overeen!");
+                throw new exception("Password and confirmation password are not the same!");
             }
             $conn= Db::getInstance();
 
