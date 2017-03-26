@@ -1,58 +1,85 @@
 <?php
-class USER
+class users
 {
-    private $db;
+    private $m_sFullName;
+    private $m_sUserName;
+    private $m_sEmail;
+    private $m_sPassword;
 
-    function __construct($DB_con)
+    /**
+     * users constructor.
+     * @param $m_sFullName
+     * @param $m_sUserName
+     * @param $m_sEmail
+     * @param $m_sPassword
+     */
+
+
+    /**
+     * @return mixed
+     */
+    public function getMSFullName()
     {
-        $this->db = $DB_con;
+        return $this->m_sFullName;
     }
 
-
-    public function doLogin($username,$password)
+    /**
+     * @param mixed $m_sFullName
+     */
+    public function setMSFullName($m_sFullName)
     {
-        try
-        {
-            $stmt = $this->conn->prepare("SELECT id, username, email, password FROM users WHERE username=:uname");
-            $stmt->execute(array(':usname'=>$username));
-            $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-            if($stmt->rowCount() == 1)
-            {
-                if(password_verify($password, $userRow['password']))
-                {
-                    $_SESSION['user_session'] = $userRow['id'];
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-        catch(PDOException $e)
-        {
-            echo $e->getMessage();
-        }
+        $this->m_sFullName = $m_sFullName;
     }
 
-    public function is_loggedin()
+    /**
+     * @return mixed
+     */
+    public function getMSUserName()
     {
-        if(isset($_SESSION['user_session']))
-        {
-            return true;
-        }
+        return $this->m_sUserName;
     }
 
-    public function redirect($url)
+    /**
+     * @param mixed $m_sUserName
+     */
+    public function setMSUserName($m_sUserName)
     {
-        header("Location: $url");
+        $this->m_sUserName = $m_sUserName;
     }
 
-    public function doLogout()
+    /**
+     * @return mixed
+     */
+    public function getMSEmail()
     {
-        session_destroy();
-        unset($_SESSION['user_session']);
-        return true;
+        return $this->m_sEmail;
     }
+
+    /**
+     * @param mixed $m_sEmail
+     */
+    public function setMSEmail($m_sEmail)
+    {
+        $this->m_sEmail = $m_sEmail;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMSPassword()
+    {
+        return $this->m_sPassword;
+    }
+
+    /**
+     * @param mixed $m_sPassword
+     */
+    public function setMSPassword($m_sPassword)
+    {
+        $this->m_sPassword = $m_sPassword;
+    }
+
 }
-?>
+
+
+

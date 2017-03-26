@@ -1,28 +1,29 @@
 <?php
 
-class Database
-{
-    private $host = "localhost";
-    private $db_name = "Pinterest_PHP";
-    private $username = "root";
-    private $password = "root";
-    public $conn;
 
-    public function dbConnection()
-    {
+//Our MySQL user account.
+define('MYSQL_USER', 'root');
 
-        $this->conn = null;
-        try
-        {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        }
-        catch(PDOException $exception)
-        {
-            echo "Connection error: " . $exception->getMessage();
-        }
+//Our MySQL password.
+define('MYSQL_PASSWORD', 'root');
 
-        return $this->conn;
-    }
-}
-?>
+//The server that MySQL is located on.
+define('MYSQL_HOST', 'localhost');
+
+//The name of our database.
+define('MYSQL_DATABASE', 'Pinterest_PHP');
+
+
+$pdoOptions = array(
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_EMULATE_PREPARES => false
+);
+
+$pdo = new PDO(
+    "mysql:host=" . MYSQL_HOST . ";dbname=" . MYSQL_DATABASE, //DSN
+    MYSQL_USER, //Username
+    MYSQL_PASSWORD, //Password
+    $pdoOptions //Options
+);
+
+//The PDO object can now be used to query MySQL.

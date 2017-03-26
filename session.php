@@ -1,15 +1,17 @@
 <?php
 
-session_start();
+$conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', 'root');
 
-require_once 'classes/user.php';
-$session = new USER();
-
-// if user session is not active(not loggedin) this page will help 'home.php and profile.php' to redirect to login page
-// put this file within secured pages that users (users can't access without login)
-
-if(!$session->is_loggedin())
-{
-    // session no set redirects to login page
-    $session->redirect('index.php');
+session_start();// Starting Session
+// Storing Session
+$user_check=$_SESSION['login_user'];
+// SQL Query To Fetch Complete Information Of User
+$ses_sql=mysql_query("select username from login where username='$user_check'", $connection);
+$row = mysql_fetch_assoc($ses_sql);
+$login_session =$row['username'];
+if(!isset($login_session)){
+    mysql_close($connection); // Closing Connection
+    header('Location: index.php'); // Redirecting To Home Page
 }
+
+?>

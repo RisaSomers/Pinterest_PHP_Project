@@ -1,11 +1,19 @@
 <?php
 session_start();
 
+require 'connect.php';
 
 
-
-
-
+<<<<<<< HEAD
+    include_once ("classes/user.php");
+    include_once("classes/Db.class.php");
+    // als we submitten gaan we velden uitlezen
+    if(!empty($_POST)){
+        try{
+            $options = [
+                'cost' => 12
+            ];
+=======
 try {
     // if geregistreerd
     if (!empty($_POST)) {
@@ -18,40 +26,98 @@ try {
         $Password = $_POST['Password'];
         $Passwordcon = $_POST['Password_confirmation'];
 
+>>>>>>> origin/master
 
-        if ($_POST['Password'] == $_POST['Password_confirmation']) {
+            //lezen de velden uit en steken die waarden in class user
+            $users = new users();
 
-            if (strlen($Password) >= 6) {
+            $res = "succes";
+            $MinLength = 6;
 
-                if (!empty($_POST)) {
-                    //formulier is verzonden, controleer formulier
-                    if (empty($_POST['FullName'])) $veldfout['FullName'] = TRUE;
-
-                    $sameEmail = $conn->prepare("SELECT Email FROM Users WHERE Email = :Email ");
-                    $sameEmail->bindValue(':Email', $Email);
-                    $sameEmail->execute();
-
-                    if($sameEmail->fetch(PDO::FETCH_ASSOC) == $Email){
-                        throw new Exception("Email bestaat al");
-                    }
-                    //afhandeling
-                    if (!empty($veldfout)) {
-                        //formulier incorrect ingevuld
-                        throw new Exception("Vul alle velden in");
-                    } else {
-                        //formulier correct
-                        header("Location: index.php");
-
-                    }
-
-                } else {
-                    throw new Exception("Paswoord komt niet overeen");
-                }
-
-            } else {
-                throw new Exception("Passwoord moet minstens 6 karakters hebben");
+            //error voor legen velden
+            if(empty($users->FullName = $_POST['FullName'])){
+                $error = "Fullname can not be empty.";
             }
 
+<<<<<<< HEAD
+            elseif(empty($users->UserName = $_POST['UserName'])){
+                $error = "Username can not be empty";
+            }
+=======
+                    $sameEmail = $pdo->prepare("SELECT Email FROM Users WHERE Email = :Email ");
+                    $sameEmail->bindValue(':Email', $Email);
+                    $sameEmail->execute();
+>>>>>>> origin/master
+
+            elseif(empty($users->Email = $_POST['Email'])){
+                $error = "Email can not be empty";
+            }
+
+            elseif(empty($users->Password = $_POST['Password'])){
+                $error = "Password can not be empty";
+            }
+
+<<<<<<< HEAD
+            elseif(empty($users->Passwordcon = $_POST['Password_confirmation'])){
+                $error = "Password confirmation can not be empty";
+            }
+
+            elseif(strlen($users->Password) <= $MinLength){
+                $error = "Your password has to be at least 6 characters long";
+            }
+
+            $users->FullName = $_POST['FullName'];
+            $users->UserName = $_POST['UserName'];
+            $users->Email = $_POST['Email'];
+            $users->Password = password_hash($_POST['Password'], PASSWORD_DEFAULT, $options);
+            $users->Passwordcon = $_POST['Password_confirmation'];
+            if ($_POST['Password'] != $_POST['Password_confirmation']){
+                throw new exception("Password and confirmation password are not the same!");
+            }
+            $conn= Db::getInstance();
+
+            if(!isset($error)){
+                $statement = $conn->prepare("SELECT * FROM Users WHERE Email = :Email");
+                $statement->bindValue(":Email", $users->Email);
+
+                if($statement->execute() && $statement->rowCount() != 0){
+                    $resultaat = $statement->fetch(PDO::FETCH_ASSOC);
+                    $error = "Mail is already used";
+                    $res = false;
+                }
+
+                else{
+                    if($res != false){
+                        $succes = "Welcome, you are registered";
+                        $users->Save();
+                        header("Location: topics.php");
+                        session_start();
+
+                        $_SESSION['Email'] = $users->Email;
+                        $_SESSION['UserName'] = $users->UserName;
+                        $_SESSION['FullName'] = $users->FullName;
+                    }
+
+                    else{
+                        $fail = "oops, something went wrong! try again!";
+                        header("Location: signup.php");
+                    }
+
+=======
+                } else {
+                    throw new Exception("Paswoord komt niet overeen");
+>>>>>>> origin/master
+                }
+            }
+        }
+
+<<<<<<< HEAD
+        catch(Exception $e){
+            $error = $e->getMessage();
+        }
+    }
+
+=======
 
             $PasswordHash = password_hash($Password, PASSWORD_BCRYPT, array("cost" => 12) );
 
@@ -59,7 +125,7 @@ try {
 
 
 
-            $statement = $conn->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
+            $statement = $pdo->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
             $statement->bindValue(":FullName", $FullName);
             $statement->bindValue(":UserName", $UserName);
             $statement->bindValue(":Email", $Email);
@@ -78,6 +144,7 @@ try {
 
 }
 
+//login
 
 
 
@@ -85,6 +152,8 @@ try {
 
 
 
+
+>>>>>>> origin/master
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -111,13 +180,21 @@ try {
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+
     <style>
 
-        h3{
+        .error{
             color: red;
+        }
+        small{
+            color: #fff;
+            background-color: red;
         }
 
     </style>
+
+
 </head>
 
 <body>
@@ -166,7 +243,7 @@ try {
             <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                 <form role="form" method="post">
                     <h2>Please Sign Up<?php if( isset( $error ) ): ?>
-                                <div class="error"> <?php echo '<h3>' . $error . '</h3>' ?> </div>
+                                <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
                             <?php endif; ?></h2>
                     <hr class="colorgraph">
                     <div class="row">
