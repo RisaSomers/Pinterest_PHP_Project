@@ -1,30 +1,58 @@
 <?php
 
-if (!empty($_POST['SignUp'])){
-    try{
-        $dbh = new PDO('mysql:host=localhost; dbname=Pinterest_PHP', 'root', 'root');
-    } catch (PDOException $e){
-        $error = $e->getMessage();
-    }
-     $username = $_POST['username'];
-    $password = $_POST['password'];
+session_start();
 
-    $sql = "SELECT * FROM users WHERE username =:username LIMIT 1";
-    $query = $dbh->prepare($sql);
-    $query->execute(array(':email'=>$email));
-    $results = $query->fetchAll(PDO::FETCH_ASSOC);
+include 'connect.php';
 
-    foreach($results as $row){
-        if(password_verify($password,$row['password'])){
-            session_start();
-            $_SESSION['username'] = $username;
-            header('Location: index.php');
-        } else {
-            header('Location: login.php');
+if(isset($_POST['SignIn'])){
+
+    //Retrieve the field values from our login form.
+    $username = !empty($_POST['username']) ? trim($_POST['username']) : null;
+    $passwordAttempt = !empty($_POST['password']) ? trim($_POST['password']) : null;
+
+    //Retrieve the user account information for the given username.
+    $sql = "SELECT id, UserName, Password FROM Users WHERE username = :username";
+    $stmt = $pdo->prepare($sql);
+
+    //Bind value.
+    $stmt->bindValue(':username', $username);
+
+    //Execute.
+    $stmt->execute();
+
+    //Fetch row.
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    //If $row is FALSE.
+    if($user === false){
+        //Could not find a user with that username!
+        //PS: You might want to handle this error in a more user-friendly manner!
+        die('Incorrect username / password combination!');
+    } else{
+        //User account found. Check to see if the given password matches the
+        //password hash that we stored in our users table.
+
+        //Compare the passwords.
+        $validPassword = password_verify($passwordAttempt, $user['password']);
+
+        //If $validPassword is TRUE, the login has been successful.
+        if($validPassword){
+
+            //Provide the user with a login session.
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['logged_in'] = time();
+
+
+            header('Location: profile.php');
+            exit;
+
+        } else{
+            //$validPassword was FALSE. Passwords do not match.
+            die('Incorrect username / password combination!');
         }
     }
-}
 
+}
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -109,31 +137,28 @@ if (!empty($_POST['SignUp'])){
 
     <div class="container">
 
-                    <h2>Log In<?php if( isset( $error ) ): ?>
-                            <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
+                    <h2>Log In<?php if( isset( $errMsg ) ): ?>
+                            <div class="error"> <?php echo '<small>' . $errMsg . '</small>' ?> </div>
                         <?php endif; ?></h2>
                     <hr class="colorgraph">
                     <div class="row">
-                        <form method="post"  action="">
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <input type="text" name="username" id="username" class="form-control input-lg" placeholder="Gebruikersnaam" tabindex="1">
+                                <input type="text" name="username" id="usernamelogin" class="form-control input-lg" placeholder="Gebruikersnaam" tabindex="8">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="2">
+                                <input type="password" name="password" id="passwordlogin" class="form-control input-lg" placeholder="Password" tabindex="9">
                             </div>
                         </div>
-                        </form>
                     </div>
 
 
                     <hr class="colorgraph">
                     <div class="form-group">
 
-                            <input name="SignIn" type="submit" value="Sign In" class="btn btn-primary btn-block btn-lg" tabindex="3">
-                        <br/><p>Or register <a href="signup.php">here</a></p>
+                            <input name="SignIn" type="submit" value="Sign In" class="btn btn-primary btn-block btn-lg" tabindex="10">
 
                     </div>
                 </form>
