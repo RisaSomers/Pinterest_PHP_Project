@@ -1,19 +1,29 @@
 <?php
 session_start();
 
-require 'connect.php';
+include_once "classes/user.php";
+include_once "classes/Db.class.php";
 
 
+<<<<<<< HEAD
 
     include_once ("classes/user.php");
     include_once("classes/Db.class.php");
 
+=======
+>>>>>>> origin/master
     // als we submitten gaan we velden uitlezen
     if(!empty($_POST)){
         try{
             $options = [
                 'cost' => 12
             ];
+<<<<<<< HEAD
+=======
+try {
+    // if geregistreerd
+    if (!empty($_POST)) {
+>>>>>>> origin/master
 
 
 
@@ -35,12 +45,20 @@ require 'connect.php';
                 $error = "Username can not be empty";
             }
 
+<<<<<<< HEAD
+=======
+                    $sameEmail = $pdo->prepare("SELECT Email FROM Users WHERE Email = :Email ");
+                    $sameEmail->bindValue(':Email', $Email);
+                    $sameEmail->execute();
+
+>>>>>>> origin/master
 
             elseif(empty($users->Email = $_POST['Email'])){
                 $error = "Email can not be empty";
             }
 
-            elseif(empty($users->Password = $_POST['Password'])){
+            elseif(empty($users->Password = $_POST['Password']))
+        {
                 $error = "Password can not be empty";
             }
 
@@ -93,12 +111,45 @@ require 'connect.php';
                     }
 
 
+<<<<<<< HEAD
                 } 
                 
                 
+=======
+                } else {
+                    throw new Exception("Paswoord komt niet overeen");
+
+                }
+>>>>>>> origin/master
             }
 
+<<<<<<< HEAD
         }
+=======
+
+        catch(Exception $e){
+            $error = $e->getMessage();
+        }
+    }
+
+
+
+            $PasswordHash = password_hash($Password, PASSWORD_BCRYPT, array("cost" => 12) );
+
+            // connectie met databank
+
+
+
+            $statement = $pdo->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
+            $statement->bindValue(":FullName", $FullName);
+            $statement->bindValue(":UserName", $UserName);
+            $statement->bindValue(":Email", $Email);
+            $statement->bindValue(":Password", $PasswordHash);
+
+            $res = $statement->execute();
+            return ($res);
+            header('Location: signup.php');
+>>>>>>> origin/master
 
 
     
@@ -108,6 +159,10 @@ require 'connect.php';
             
 
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 ?><!DOCTYPE html>
 <html lang="en">
 

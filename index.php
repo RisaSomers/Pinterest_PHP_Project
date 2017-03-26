@@ -55,7 +55,7 @@ include_once("classes/user.php");
                         <a href="#">Services</a>
                     </li>
                     <li>
-                        <a href="logout.php">Logout</a>
+                        <a href="login.php">Login</a>
                     </li>
                 </ul>
             </div>
