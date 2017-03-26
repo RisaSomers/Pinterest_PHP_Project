@@ -1,6 +1,6 @@
 <?php
 include_once("classes/user.php");
-include_once("session.php");
+//include_once("session.php");
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -43,7 +43,7 @@ include_once("session.php");
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
+                <a class="navbar-brand" href="#">Pinterest</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -70,7 +70,8 @@ include_once("session.php");
         <div class="row">
 
             <div class="col-lg-12">
-                <h1 class="page-header">Thumbnail Gallery</h1>
+                <h1 class="page-header">Like 5 topics</h1>
+                <h2>Then we'll build a custom home feed for you</h2>
             </div>
 
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">

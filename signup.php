@@ -1,89 +1,113 @@
 <?php
+session_start();
 
-try {
-    // if geregistreerd
-    if (!empty($_POST)) {
+require 'connect.php';
 
 
-        // checken of velden ingevuld zijn
-        $FullName = $_POST['FullName'];
-        $UserName = $_POST['UserName'];
-        $Email = $_POST['Email'];
-        $Password = $_POST['Password'];
-        $Passwordcon = $_POST['Password_confirmation'];
-        $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', '');
 
-        if ($_POST['Password'] == $_POST['Password_confirmation']) {
+    include_once ("classes/user.php");
+    include_once("classes/Db.class.php");
 
-            if (strlen($Password) >= 6) {
-
-                if (!empty($_POST)) {
-                    //formulier is verzonden, controleer formulier
-                    if (empty($_POST['FullName'])) $veldfout['FullName'] = TRUE;
-
-                    $sameEmail = $conn->prepare("SELECT Email FROM Users WHERE Email = :Email ");
-                    $sameEmail->bindValue(':Email', $Email);
-                    $sameEmail->execute();
-
-                    if($sameEmail->fetch(PDO::FETCH_ASSOC) == $Email){
-                        throw new Exception("Email bestaat al");
-                    }
-                    //afhandeling
-                    if (!empty($veldfout)) {
-                        //formulier incorrect ingevuld
-                        throw new Exception("Vul alle velden in");
-                    } else {
-                        //formulier correct
-                        header("Location: index.php");
-
-                    }
+    // als we submitten gaan we velden uitlezen
+    if(!empty($_POST)){
+        try{
+            $options = [
+                'cost' => 12
+            ];
 
 
 
 
 
+            //lezen de velden uit en steken die waarden in class user
+            $users = new users();
 
+            $res = "succes";
+            $MinLength = 6;
 
-
-
-                } else {
-                    throw new Exception("Paswoord komt niet overeen");
-                }
-
-            } else {
-                throw new Exception("Passwoord moet minstens 6 karakters hebben");
+            //error voor legen velden
+            if(empty($users->FullName = $_POST['FullName'])){
+                $error = "Fullname can not be empty.";
             }
 
 
-            $options = [
-                'cost' => 12,
-            ];
-
-            $Password = password_hash($Password, PASSWORD_DEFAULT, $options);
-
-            // connectie met databank
+            elseif(empty($users->UserName = $_POST['UserName'])){
+                $error = "Username can not be empty";
+            }
 
 
+            elseif(empty($users->Email = $_POST['Email'])){
+                $error = "Email can not be empty";
+            }
 
-            $statement = $conn->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
-            $statement->bindValue(":FullName", $FullName);
-            $statement->bindValue(":UserName", $UserName);
-            $statement->bindValue(":Email", $Email);
-            $statement->bindValue(":Password", $Password);
+            elseif(empty($users->Password = $_POST['Password'])){
+                $error = "Password can not be empty";
+            }
 
-            $res = $statement->execute();
-            return ($res);
 
+            elseif(empty($users->Passwordcon = $_POST['Password_confirmation'])){
+                $error = "Password confirmation can not be empty";
+            }
+
+            elseif(strlen($users->Password) < $MinLength){
+                $error = "Your password has to be at least 6 characters long";
+            }
+
+            $users->FullName = $_POST['FullName'];
+            $users->UserName = $_POST['UserName'];
+            $users->Email = $_POST['Email'];
+            $users->Password = password_hash($_POST['Password'], PASSWORD_DEFAULT, $options);
+            $users->Passwordcon = $_POST['Password_confirmation'];
+        
+            if ($_POST['Password'] != $_POST['Password_confirmation']){
+                throw new exception("Password and confirmation password are not the same!");
+            }
+            
+            $conn= Db::getInstance();
+
+            if(!isset($error)){
+                $statement = $conn->prepare("SELECT * FROM Users WHERE Email = :Email");
+                $statement->bindValue(":Email", $users->Email);
+
+                if($statement->execute() && $statement->rowCount() != 0){
+                    $resultaat = $statement->fetch(PDO::FETCH_ASSOC);
+                    $error = "Mail is already used";
+                    $res = false;
+                }
+
+                else{
+                    if($res != false){
+                        $succes = "Welcome, you are registered";
+                        $users->Save();
+                        header("Location: topics.php");
+                        session_start();
+
+                        $_SESSION['Email'] = $users->Email;
+                        $_SESSION['UserName'] = $users->UserName;
+                        $_SESSION['FullName'] = $users->FullName;
+                    }
+
+                    else{
+                        $fail = "oops, something went wrong! try again!";
+                        header("Location: signup.php");
+                    }
+
+
+                } 
+                
+                
+            }
 
         }
-    }
 
-    }catch (Exception $e){
-    $error = $e->getMessage();
+
+    
+                catch(Exception $e){
+            $error = $e->getMessage();
+        }
+            
 
 }
-
-
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -116,6 +140,10 @@ try {
         .error{
             color: red;
         }
+        small{
+            color: #fff;
+            
+        }
 
     </style>
 
@@ -137,7 +165,7 @@ try {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <a class="navbar-brand" href="#">IMDterest</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -167,7 +195,7 @@ try {
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                 <form role="form" method="post">
-                    <h2>Please Sign Up <?php if( isset( $error ) ): ?>
+                    <h2>Please Sign Up<?php if( isset( $error ) ): ?>
                                 <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
                             <?php endif; ?></h2>
                     <hr class="colorgraph">
@@ -198,13 +226,22 @@ try {
                             </div>
                         </div>
                     </div>
+                    <br/>
+
 
 
                     <hr class="colorgraph">
                     <div class="row">
-                        <div class="col-xs-12 col-md-6"><input name="Registration" type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
-                        <div class="col-xs-12 col-md-6"><a href="#" name="SignIn" class="btn btn-success btn-block btn-lg">Sign In</a></div>
-                    </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="form-group">
+                            <input name="Registration" type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7">
+                            </div>
+                        </div>
+                        
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <a href="login.php"><input name="SignIn"  value="Sign In" class="btn btn-primary btn-block btn-lg" tabindex="10"></a>
+                        </div>
+                        </div>
                 </form>
             </div>
         </div>
@@ -216,7 +253,7 @@ try {
 <footer>
     <div class="row">
         <div class="col-lg-12">
-            <p>Copyright &copy; Your Website 2014</p>
+            <p>Copyright &copy; IMDterest 2017</p>
         </div>
     </div>
 </footer>

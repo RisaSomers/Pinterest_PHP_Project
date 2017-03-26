@@ -1,6 +1,6 @@
 <?php
 
-$conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', 'root');
+$conn = new PDO('mysql:host=localhost;dbname=users', 'root', '');
 
 session_start();// Starting Session
 // Storing Session
@@ -13,4 +13,5 @@ if(!isset($login_session)){
     mysql_close($connection); // Closing Connection
     header('Location: index.php'); // Redirecting To Home Page
 }
+
 ?>

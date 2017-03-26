@@ -13,13 +13,7 @@ class users
      * @param $m_sEmail
      * @param $m_sPassword
      */
-    public function __construct($m_sFullName, $m_sUserName, $m_sEmail, $m_sPassword)
-    {
-        $this->m_sFullName = $m_sFullName;
-        $this->m_sUserName = $m_sUserName;
-        $this->m_sEmail = $m_sEmail;
-        $this->m_sPassword = $m_sPassword;
-    }
+
 
     /**
      * @return mixed
