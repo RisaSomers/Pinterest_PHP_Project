@@ -1,9 +1,8 @@
 <?php
 session_start();
 
-include_once 'connect.php';
-include_once 'classes/user.php';
-include_once 'classes/Db.class.php';
+include_once "classes/user.php";
+include_once "classes/Db.class.php";
 
 
     // als we submitten gaan we velden uitlezen
@@ -51,7 +50,8 @@ try {
                 $error = "Email can not be empty";
             }
 
-            elseif(empty($users->Password = $_POST['Password'])){
+            elseif(empty($users->Password = $_POST['Password']))
+        {
                 $error = "Password can not be empty";
             }
 
