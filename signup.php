@@ -1,19 +1,17 @@
 <?php
 session_start();
 
-require 'connect.php';
+include_once 'connect.php';
+include_once 'classes/user.php';
+include_once 'classes/Db.class.php';
 
 
-<<<<<<< HEAD
-    include_once ("classes/user.php");
-    include_once("classes/Db.class.php");
     // als we submitten gaan we velden uitlezen
     if(!empty($_POST)){
         try{
             $options = [
                 'cost' => 12
             ];
-=======
 try {
     // if geregistreerd
     if (!empty($_POST)) {
@@ -26,7 +24,7 @@ try {
         $Password = $_POST['Password'];
         $Passwordcon = $_POST['Password_confirmation'];
 
->>>>>>> origin/master
+
 
             //lezen de velden uit en steken die waarden in class user
             $users = new users();
@@ -39,15 +37,15 @@ try {
                 $error = "Fullname can not be empty.";
             }
 
-<<<<<<< HEAD
+
             elseif(empty($users->UserName = $_POST['UserName'])){
                 $error = "Username can not be empty";
             }
-=======
+
                     $sameEmail = $pdo->prepare("SELECT Email FROM Users WHERE Email = :Email ");
                     $sameEmail->bindValue(':Email', $Email);
                     $sameEmail->execute();
->>>>>>> origin/master
+
 
             elseif(empty($users->Email = $_POST['Email'])){
                 $error = "Email can not be empty";
@@ -57,7 +55,7 @@ try {
                 $error = "Password can not be empty";
             }
 
-<<<<<<< HEAD
+
             elseif(empty($users->Passwordcon = $_POST['Password_confirmation'])){
                 $error = "Password confirmation can not be empty";
             }
@@ -103,21 +101,21 @@ try {
                         header("Location: signup.php");
                     }
 
-=======
+
                 } else {
                     throw new Exception("Paswoord komt niet overeen");
->>>>>>> origin/master
+
                 }
             }
         }
 
-<<<<<<< HEAD
+
         catch(Exception $e){
             $error = $e->getMessage();
         }
     }
 
-=======
+
 
             $PasswordHash = password_hash($Password, PASSWORD_BCRYPT, array("cost" => 12) );
 
@@ -143,17 +141,6 @@ try {
     $error = $e->getMessage();
 
 }
-
-//login
-
-
-
-
-
-
-
-
->>>>>>> origin/master
 
 ?><!DOCTYPE html>
 <html lang="en">
