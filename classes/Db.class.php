@@ -15,6 +15,7 @@ class Db{
             // er is nog connectie, maak aan en geef terug
 
             self::$conn = new PDO("mysql:host=localhost;dbname=users","root","");
+
             return self::$conn;
         }
 
