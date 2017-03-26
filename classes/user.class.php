@@ -1,4 +1,9 @@
 <?php
+
+    sql_autoload_register(function ($class){
+        include_once("classes/".$class.".php");
+    });
+
 class users
 {
     private $m_sFullName;
@@ -13,7 +18,13 @@ class users
      * @param $m_sEmail
      * @param $m_sPassword
      */
-
+    public function __construct($m_sFullName, $m_sUserName, $m_sEmail, $m_sPassword)
+    {
+        $this->m_sFullName = $m_sFullName;
+        $this->m_sUserName = $m_sUserName;
+        $this->m_sEmail = $m_sEmail;
+        $this->m_sPassword = $m_sPassword;
+    }
 
     /**
      * @return mixed
@@ -78,6 +89,24 @@ class users
     {
         $this->m_sPassword = $m_sPassword;
     }
+
+    public function Save(){
+
+
+
+        $conn= Db::getInstance();
+
+        //query schrijven
+        $statement = $conn->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)"); 
+        $statement->bindValue(":FullName", $this->FullName); 
+        $statement->bindValue(":UserName", $this->UserName); 
+        $statement->bindValue(":Email", $this->Email); 
+        $statement->bindValue(":Password", $this->Password);
+
+        return $statement->execute();
+    }
+
+
 
 }
 

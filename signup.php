@@ -1,87 +1,90 @@
 <?php
 
-try {
-    // if geregistreerd
-    if (!empty($_POST)) {
-
-
-        // checken of velden ingevuld zijn
-        $FullName = $_POST['FullName'];
-        $UserName = $_POST['UserName'];
-        $Email = $_POST['Email'];
-        $Password = $_POST['Password'];
-        $Passwordcon = $_POST['Password_confirmation'];
-        $conn = new PDO('mysql:host=localhost;dbname=Pinterest_PHP', 'root', '');
-
-        if ($_POST['Password'] == $_POST['Password_confirmation']) {
-
-            if (strlen($Password) >= 6) {
-
-                if (!empty($_POST)) {
-                    //formulier is verzonden, controleer formulier
-                    if (empty($_POST['FullName'])) $veldfout['FullName'] = TRUE;
-
-                    $sameEmail = $conn->prepare("SELECT Email FROM Users WHERE Email = :Email ");
-                    $sameEmail->bindValue(':Email', $Email);
-                    $sameEmail->execute();
-
-                    if($sameEmail->fetch(PDO::FETCH_ASSOC) == $Email){
-                        throw new Exception("Email bestaat al");
-                    }
-                    //afhandeling
-                    if (!empty($veldfout)) {
-                        //formulier incorrect ingevuld
-                        throw new Exception("Vul alle velden in");
-                    } else {
-                        //formulier correct
-                        header("Location: index.php");
-
-                    }
-
-
-
-
-
-
-
-
-
-                } else {
-                    throw new Exception("Paswoord komt niet overeen");
-                }
-
-            } else {
-                throw new Exception("Passwoord moet minstens 6 karakters hebben");
-            }
-
-
+    include_once ("classes/user.php");
+    include_once("classes/Db.class.php");
+    // als we submitten gaan we velden uitlezen
+    if(!empty($_POST)){
+        try{
             $options = [
-                'cost' => 12,
+                'cost' => 12
             ];
 
-            $Password = password_hash($Password, PASSWORD_DEFAULT, $options);
+            //lezen de velden uit en steken die waarden in class user
+            $users = new users();
 
-            // connectie met databank
+            $res = "succes";
+            $MinLength = 6;
 
+            //error voor legen velden
+            if(empty($users->FullName = $_POST['FullName'])){
+                $error = "Fullname can not be empty.";
+            }
 
+            elseif(empty($users->UserName = $_POST['UserName'])){
+                $error = "Username can not be empty";
+            }
 
-            $statement = $conn->prepare("INSERT INTO Users (FullName, UserName, Email, Password) VALUES(:FullName, :UserName, :Email, :Password)");
-            $statement->bindValue(":FullName", $FullName);
-            $statement->bindValue(":UserName", $UserName);
-            $statement->bindValue(":Email", $Email);
-            $statement->bindValue(":Password", $Password);
+            elseif(empty($users->Email = $_POST['Email'])){
+                $error = "Email can not be empty";
+            }
 
-            $res = $statement->execute();
-            return ($res);
+            elseif(empty($users->Password = $_POST['Password'])){
+                $error = "Password can not be empty";
+            }
 
+            elseif(empty($users->Passwordcon = $_POST['Password_confirmation'])){
+                $error = "Password confirmation can not be empty";
+            }
 
+            elseif(strlen($users->Password) <= $MinLength){
+                $error = "Your password has to be at least 6 characters long";
+            }
+
+            $users->FullName = $_POST['FullName'];
+            $users->UserName = $_POST['UserName'];
+            $users->Email = $_POST['Email'];
+            $users->Password = password_hash($_POST['Password'], PASSWORD_DEFAULT, $options);
+            $users->Passwordcon = $_POST['Password_confirmation'];
+            if ($_POST['Password'] != $_POST['Password_confirmation']){
+                throw new exception("Passwoorden komen niet overeen!");
+            }
+            $conn= Db::getInstance();
+
+            if(!isset($error)){
+                $statement = $conn->prepare("SELECT * FROM Users WHERE Email = :Email");
+                $statement->bindValue(":Email", $users->Email);
+
+                if($statement->execute() && $statement->rowCount() != 0){
+                    $resultaat = $statement->fetch(PDO::FETCH_ASSOC);
+                    $error = "Mail is already used";
+                    $res = false;
+                }
+
+                else{
+                    if($res != false){
+                        $succes = "Welcome, you are registered";
+                        $users->Save();
+                        header("Location: topics.php");
+                        session_start();
+
+                        $_SESSION['Email'] = $users->Email;
+                        $_SESSION['UserName'] = $users->UserName;
+                        $_SESSION['FullName'] = $users->FullName;
+                    }
+
+                    else{
+                        $fail = "oops, something went wrong! try again!";
+                        header("Location: signup.php");
+                    }
+
+                }
+            }
+        }
+
+        catch(Exception $e){
+            $error = $e->getMessage();
         }
     }
-
-    }catch (Exception $e){
-    $error = $e->getMessage();
-
-}
 
 
 ?><!DOCTYPE html>
