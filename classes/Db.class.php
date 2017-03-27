@@ -14,7 +14,7 @@ class Db{
         else{
             // er is nog connectie, maak aan en geef terug
 
-            self::$conn = new PDO("mysql:host=localhost;dbname=users","root","");
+            self::$conn = new PDO("mysql:host=localhost;dbname=Pinterest_PHP","root","");
 
             return self::$conn;
         }

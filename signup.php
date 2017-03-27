@@ -15,10 +15,6 @@ session_start();
                 'cost' => 12
             ];
 
-
-
-
-
             //lezen de velden uit en steken die waarden in class user
             $users = new users();
 

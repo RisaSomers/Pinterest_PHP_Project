@@ -79,9 +79,7 @@ class users
         $this->m_sPassword = $m_sPassword;
     }
     
-    public function Save(){
-        
-    }
+
 
     public function save() {
         $pdo = Db::getInstance();
