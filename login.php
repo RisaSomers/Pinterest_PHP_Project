@@ -4,13 +4,9 @@ session_start();
 
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 =======
 >>>>>>> origin/master
-=======
-include 'connect.php';
->>>>>>> parent of dc4e534... Topics
 =======
 include 'connect.php';
 >>>>>>> parent of dc4e534... Topics
