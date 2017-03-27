@@ -1,7 +1,6 @@
 <?php
 
 
-
 /*session_start();
 
 if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
@@ -70,9 +69,7 @@ catch(Exception $e)
     $error = $e->getMessage();
 }
 
-?>
-?>
-<!doctype html>
+?><!doctype html>
 <html lang="en">
 <head>
 
@@ -100,8 +97,8 @@ catch(Exception $e)
 <form action="" method="post" enctype="multipart/form-data">
     <br>
     <label for"avatar">Upload je foto!</label>
-    <input name="avatar" type="file">
-    <input type="submit" value="Upload">
+    <input name="avatar" type="file" class="btn btn-default">
+    <input type="submit" value="Upload" class="btn btn-default">
 </form>
 
 <div class="col-xs-12 no-padding" >
