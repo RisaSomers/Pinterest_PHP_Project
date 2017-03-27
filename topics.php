@@ -1,5 +1,7 @@
 <?php
 
+    include_once("classes/Db.class.php");
+    include_once("classes/Topics.class.php");
 
 	session_start();
 	if ( isset($_SESSION['UserName'] ) ){
@@ -13,12 +15,6 @@
 		$sth = $conn->prepare("SELECT * FROM Topics;");
 		
 		$sth->execute();
-
-
-    include_once("classes/Db.class.php");
-
-    
-
 ?>
 
 
@@ -67,18 +63,17 @@
   <div id='slats'>
 
   
-  <ul>
-    
-<?php $conn= Db::getInstance(); ?>
+	<?php while( $row = $sth->fetch() ):?>
+			<a href='topics.php?id=<?php echo $row['Name'] ?>'>
+			<div class='topics'>
+			<div class='photo'><input class="check" type="checkbox" name="calltype[]" value=""></div>
+			
+			<p class='topicname'><?php echo $row['Name'] ?></p>
+			</div>
+			</a>
+			
 
-    <?php foreach ($conn->query($sql) as $key => $topic):?>
-<div class="topic">
-        <li><a href="topics.php?topics=<?php echo $key;?>&topicid=<?php echo $_GET['topic'] ;?>"><?php echo $topic['Name']; ?></a></li>
-        <img src="<?php echo $topic['Image']; ?>" alt="Afbeelding van  <?php $topic['Name']; ?>">
-        </div>
-        <hr>
-    <?php endforeach; ?>
-</ul>
+	<?php endwhile; ?>
   
 
   </div>
@@ -90,7 +85,7 @@
 
 
 
- <button type="submit"> Follow 5 topics </button>
+ <button href="profile.php" type="submit"> Follow 5 topics </button>
 
 
 

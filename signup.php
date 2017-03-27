@@ -94,7 +94,7 @@ session_start();
                     }
 
 
-<<<<<<< HEAD
+
                 } 
                 
                 
@@ -105,19 +105,13 @@ session_start();
 
     
                 catch(Exception $e){
-=======
+                    $error = $e->getMessage();
                 }
 
 
             }
 
-        } catch(Exception $e){
->>>>>>> origin/master
-            $error = $e->getMessage();
-        }
-
-
-}
+         
 ?><!DOCTYPE html>
 <html lang="en">
 
