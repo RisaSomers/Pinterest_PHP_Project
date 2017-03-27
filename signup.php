@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+
+
+
+
     include_once ("classes/user.php");
     include_once("classes/Db.class.php");
 
@@ -95,9 +99,11 @@ session_start();
                 
                 
             }
-            
 
         }
+
+
+    
                 catch(Exception $e){
 =======
                 }
@@ -191,7 +197,7 @@ session_start();
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <a href="topics.php"><input name="Registration" type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7"></a>
+                            <input name="Registration" type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7">
                             </div>
                         </div>
 

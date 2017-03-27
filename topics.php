@@ -1,8 +1,8 @@
 <?php
 
-    include_once("classes/Db.class.php");
-    include_once("classes/topics.class.php");
+    session_start();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	session_start();
 	if ( isset($_SESSION['UserName'] ) ){
@@ -19,13 +19,12 @@
 =======
 
 >>>>>>> origin/master
+=======
+    include_once("classes/Db.class.php");
+>>>>>>> parent of dc4e534... Topics
 
+    
 
-        if(!empty($_POST)){
-            $topics = new Topics();
-            $topics->Description = $_POST['topic'];
-            header("Location: profile.php");
-        }
 ?>
 
 
@@ -70,32 +69,33 @@
   <div class="search">
     <input type="search" id="filter" placeholder='Search' />
   </div>
-  <form action="" method="post">
 <article class='content'>
   <div id='slats'>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     
+=======
+>>>>>>> parent of dc4e534... Topics
   
-	<?php while( $row = $sth->fetch() ):?>
-			<a href='topics.php?Name=<?php echo $row['id'] ?>'>
-			<div class='topics'>
-			<div class='photo'><input class="check" type="checkbox" name="topic" value=<?php echo $row['Name'] ?>></div>
-			
-			<p class='topicname'><?php echo $row['Name'] ?></p>
-			</div>
-			</a>
-			
-
-	<?php endwhile; ?>
-
+  <ul>
     
-        <button>Get started</button>
+<?php $conn= Db::getInstance(); ?>
+
+    <?php foreach ($conn->query($sql) as $key => $topic):?>
+<div class="topic">
+        <li><a href="topics.php?topics=<?php echo $key;?>&topicid=<?php echo $_GET['topic'] ;?>"><?php echo $topic['Name']; ?></a></li>
+        <img src="<?php echo $topic['Image']; ?>" alt="Afbeelding van  <?php $topic['Name']; ?>">
+        </div>
+        <hr>
+    <?php endforeach; ?>
+</ul>
   
 
   </div>
 </article>   
  
+<<<<<<< HEAD
      </form>
 =======
 
@@ -122,6 +122,9 @@
 
     </div>
 
+=======
+ <button type="submit"> Follow 5 topics </button>
+>>>>>>> parent of dc4e534... Topics
 
 </body>
 </html>
