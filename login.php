@@ -2,14 +2,7 @@
 
 session_start();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
-=======
-include 'connect.php';
->>>>>>> parent of dc4e534... Topics
 include 'classes/Db.class.php';
 
 if(isset($_POST['SignIn'])){
