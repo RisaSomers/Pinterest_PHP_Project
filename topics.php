@@ -5,7 +5,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 	session_start();
 	if ( isset($_SESSION['UserName'] ) ){
 		
@@ -25,10 +24,6 @@
     include_once("classes/Db.class.php");
 >>>>>>> parent of dc4e534... Topics
 
-=======
-    include_once("classes/Db.class.php");
-
->>>>>>> parent of dc4e534... Topics
 =======
     include_once("classes/Db.class.php");
 
@@ -85,10 +80,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
     
-=======
->>>>>>> parent of dc4e534... Topics
 =======
 >>>>>>> parent of dc4e534... Topics
 =======
@@ -111,7 +103,6 @@
   </div>
 </article>   
  
-<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
      </form>
@@ -140,9 +131,6 @@
 
     </div>
 
-=======
- <button type="submit"> Follow 5 topics </button>
->>>>>>> parent of dc4e534... Topics
 =======
  <button type="submit"> Follow 5 topics </button>
 >>>>>>> parent of dc4e534... Topics
