@@ -1,7 +1,13 @@
 <?php
 
 
-/*session_start();
+
+
+
+include_once("classes/user.php");
+include_once("classes/profilechange.class.php");
+include_once("classes/profilechange.class.php");
+session_start();
 
 if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
     //User not logged in. Redirect them back to the login.php page.
@@ -27,22 +33,6 @@ if(!empty($_FILES)) {
 
 
     die();
-}
-
-echo 'Congratulations! You are logged in!';
-*/
-
-
-
-include_once("classes/user.php");
-include_once("classes/profilechange.class.php");
-include_once("classes/profilechange.class.php");
-session_start();
-
-if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
-    //User not logged in. Redirect them back to the login.php page.
-    header('Location: login.php');
-    exit;
 }
 
 $a = new profilechange();
@@ -94,12 +84,6 @@ catch(Exception $e)
 <?php include("includes/menu.php"); ?>
 
 <body>
-<form action="" method="post" enctype="multipart/form-data">
-    <br>
-    <label for"avatar">Upload je foto!</label>
-    <input name="avatar" type="file" class="btn btn-default">
-    <input type="submit" value="Upload" class="btn btn-default">
-</form>
 
 <div class="col-xs-12 no-padding" >
 
@@ -107,10 +91,14 @@ catch(Exception $e)
         <div class="col-md-6 styleguide">
 
 
-                <div class="alert alert-danger" role="alert" ></div>
 
 
             <form action="" method="post" enctype="multipart/form-data">
+
+                <label for"avatar">Upload je foto!</label>
+                <input name="avatar" type="file" class="btn btn-default">
+                <input type="submit" value="Upload" class="btn btn-default">
+
                 <div class="form-group">
                     <label for="name">Username</label>
                     <input type="text" class="form-control" id="username" name="UserName" <?PHP echo " value='". $user['UserName']."'"; ?>>
