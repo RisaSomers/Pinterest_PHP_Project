@@ -49,11 +49,11 @@ session_start();
             $users->setMSUserName($_POST['UserName']);
             $users->setMSEmail($_POST['Email']);
             $users->setMSPassword(password_hash($_POST['Password'], PASSWORD_DEFAULT, $options));
-        
+
             if ($_POST['Password'] != $_POST['Password_confirmation']){
                 throw new exception("Password and confirmation password are not the same!");
             }
-            
+
             $conn= Db::getInstance();
 
             if(!isset($error)){
@@ -90,6 +90,7 @@ session_start();
                     }
 
 
+<<<<<<< HEAD
                 } 
                 
                 
@@ -98,9 +99,17 @@ session_start();
 
         }
                 catch(Exception $e){
+=======
+                }
+
+
+            }
+
+        } catch(Exception $e){
+>>>>>>> origin/master
             $error = $e->getMessage();
         }
-            
+
 
 }
 ?><!DOCTYPE html>
@@ -108,27 +117,9 @@ session_start();
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <?php include("includes/header.php"); ?>
 
-    <title>Thumbnail Gallery - Start Bootstrap Template</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/thumbnail-gallery.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <title>IMDterest - Sign up here!</title>
 
     <style>
 
@@ -137,7 +128,7 @@ session_start();
         }
         small{
             color: #fff;
-            
+
         }
 
     </style>
@@ -147,39 +138,10 @@ session_start();
 
 <body>
 
+  <!-- Navigation -->
+  <?php include("includes/menu.php"); ?>
 
 
-<!-- Navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">IMDterest</a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container -->
-</nav>
 
 <!-- Page Content -->
 <div class="container">
@@ -232,7 +194,7 @@ session_start();
                                 <a href="topics.php"><input name="Registration" type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7"></a>
                             </div>
                         </div>
-                        
+
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <a href="login.php"><input name="SignIn"  value="Sign In" class="btn btn-primary btn-block btn-lg" tabindex="10"></a>
                         </div>
