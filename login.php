@@ -2,7 +2,7 @@
 
 session_start();
 
-include 'connect.php';
+
 include 'classes/Db.class.php';
 
 if(isset($_POST['SignIn'])){
