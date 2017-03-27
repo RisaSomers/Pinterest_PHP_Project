@@ -47,7 +47,7 @@ class profilechange extends users
     public function getOne($m_pId)
     {
         $conn = Db::getInstance();
-        $one = $conn->prepare("SELECT * FROM student WHERE id = :id");
+        $one = $conn->prepare("SELECT * FROM users WHERE id = :id");
         $one->bindValue(':id',$m_pId);
         $one->execute();
         return $one->fetch();

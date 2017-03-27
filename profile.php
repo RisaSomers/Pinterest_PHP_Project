@@ -141,10 +141,5 @@ catch(Exception $e)
 
 <img src="uploads/<?php echo $_SESSION["UserName"] ?>.jpg">
 
-<ul class="nav">
-    <li>
-        <a href="logout.php">Logout</a>
-    </li>
-</ul>
 </body>
 </html>
