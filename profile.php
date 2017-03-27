@@ -35,12 +35,31 @@ if(!empty($_FILES)) {
     die();
 }
 
+<<<<<<< HEAD
+=======
+echo 'Congratulations! You are logged in!';
+*/
+
+
+include_once ("classes/Db.class.php");
+include_once("classes/user.php");
+include_once("classes/profilechange.class.php");
+
+session_start();
+
+if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
+    //User not logged in. Redirect them back to the login.php page.
+    header('Location: login.php');
+    exit;
+}
+
+>>>>>>> origin/master
 $a = new profilechange();
 $allusers = $a->getAll();
 
 $conn = Db::getInstance();
 
-$statement = $conn->prepare('SELECT * FROM users WHERE id=:id');
+$statement = $conn->prepare("SELECT * FROM users WHERE id=:id");
 
 $statement->bindParam(':id',$_SESSION['id']);
 $statement->execute();
@@ -48,7 +67,7 @@ $user = $statement->fetch(PDO::FETCH_ASSOC);
 
 try
 {
-    if (!empty($_POST))
+    if (!empty($_POST['btn-changes']))
     {
         $a->checkPass($_POST['pass'], $_POST['pass_rep']);
         $a->update($_POST['UserName'],$_POST['Email'], $_POST['pass']);
@@ -119,7 +138,7 @@ catch(Exception $e)
 
                 </br>
                 <p>Als u geen wijzigingen wilt doorvoeren, gaat u terug naar Home zonder op onderstaande knop te klikken.</p>
-                <button type="submit" class="btn btn-default">Profiel aanpassen</button>
+                <button type="submit" name="btn-change" class="btn btn-default">Profiel aanpassen</button>
             </form>
         </div>
 </div>

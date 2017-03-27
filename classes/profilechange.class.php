@@ -17,13 +17,13 @@ class profilechange extends users
         $current_id = $_SESSION['id'];
         if (empty($pass))
         {
-            $statement = $conn->prepare('UPDATE users SET name=:UserName,email=:Email WHERE id=:id');
+            $statement = $conn->prepare("UPDATE users SET name=:UserName,email=:Email WHERE id=:id");
 
         }
         else
         {
             $this->Password = $pass;
-            $statement = $conn->prepare('UPDATE users SET UserName=:username,password=:Password,email=:Email WHERE id=:id');
+            $statement = $conn->prepare("UPDATE users SET UserName=:username,password=:Password,email=:Email WHERE id=:id");
             $statement->bindValue(':Password',$this->Password);
         }
         $statement->bindValue(':UserName',$username);
