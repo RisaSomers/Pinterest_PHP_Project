@@ -26,8 +26,8 @@ class profilechange extends users
             $statement = $conn->prepare("UPDATE users SET UserName=:username,password=:Password,email=:Email WHERE id=:id");
             $statement->bindValue(':Password',$this->Password);
         }
-        $statement->bindValue(':UserName',$username);
-        $statement->bindValue(':Email',$email);
+        $statement->bindValue(':UserName',$Username);
+        $statement->bindValue(':Email',$Email);
         $statement->bindValue(':id',$current_id);
         $statement->execute();
 
@@ -40,14 +40,14 @@ class profilechange extends users
     public function getAll()
     {
         $conn = Db::getInstance();
-        $allposts = $conn->query("SELECT * FROM users");
+        $allposts = $conn->query("SELECT * FROM Users");
         return $allposts;
     }
 
     public function getOne($m_pId)
     {
         $conn = Db::getInstance();
-        $one = $conn->prepare("SELECT * FROM users WHERE id = :id");
+        $one = $conn->prepare("SELECT * FROM Users WHERE id = :id");
         $one->bindValue(':id',$m_pId);
         $one->execute();
         return $one->fetch();

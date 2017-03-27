@@ -35,17 +35,13 @@ if(!empty($_FILES)) {
     die();
 }
 
-<<<<<<< HEAD
-=======
-echo 'Congratulations! You are logged in!';
-*/
+
+
 
 
 include_once ("classes/Db.class.php");
 include_once("classes/user.php");
 include_once("classes/profilechange.class.php");
-
-session_start();
 
 if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
     //User not logged in. Redirect them back to the login.php page.
@@ -53,13 +49,12 @@ if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
     exit;
 }
 
->>>>>>> origin/master
 $a = new profilechange();
 $allusers = $a->getAll();
 
 $conn = Db::getInstance();
 
-$statement = $conn->prepare("SELECT * FROM users WHERE id=:id");
+$statement = $conn->prepare("SELECT * FROM Users WHERE id=:id");
 
 $statement->bindParam(':id',$_SESSION['id']);
 $statement->execute();
