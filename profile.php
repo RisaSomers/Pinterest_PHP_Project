@@ -38,6 +38,8 @@ echo 'Congratulations! You are logged in!';
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
     <title>Document</title>
 
     <style>
@@ -51,6 +53,7 @@ echo 'Congratulations! You are logged in!';
             text-decoration: none;
         }
     </style>
+    <?php include("includes/menu.php"); ?>
 </head>
 <body>
 <form action="" method="post" enctype="multipart/form-data">

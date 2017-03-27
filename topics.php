@@ -1,10 +1,10 @@
-<?php 
+<?php
 
     session_start();
 
     include_once("classes/Db.class.php");
 
-    
+
 
 ?>
 
@@ -17,40 +17,43 @@
     <title>Topics</title>
     <link rel="stylesheet" href="css/topics.css">
     <link rel="stylesheet" href="js/topics.js">
-    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-    
+
         .vierkant{
             background-color: cadetblue;
             text-align: center;
             border-radius: 5%;
             margin: 20%;
             margin-top: 15%;
-            padding-top: 5%;   
+            padding-top: 5%;
         }
-    
+
     </style>
+    <?php include("includes/menu.php"); ?>
 </head>
+
 <body>
 
  <div class="vierkant">
- 
+
  <div class="tekst">
-     
+
      <h5>Like 5 topics</h1>
      <h7>Then we'll build a custom home feed for you</h2>
-     
+
  </div>
- 
+
   <div class="search">
     <input type="search" id="filter" placeholder='Search' />
   </div>
 <article class='content'>
   <div id='slats'>
 
-  
+
   <ul>
-    
+
 <?php $conn= Db::getInstance(); ?>
 
     <?php foreach ($conn->query($sql) as $key => $topic):?>
@@ -61,16 +64,16 @@
         <hr>
     <?php endforeach; ?>
 </ul>
-  
+
 
   </div>
-</article>   
- 
+</article>
+
  <button type="submit"> Follow 5 topics </button>
 
-      
-    </div>       
-        
-          
+
+    </div>
+
+
 </body>
 </html>

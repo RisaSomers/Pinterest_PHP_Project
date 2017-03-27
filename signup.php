@@ -1,13 +1,6 @@
 <?php
 session_start();
 
-<<<<<<< Updated upstream
-
-
-
-
-=======
->>>>>>> Stashed changes
     include_once ("classes/user.php");
     include_once("classes/Db.class.php");
 
@@ -56,11 +49,11 @@ session_start();
             $users->setMSUserName($_POST['UserName']);
             $users->setMSEmail($_POST['Email']);
             $users->setMSPassword(password_hash($_POST['Password'], PASSWORD_DEFAULT, $options));
-        
+
             if ($_POST['Password'] != $_POST['Password_confirmation']){
                 throw new exception("Password and confirmation password are not the same!");
             }
-            
+
             $conn= Db::getInstance();
 
             if(!isset($error)){
@@ -97,19 +90,15 @@ session_start();
                     }
 
 
-                } 
-                
-                
+                }
+
+
             }
 
-        }
-
-
-    
-                catch(Exception $e){
+        } catch(Exception $e){
             $error = $e->getMessage();
         }
-            
+
 
 }
 ?><!DOCTYPE html>
@@ -123,7 +112,7 @@ session_start();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Thumbnail Gallery - Start Bootstrap Template</title>
+    <title>IMDterest - Sign up here!</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -146,7 +135,7 @@ session_start();
         }
         small{
             color: #fff;
-            
+
         }
 
     </style>
@@ -241,7 +230,7 @@ session_start();
                             <input name="Registration" type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7">
                             </div>
                         </div>
-                        
+
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <a href="login.php"><input name="SignIn"  value="Sign In" class="btn btn-primary btn-block btn-lg" tabindex="10"></a>
                         </div>
