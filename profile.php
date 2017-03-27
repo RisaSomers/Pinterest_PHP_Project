@@ -55,7 +55,7 @@ try
     if (!empty($_POST))
     {
         $a->checkPass($_POST['pass'], $_POST['pass_rep']);
-        $a->update($_POST['name'],$_POST['pass'], $_POST['year'], $_POST['branch'], $_POST['description']);
+        $a->update($_POST['UserName'],$_POST['Email'], $_POST['pass']);
     }
 }
 catch(Exception $e)
@@ -108,12 +108,12 @@ catch(Exception $e)
 
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="name">Naam</label>
-                    <input type="text" class="form-control" id="name" name="name">
+                    <label for="name">Username</label>
+                    <input type="text" class="form-control" id="username" name="UserName" <?PHP echo " value='". $user['UserName']."'"; ?>>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email">
+                    <label for="Email">Email</label>
+                    <input type="email" class="form-control" id="Email" name="Email" <?PHP echo " value='". $user['Email']."'"; ?>>
                 </div>
                 <div class="form-group">
                     <label for="pass">Nieuw wachtwoord</label>

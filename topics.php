@@ -58,8 +58,8 @@ session_start();
 
  <div class="tekst">
 
-     <h5>Like 5 topics</h1>
-     <h7>Then we'll build a custom home feed for you</h2>
+     <h1>Like 5 topics</h1>
+     <h2>Then we'll build a custom home feed for you</h2>
 
  </div>
 

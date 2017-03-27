@@ -11,22 +11,22 @@ class profilechange extends users
 
 
 
-    public function update($name, $email, $pass)
+    public function update($username, $email, $pass)
     {
         $conn = Db::getInstance();
         $current_id = $_SESSION['id'];
         if (empty($pass))
         {
-            $statement = $conn->prepare('UPDATE users SET name=:FullName,email=:Email WHERE id=:id');
+            $statement = $conn->prepare('UPDATE users SET name=:UserName,email=:Email WHERE id=:id');
 
         }
         else
         {
             $this->Password = $pass;
-            $statement = $conn->prepare('UPDATE users SET name=:name,password=:Password,email=:Email,branch=:branch,description=:description WHERE id=:id');
+            $statement = $conn->prepare('UPDATE users SET UserName=:username,password=:Password,email=:Email WHERE id=:id');
             $statement->bindValue(':Password',$this->Password);
         }
-        $statement->bindValue(':FullName',$name);
+        $statement->bindValue(':UserName',$username);
         $statement->bindValue(':Email',$email);
         $statement->bindValue(':id',$current_id);
         $statement->execute();
@@ -43,7 +43,7 @@ class profilechange extends users
         $allposts = $conn->query("SELECT * FROM users");
         return $allposts;
     }
-/*
+
     public function getOne($m_pId)
     {
         $conn = Db::getInstance();
@@ -60,7 +60,7 @@ class profilechange extends users
             throw new Exception("Passwords don't match!");
         }
     }
-*/
+
 
 }
 
