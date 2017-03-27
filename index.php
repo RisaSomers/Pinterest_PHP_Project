@@ -17,12 +17,6 @@ session_start();
 
 		$sth->execute();
 
-
-        if(!empty($_POST)){
-            $topics = new Topics();
-            $topics->Description = $_POST['topic'];
-            header("Location: profile.php");
-        }
 ?><!DOCTYPE html>
 <html lang="en">
 
