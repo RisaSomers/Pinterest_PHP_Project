@@ -31,8 +31,10 @@
         }
 
     </style>
-    <?php include("includes/menu.php"); ?>
+
 </head>
+
+<?php include("includes/menu.php"); ?>
 
 <body>
 

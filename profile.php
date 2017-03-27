@@ -34,13 +34,9 @@ echo 'Congratulations! You are logged in!';
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    
-    <title>Document</title>
+
+    <?php include("includes/header.php"); ?>
+    <title>Account</title>
 
     <style>
         .nav li {
@@ -53,8 +49,12 @@ echo 'Congratulations! You are logged in!';
             text-decoration: none;
         }
     </style>
-    <?php include("includes/menu.php"); ?>
+
 </head>
+
+<!-- Navigation -->
+<?php include("includes/menu.php"); ?>
+
 <body>
 <form action="" method="post" enctype="multipart/form-data">
     <br>
