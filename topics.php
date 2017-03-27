@@ -3,7 +3,7 @@
     include_once("classes/Db.class.php");
     include_once("classes/Topics.class.php");
 
-	session_start();
+session_start();
 	if ( isset($_SESSION['UserName'] ) ){
 		
 	}
@@ -15,6 +15,13 @@
 		$sth = $conn->prepare("SELECT * FROM Topics;");
 		
 		$sth->execute();
+
+
+        if(!empty($_POST)){
+            $topics = new Topics();
+            $topics->Description = $_POST['topic'];
+            header("Location: profile.php");
+        }
 ?>
 
 
@@ -59,14 +66,15 @@
   <div class="search">
     <input type="search" id="filter" placeholder='Search' />
   </div>
+  <form action="" method="post">
 <article class='content'>
   <div id='slats'>
 
   
 	<?php while( $row = $sth->fetch() ):?>
-			<a href='topics.php?id=<?php echo $row['Name'] ?>'>
+			<a href='topics.php?Name=<?php echo $row['id'] ?>'>
 			<div class='topics'>
-			<div class='photo'><input class="check" type="checkbox" name="calltype[]" value=""></div>
+			<div class='photo'><input class="check" type="checkbox" name="topic" value=<?php echo $row['Name'] ?>></div>
 			
 			<p class='topicname'><?php echo $row['Name'] ?></p>
 			</div>
@@ -75,6 +83,7 @@
 
 	<?php endwhile; ?>
   
+      <button>Get staerted</button>
 
   </div>
 </article>   
@@ -84,8 +93,6 @@
      </form>
 
 
-
- <button href="profile.php" type="submit"> Follow 5 topics </button>
 
 
 

@@ -1,6 +1,7 @@
 <?PHP
 
 include_once("user.php");
+include_once("Db.class.php");
 
 class profilechange extends users
 {
