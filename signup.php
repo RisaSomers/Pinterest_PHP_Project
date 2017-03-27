@@ -1,10 +1,13 @@
 <?php
 session_start();
 
+<<<<<<< Updated upstream
 
 
 
 
+=======
+>>>>>>> Stashed changes
     include_once ("classes/user.php");
     include_once("classes/Db.class.php");
 

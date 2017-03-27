@@ -55,7 +55,7 @@ session_start();
                         <a href="profile.php">Profile</a>
                     </li>
                     <li>
-                        <a href="logout.php">Logout</a>
+                        <a href="logout.php">Login</a>
                     </li>
                 </ul>
             </div>
