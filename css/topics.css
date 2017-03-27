@@ -183,4 +183,187 @@ html {
   margin: 0;
 }
 
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font: 300 62.5%/1.75 'helvetica neue', sans-serif;
+}
+
+body {
+  font-size: 1.8em;
+  margin: 0 auto;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.1;
+  margin: 2.4rem 0 0.5rem;
+  font-weight: bold;
+}
+
+h2, h3 {
+  letter-spacing: -1px;
+}
+
+h1 {
+  font-size: 2.8em;
+  letter-spacing: -2px;
+}
+
+h2 {
+  font-size: 2.4em;
+}
+
+h3 {
+  font-size: 1.8em;
+}
+
+h4 {
+  font-size: 1.4em;
+}
+
+h5 {
+  font-size: 1.2em;
+}
+
+h6 {
+  font-size: 1.1em;
+}
+
+p {
+  margin: 0;
+}
+
+ul, ol, table, img {
+  margin: .5em 0;
+}
+
+p + p {
+  text-indent: 1.5em;
+}
+
+form p + p {
+  text-indent: 0;
+}
+
+ul, ol {
+  padding: 0;
+}
+ul ul, ul ol, ol ul, ol ol {
+  padding-left: 1em;
+}
+
+table {
+  border-bottom: 1px solid #000;
+  line-height: 1.2;
+}
+
+tr {
+  border-top: 1px solid #000;
+}
+
+th {
+  text-align: left;
+  border-bottom: 2px solid #000;
+}
+
+th, td {
+  padding: .25em 1em;
+}
+th:first-child, td:first-child {
+  padding-left: 0;
+}
+th:last-child, td:last-child {
+  padding-right: 0;
+}
+
+a:link {
+  color: #35a;
+}
+a:visited {
+  color: #86a;
+}
+a:hover {
+  color: #f00;
+}
+a:active {
+  color: #35d;
+}
+
+hr {
+  border-width: 1px 0 0 0;
+}
+
+.wrapper {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.single {
+  width: 80%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 1em 2em 2em;
+}
+
+/* fontawesome */
+[class*="fontawesome-"]:before {
+  font-family: 'FontAwesome', sans-serif;
+}
+
+html {
+  background: #2980b9;
+  -webkit-font-smoothing: antialiased;
+}
+
+.content {
+  text-align: center;
+}
+
+#filter {
+  display: block;
+  margin: 1.5em auto 1.5em;
+  text-align: center;
+  min-width: 300px;
+  border-radius: 30px;
+  border-width: 0;
+  padding: .25em;
+  outline: none;
+  box-shadow: 0 15px 0 -4px rgba(0, 0, 0, 0.1);
+  transition: all .3s ease-in;
+}
+#filter:focus {
+  box-shadow: 0 7px 0 -4px rgba(0, 0, 0, 0.1);
+  width: 60%;
+  font-size: 1.5em;
+}
+
+#slats {
+  color: #fff;
+}
+#slats li {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  width: 160px;
+  margin: .5em .5em 1em;
+  line-height: 1.2;
+  font-size: .8em;
+}
+#slats li:before {
+  font-size: 2.2em;
+}
+#slats .hidden {
+  display: none;
+}
+#slats h3 {
+  font-size: 1.2em;
+  margin: 0;
+}
+
 

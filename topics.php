@@ -1,3 +1,15 @@
+<?php 
+
+    session_start();
+
+    include_once("classes/Db.class.php");
+
+    
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,18 +26,13 @@
             border-radius: 5%;
             margin: 20%;
             margin-top: 15%;
-            padding-top: 5%;
-            
+            padding-top: 5%;   
         }
-    
     
     </style>
 </head>
 <body>
- 
- 
- 
- 
+
  <div class="vierkant">
  
  <div class="tekst">
@@ -35,68 +42,32 @@
      
  </div>
  
- 
- 
   <div class="search">
     <input type="search" id="filter" placeholder='Search' />
   </div>
 <article class='content'>
   <div id='slats'>
-    <ul>
-
-
-  <li class='fontawesome-glass'>
-    <h3>Glass</h3>
-    <p>wine, martini, cup</p>
-  </li>
-
-  <li class='fontawesome-music'>
-    <h3>Music</h3>
-    <p>note, clef, mp3</p>
-  </li>
-
-  <li class='fontawesome-search'>
-    <h3>Search</h3>
-    <p>magnifying glass, zoom</p>
-  </li>
-
-  <li class='fontawesome-envelope-alt'>
-    <h3>Envelope-alt</h3>
-    <p>letter, contact, email, e-mail</p>
-  </li>
-
-  <li class='fontawesome-heart'>
-    <h3>Heart</h3>
-    <p>favourite, love, like, rate, rating</p>
-  </li>
-
-  <li class='fontawesome-star'>
-    <h3>Star</h3>
-    <p>favourite, love, like, rate, rating</p>
-  </li>
-
-  <li class='fontawesome-star-empty'>
-    <h3>Star-empty</h3>
-    <p>favourite, love, like</p>
-  </li>
 
   
+  <ul>
+    
+<?php $conn= Db::getInstance(); ?>
 
-
-      
-      
-    </ul>  
+    <?php foreach ($conn->query($sql) as $key => $topic):?>
+<div class="topic">
+        <li><a href="topics.php?topics=<?php echo $key;?>&topicid=<?php echo $_GET['topic'] ;?>"><?php echo $topic['Name']; ?></a></li>
+        <img src="<?php echo $topic['Image']; ?>" alt="Afbeelding van  <?php $topic['Name']; ?>">
+        </div>
+        <hr>
+    <?php endforeach; ?>
+</ul>
+  
 
   </div>
 </article>   
  
  <button type="submit"> Follow 5 topics </button>
 
- 
-  
-   
-    
-     
       
     </div>       
         
