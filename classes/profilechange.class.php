@@ -39,7 +39,7 @@ class profilechange extends users
     public function getAll()
     {
         $conn = Db::getInstance();
-        $allposts = $conn->query("SELECT * FROM student");
+        $allposts = $conn->query("SELECT * FROM users");
         return $allposts;
     }
 /*
