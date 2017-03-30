@@ -5,7 +5,7 @@ include_once("classes/Topics.class.php");
 
 session_start();
 
-	if ( isset($_SESSION['UserName'] ) ){
+	if ( isset($_SESSION['user_id'] ) ){
 
 	}
 	else{
