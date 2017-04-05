@@ -1,7 +1,22 @@
 <?php
 include_once("classes/user.php");
+include_once("classes/Db.class.php");
+include_once("classes/Topics.class.php");
 
 session_start();
+
+	if ( isset($_SESSION['UserName'] ) ){
+
+	}
+	else{
+		header('Location: login.php');
+	}
+
+		$conn= Db::getInstance();
+		$sth = $conn->prepare("SELECT * FROM Topics LIMIT 1;");
+
+		$sth->execute();
+
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -20,20 +35,24 @@ session_start();
 
 
     <!-- Page Content -->
+
+
     <div class="container">
 
         <div class="row">
 
             <div class="col-lg-12">
-                <h1 class="page-header">Like 5 topics</h1>
-                <h2>Then we'll build a custom home feed for you</h2>
+                <h1 class="page-header">Your feed</h1>
+
             </div>
 
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="#">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                  <?php while( $row = $sth->fetch() ):?>
+                      <?php echo $row['Name'] ?>
+                      <img src="<?php echo $row ['Image'] ?>" class="thumbnail"alt="">
+                  <?php endwhile; ?>
                 </a>
-                <a class="align-center" href="#">Image name</a>
             </div>
 
         </div>
@@ -44,7 +63,7 @@ session_start();
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
+                    <p>Copyright &copy; IMDterest 2017</p>
                 </div>
             </div>
         </footer>

@@ -11,23 +11,23 @@ class profilechange extends users
 
 
 
-    public function update($name, $email, $pass)
+    public function update($username, $email, $pass)
     {
         $conn = Db::getInstance();
         $current_id = $_SESSION['id'];
         if (empty($pass))
         {
-            $statement = $conn->prepare('UPDATE users SET name=:FullName,email=:Email WHERE id=:id');
+            $statement = $conn->prepare("UPDATE users SET name=:UserName,email=:Email WHERE id=:id");
 
         }
         else
         {
             $this->Password = $pass;
-            $statement = $conn->prepare('UPDATE users SET name=:name,password=:Password,email=:Email,branch=:branch,description=:description WHERE id=:id');
+            $statement = $conn->prepare("UPDATE users SET UserName=:username,password=:Password,email=:Email WHERE id=:id");
             $statement->bindValue(':Password',$this->Password);
         }
-        $statement->bindValue(':FullName',$name);
-        $statement->bindValue(':Email',$email);
+        $statement->bindValue(':UserName',$Username);
+        $statement->bindValue(':Email',$Email);
         $statement->bindValue(':id',$current_id);
         $statement->execute();
 
@@ -40,14 +40,14 @@ class profilechange extends users
     public function getAll()
     {
         $conn = Db::getInstance();
-        $allposts = $conn->query("SELECT * FROM users");
+        $allposts = $conn->query("SELECT * FROM Users");
         return $allposts;
     }
-/*
+
     public function getOne($m_pId)
     {
         $conn = Db::getInstance();
-        $one = $conn->prepare("SELECT * FROM student WHERE id = :id");
+        $one = $conn->prepare("SELECT * FROM Users WHERE id = :id");
         $one->bindValue(':id',$m_pId);
         $one->execute();
         return $one->fetch();
@@ -60,7 +60,7 @@ class profilechange extends users
             throw new Exception("Passwords don't match!");
         }
     }
-*/
+
 
 }
 

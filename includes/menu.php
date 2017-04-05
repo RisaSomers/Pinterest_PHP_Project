@@ -28,6 +28,9 @@
                 <li>
                     <a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></a>
                 </li>
+                <li>
+                    <a href="logout.php">Logout</a>
+                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
