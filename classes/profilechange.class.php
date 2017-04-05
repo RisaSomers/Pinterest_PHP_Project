@@ -6,43 +6,35 @@ include_once("Db.class.php");
 class profilechange extends users
 {
 
-<<<<<<< HEAD
 
-
-
-
-
-=======
->>>>>>> origin/master
     public function update($username, $email, $pass)
     {
         $conn = Db::getInstance();
         $current_id = $_SESSION['user_id'];
         if (empty($pass))
         {
-<<<<<<< HEAD
             $statement = $conn->prepare("UPDATE users SET name=:UserName,email=:Email WHERE id=:id");
-=======
+
             $statement = $conn->prepare('UPDATE Users SET UserName=:UserName,Email=:Email WHERE id=:id');
->>>>>>> origin/master
+
 
         }
         else
         {
             $this->Password = $pass;
-<<<<<<< HEAD
+
             $statement = $conn->prepare("UPDATE users SET UserName=:username,password=:Password,email=:Email WHERE id=:id");
             $statement->bindValue(':Password',$this->Password);
         }
         $statement->bindValue(':UserName',$Username);
         $statement->bindValue(':Email',$Email);
-=======
+
             $statement = $conn->prepare('UPDATE Users SET UserName=:UserName,Password=:Password,Email=:Email WHERE id=:id');
             $statement->bindValue(':Password',$pass);
         }
         $statement->bindValue(':UserName',$username);
         $statement->bindValue(':Email',$email);
->>>>>>> origin/master
+
         $statement->bindValue(':id',$current_id);
         $statement->execute();
 
@@ -73,12 +65,12 @@ class profilechange extends users
 				throw new Exception("Passwords don't match!");
 			}
     }
-<<<<<<< HEAD
+
 
 
 }
 
 ?>
-=======
+
 }
->>>>>>> origin/master
+

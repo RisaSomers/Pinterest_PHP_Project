@@ -5,11 +5,11 @@ include_once("classes/Topics.class.php");
 
 session_start();
 
-<<<<<<< HEAD
+
 	if ( isset($_SESSION['UserName'] ) ){
-=======
+
 	if ( isset($_SESSION['user_id'] ) ){
->>>>>>> origin/master
+
 
 	}
 	else{
