@@ -1,5 +1,5 @@
 <?php
-<<<<<<< HEAD
+
 
 
 
@@ -8,11 +8,11 @@
 include_once("classes/user.php");
 include_once("classes/profilechange.class.php");
 include_once("classes/profilechange.class.php");
-=======
+
 include_once("classes/Db.class.php");
 include_once("classes/user.php");
 include_once("classes/profilechange.class.php");
->>>>>>> origin/master
+
 session_start();
 
 if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
@@ -41,7 +41,7 @@ if (!isset($_FILES)) {
 	}
 }
 
-<<<<<<< HEAD
+
 
 
 
@@ -56,14 +56,14 @@ if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
     exit;
 }
 
-=======
+
 if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
     //User not logged in. Redirect them back to the login.php page.
     header('Location: login.php');
     exit;
 }
 
->>>>>>> origin/master
+
 $a = new profilechange();
 $allusers = $a->getAll();
 
@@ -84,11 +84,11 @@ try
         ];
 
         $a->checkPass($_POST['pass'], $_POST['pass_rep']);
-<<<<<<< HEAD
+
         $a->update($_POST['UserName'],$_POST['Email'], $_POST['pass']);
-=======
+
         $a->update($_POST['UserName'],$_POST['Email'], password_hash($_POST['pass'], PASSWORD_DEFAULT, $options));
->>>>>>> origin/master
+
     }
 }
 catch(Exception $e)
@@ -130,7 +130,7 @@ catch(Exception $e)
 
             <form action="" method="post" enctype="multipart/form-data">
 
-<<<<<<< HEAD
+
 
 
             <form action="" method="post" enctype="multipart/form-data">
@@ -139,12 +139,12 @@ catch(Exception $e)
                 <input name="avatar" type="file" class="btn btn-default">
                 <input type="submit" value="Upload" class="btn btn-default">
 
-=======
+
                 <label for"avatar">Upload je foto!</label>
                 <input name="avatar" type="file" class="btn btn-default">
                 <input type="submit" value="Upload" class="btn btn-default">
 
->>>>>>> origin/master
+
                 <div class="form-group">
                     <label for="name">Username</label>
                     <input type="text" class="form-control" id="username" name="UserName" <?PHP echo " value='". $user['UserName']."'"; ?>>
