@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 
 
 
@@ -7,6 +8,11 @@
 include_once("classes/user.php");
 include_once("classes/profilechange.class.php");
 include_once("classes/profilechange.class.php");
+=======
+include_once("classes/Db.class.php");
+include_once("classes/user.php");
+include_once("classes/profilechange.class.php");
+>>>>>>> origin/master
 session_start();
 
 if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
@@ -15,26 +21,27 @@ if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
     exit;
 }
 
-if(!empty($_FILES)) {
-    print_r($_FILES);
-    $file = $_SESSION["UserName"];
+if (!isset($_FILES)) {
+	if(($_FILES['avatar']['error']) != UPLOAD_ERR_NO_FILE) {
+		print_r($_FILES);
+		$file = $_SESSION["UserName"];
 
-    $imageType = pathinfo(basename($_FILES["avatar"]["name"]), PATHINFO_EXTENSION);
-    $targetFile = "uploads/" . $file . "." . $imageType;
+		$imageType = pathinfo(basename($_FILES["avatar"]["name"]), PATHINFO_EXTENSION);
+		$targetFile = "uploads/" . $file . "." . $imageType;
 
-    if ($imageType != "jpg" && $imageType != "png" && $imageType != "jpeg" && $imageType != "gif") {
-        $error = "Geen image";
-    }
+		if ($imageType != "jpg" && $imageType != "png" && $imageType != "jpeg" && $imageType != "gif") {
+			$error = "Geen image";
+		}
 
-    if (!move_uploaded_file($_FILES["avatar"]["tmp_name"], $targetFile)) {
-        $error = "Kon bestand niet verplaatsen";
-    }
+		if (!move_uploaded_file($_FILES["avatar"]["tmp_name"], $targetFile)) {
+			$error = "Kon bestand niet verplaatsen";
+		}
 
-
-
-    die();
+		die();
+	}
 }
 
+<<<<<<< HEAD
 
 
 
@@ -49,6 +56,14 @@ if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
     exit;
 }
 
+=======
+if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
+    //User not logged in. Redirect them back to the login.php page.
+    header('Location: login.php');
+    exit;
+}
+
+>>>>>>> origin/master
 $a = new profilechange();
 $allusers = $a->getAll();
 
@@ -56,7 +71,7 @@ $conn = Db::getInstance();
 
 $statement = $conn->prepare("SELECT * FROM Users WHERE id=:id");
 
-$statement->bindParam(':id',$_SESSION['id']);
+$statement->bindParam(':id',$_SESSION['user_id']);
 $statement->execute();
 $user = $statement->fetch(PDO::FETCH_ASSOC);
 
@@ -64,13 +79,22 @@ try
 {
     if (!empty($_POST['btn-changes']))
     {
+        $options = [
+            'cost' => 12
+        ];
+
         $a->checkPass($_POST['pass'], $_POST['pass_rep']);
+<<<<<<< HEAD
         $a->update($_POST['UserName'],$_POST['Email'], $_POST['pass']);
+=======
+        $a->update($_POST['UserName'],$_POST['Email'], password_hash($_POST['pass'], PASSWORD_DEFAULT, $options));
+>>>>>>> origin/master
     }
 }
 catch(Exception $e)
 {
     $error = $e->getMessage();
+    die(var_dump($error));
 }
 
 ?><!doctype html>
@@ -104,7 +128,9 @@ catch(Exception $e)
     <form id="loginform" action="" method="post" enctype="multipart/form-data">
         <div class="col-md-6 styleguide">
 
+            <form action="" method="post" enctype="multipart/form-data">
 
+<<<<<<< HEAD
 
 
             <form action="" method="post" enctype="multipart/form-data">
@@ -113,6 +139,12 @@ catch(Exception $e)
                 <input name="avatar" type="file" class="btn btn-default">
                 <input type="submit" value="Upload" class="btn btn-default">
 
+=======
+                <label for"avatar">Upload je foto!</label>
+                <input name="avatar" type="file" class="btn btn-default">
+                <input type="submit" value="Upload" class="btn btn-default">
+
+>>>>>>> origin/master
                 <div class="form-group">
                     <label for="name">Username</label>
                     <input type="text" class="form-control" id="username" name="UserName" <?PHP echo " value='". $user['UserName']."'"; ?>>
@@ -129,7 +161,6 @@ catch(Exception $e)
                     <label for="pass_rep">Wachtwoord herhalen</label>
                     <input type="password" class="form-control" id="pass_rep" name="pass_rep">
                 </div>
-
 
                 </br>
                 <p>Als u geen wijzigingen wilt doorvoeren, gaat u terug naar Home zonder op onderstaande knop te klikken.</p>
