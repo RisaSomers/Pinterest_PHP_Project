@@ -1,10 +1,10 @@
 <?php
 class users
 {
-    private $m_sFullName;
-    private $m_sUserName;
-    private $m_sEmail;
-    private $m_sPassword;
+    private $m_sfirstname;
+    private $m_slastname;
+    private $m_semail;
+    private $m_spassword;
 
     /**
      * users constructor.
@@ -18,39 +18,39 @@ class users
     /**
      * @return mixed
      */
-    public function getMSFullName()
+    public function getMSfirstname()
     {
-        return $this->m_sFullName;
+        return $this->m_sfirstname;
     }
 
     /**
      * @param mixed $m_sFullName
      */
-    public function setMSFullName($m_sFullName)
+    public function setMSfirstname($m_sfirstname)
     {
-        $this->m_sFullName = $m_sFullName;
+        $this->m_sfirstname = $m_sfirstname;
     }
 
     /**
      * @return mixed
      */
-    public function getMSUserName()
+    public function getMSlastname()
     {
-        return $this->m_sUserName;
+        return $this->m_slastname;
     }
 
     /**
      * @param mixed $m_sUserName
      */
-    public function setMSUserName($m_sUserName)
+    public function setMSlastname($m_slastname)
     {
-        $this->m_sUserName = $m_sUserName;
+        $this->m_slastname = $m_slastname;
     }
 
     /**
      * @return mixed
      */
-    public function getMSEmail()
+    public function getMSemail()
     {
         return $this->m_sEmail;
     }
@@ -58,37 +58,37 @@ class users
     /**
      * @param mixed $m_sEmail
      */
-    public function setMSEmail($m_sEmail)
+    public function setMSemail($m_semail)
     {
-        $this->m_sEmail = $m_sEmail;
+        $this->m_semail = $m_semail;
     }
 
     /**
      * @return mixed
      */
-    public function getMSPassword()
+    public function getMSpassword()
     {
-        return $this->m_sPassword;
+        return $this->m_spassword;
     }
 
     /**
      * @param mixed $m_sPassword
      */
-    public function setMSPassword($m_sPassword)
+    public function setMSpassword($m_spassword)
     {
-        $this->m_sPassword = $m_sPassword;
+        $this->m_spassword = $m_spassword;
     }
     
 
 
     public function save() {
         $pdo = Db::getInstance();
-        $stmt = $pdo->prepare("INSERT INTO users (FullName, UserName, Password, Email) VALUES (:fullname, :username, :password, :email)");
+        $stmt = $pdo->prepare("INSERT INTO Users (firstname, lastname, password, email) VALUES (:firstname, :lastname, :password, :email)");
         print_r($this);
-        $stmt->bindValue(":fullname", $this->m_sFullName);
-        $stmt->bindValue(":username", $this->m_sUserName);
-        $stmt->bindValue(":password", $this->m_sPassword);
-        $stmt->bindValue(":email", $this->m_sEmail);
+        $stmt->bindValue(":fistname", $this->m_sfirstname);
+        $stmt->bindValue(":lastname", $this->m_slastname);
+        $stmt->bindValue(":password", $this->m_spassword);
+        $stmt->bindValue(":email", $this->m_semail);
         return $stmt->execute();
     }
 

@@ -6,7 +6,7 @@ include_once("classes/Topics.class.php");
 session_start();
 
 
-	if ( isset($_SESSION['UserName'] ) ){
+	if ( isset($_SESSION['email'] ) ){
 
 	if ( isset($_SESSION['user_id'] ) ){
 
@@ -53,8 +53,8 @@ session_start();
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="#">
                   <?php while( $row = $sth->fetch() ):?>
-                      <?php echo $row['Name'] ?>
-                      <img src="<?php echo $row ['Image'] ?>" class="thumbnail"alt="">
+                      <?php echo $row['name'] ?>
+                      <img src="<?php echo $row ['image'] ?>" class="thumbnail"alt="">
                   <?php endwhile; ?>
                 </a>
             </div>

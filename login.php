@@ -8,16 +8,16 @@ include 'classes/Db.class.php';
 if(isset($_POST['SignIn'])){
 
     //Retrieve the field values from our login form.
-    $username = $_POST['username'];
+    $username = $_POST['email'];
     $passwordAttempt = $_POST['password'];
 
     //Retrieve the user account information for the given username.
     $pdo = Db::getInstance();
-    $sql = "SELECT id, UserName, Password FROM Users WHERE UserName = :username";
+    $sql = "SELECT id, email, password FROM Users WHERE email = :email";
     $stmt = $pdo->prepare($sql);
 
     //Bind value.
-    $stmt->bindValue(':username', $username);
+    $stmt->bindValue(':email', $email);
 
     //Execute.
     $stmt->execute();
@@ -29,13 +29,13 @@ if(isset($_POST['SignIn'])){
     if($user === false){
         //Could not find a user with that username!
         //PS: You might want to handle this error in a more user-friendly manner!
-        die('Incorrect username / password combination!');
+        die('Incorrect email / password combination!');
     } else{
         //User account found. Check to see if the given password matches the
         //password hash that we stored in our users table.
 
         //Compare the passwords.
-        $validPassword = password_verify($passwordAttempt, $user['Password']);
+        $validPassword = password_verify($passwordAttempt, $user['password']);
 
         //If $validPassword is TRUE, the login has been successful.
         if($validPassword){
@@ -50,7 +50,7 @@ if(isset($_POST['SignIn'])){
 
         } else{
             //$validPassword was FALSE. Passwords do not match.
-            die('Incorrect username / password combination!');
+            die('Incorrect email / password combination!');
         }
     }
 
@@ -96,7 +96,7 @@ if(isset($_POST['SignIn'])){
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <input type="text" name="username" id="usernamelogin" class="form-control input-lg" placeholder="Gebruikersnaam" tabindex="8">
+                                <input type="text" name="email" id="usernamelogin" class="form-control input-lg" placeholder="Email" tabindex="8">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6">

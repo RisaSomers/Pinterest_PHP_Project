@@ -22,47 +22,47 @@ session_start();
             $MinLength = 6;
 
             //error voor legen velden
-            if(empty($users->FullName = $_POST['FullName'])){
-                $error = "Fullname can not be empty.";
+            if(empty($users->fullname = $_POST['firstname'])){
+                $error = "Firstname can not be empty.";
             }
 
 
-            elseif(empty($users->UserName = $_POST['UserName'])){
-                $error = "Username can not be empty";
+            elseif(empty($users->lastname = $_POST['lastname'])){
+                $error = "Lastname can not be empty";
             }
 
 
-            elseif(empty($users->Email = $_POST['Email'])){
+            elseif(empty($users->email = $_POST['email'])){
                 $error = "Email can not be empty";
             }
 
-            elseif(empty($users->Password = $_POST['Password'])){
+            elseif(empty($users->password = $_POST['password'])){
                 $error = "Password can not be empty";
             }
 
 
-            elseif(empty($users->Passwordcon = $_POST['Password_confirmation'])){
+            elseif(empty($users->passwordcon = $_POST['password_confirmation'])){
                 $error = "Password confirmation can not be empty";
             }
 
-            elseif(strlen($users->Password) < $MinLength){
+            elseif(strlen($users->password) < $MinLength){
                 $error = "Your password has to be at least 6 characters long";
             }
 
-            $users->setMSFullName($_POST['FullName']);
-            $users->setMSUserName($_POST['UserName']);
-            $users->setMSEmail($_POST['Email']);
-            $users->setMSPassword(password_hash($_POST['Password'], PASSWORD_DEFAULT, $options));
+            $users->setMSfirstname($_POST['firstname']);
+            $users->setMSlastname($_POST['lastname']);
+            $users->setMSemail($_POST['email']);
+            $users->setMSpassword(password_hash($_POST['password'], PASSWORD_DEFAULT, $options));
 
-            if ($_POST['Password'] != $_POST['Password_confirmation']){
+            if ($_POST['password'] != $_POST['password_confirmation']){
                 throw new exception("Password and confirmation password are not the same!");
             }
 
             $conn= Db::getInstance();
 
             if(!isset($error)){
-                $statement = $conn->prepare("SELECT * FROM Users WHERE Email = :Email");
-                $statement->bindValue(":Email", $users->getMSEmail());
+                $statement = $conn->prepare("SELECT * FROM Users WHERE email = :email");
+                $statement->bindValue(":email", $users->getMSemail());
 
                 if($statement->execute() && $statement->rowCount() != 0){
                     $resultaat = $statement->fetch(PDO::FETCH_ASSOC);
@@ -74,17 +74,17 @@ session_start();
                     if($res != false){
                         $succes = "Welcome, you are registered";
                         $register = new users();
-                        $register->setMSFullName($_POST['FullName']);
-                        $register->setMSUserName($_POST['UserName']);
-                        $register->setMSEmail($_POST['Email']);
-                        $register->setMSPassword(password_hash($_POST['Password'], PASSWORD_DEFAULT, $options));
+                        $register->setMSfirstname($_POST['firstname']);
+                        $register->setMSlastname($_POST['lastname']);
+                        $register->setMSemail($_POST['email']);
+                        $register->setMSpassword(password_hash($_POST['password'], PASSWORD_DEFAULT, $options));
                         $register->save();
 
                         session_start();
 
-                        $_SESSION['Email'] = $users->Email;
-                        $_SESSION['UserName'] = $users->UserName;
-                        $_SESSION['FullName'] = $users->FullName;
+                        $_SESSION['email'] = $users->email;
+                        $_SESSION['lastName'] = $users->lastname;
+                        $_SESSION['fristName'] = $users->firstname;
                         header("Location: topics.php");
                     }
 
@@ -159,27 +159,27 @@ session_start();
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <input type="text" name="FullName" id="fullname" class="form-control input-lg" placeholder="Volledige naam" tabindex="1">
+                                <input type="text" name="firstname" id="fullname" class="form-control input-lg" placeholder="Firstname" tabindex="1">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <input type="text" name="UserName" id="username" class="form-control input-lg" placeholder="Gebruikersnaam" tabindex="2">
+                                <input type="text" name="lastname" id="username" class="form-control input-lg" placeholder="Lastname" tabindex="2">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="email" name="Email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="4">
+                        <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="4">
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <input type="password" name="Password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
+                                <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <input type="password" name="Password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" tabindex="6">
+                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" tabindex="6">
                             </div>
                         </div>
                     </div>

@@ -6,7 +6,7 @@
 
 session_start();
 
-	if ( isset($_SESSION['UserName'] ) ){
+	if ( isset($_SESSION['email'] ) ){
 
 	}
 	else{
@@ -21,7 +21,7 @@ session_start();
 
         if(!empty($_POST)){
             $topics = new Topics();
-            $topics->Description = $_POST['topic'];
+            $topics->Description = $_POST['Topic'];
             header("Location: profile.php");
         }
 ?><!DOCTYPE html>
@@ -40,6 +40,16 @@ session_start();
             margin: 20%;
             margin-top: 15%;
             padding-top: 5%;
+        }
+        
+        a{
+            text-decoration: none;
+            color: white;
+        }
+        
+        img{
+            width: 20%;
+            margin-top: 5px;
         }
 
     </style>
@@ -70,9 +80,14 @@ session_start();
 	<?php while( $row = $sth->fetch() ):?>
 			<a href='topics.php?Name=<?php echo $row['id'] ?>'>
 			<div class='topics'>
-			<div class='photo'><input class="check" type="checkbox" name="topic" value=<?php echo $row['Name'] ?>></div>
+			
+			<img src="<?php echo $row['image'] ?>" alt="">
+			
+			<div class='photo'><input class="check" type="checkbox" name="topic" value=<?php echo $row['name'] ?>></div>
 
-			<p class='topicname'><?php echo $row['Name'] ?></p>
+			<p class='topicname'><?php echo $row['name'] ?></p>
+			
+			
 
 			</div>
 			</a>
