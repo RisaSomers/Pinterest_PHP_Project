@@ -1,10 +1,6 @@
 <?php
 session_start();
 
-
-
-
-
     include_once ("classes/user.php");
     include_once("classes/Db.class.php");
 
@@ -120,18 +116,6 @@ session_start();
     <?php include("includes/header.php"); ?>
 
     <title>IMDterest - Sign up here!</title>
-
-    <style>
-
-        .error{
-            color: red;
-        }
-        small{
-            color: #fff;
-
-        }
-
-    </style>
 
 
 </head>

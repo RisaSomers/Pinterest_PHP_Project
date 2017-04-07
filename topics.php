@@ -7,7 +7,7 @@
 session_start();
 
 	if ( isset($_SESSION['email'] ) ){
-
+        
 	}
 	else{
 		header('Location: login.php');
@@ -21,8 +21,8 @@ session_start();
 
         if(!empty($_POST)){
             $topics = new Topics();
-            $topics->Description = $_POST['Topic'];
-            header("Location: profile.php");
+            $topics->Description = $_POST['topic'];
+            header("Location: index.php");
         }
 ?><!DOCTYPE html>
 <html lang="en">
@@ -42,6 +42,12 @@ session_start();
             padding-top: 5%;
         }
         
+        ul{
+            text-decoration: none;
+            list-style-type: none;
+            
+        }
+        
         a{
             text-decoration: none;
             color: white;
@@ -50,6 +56,18 @@ session_start();
         img{
             width: 20%;
             margin-top: 5px;
+        }
+        
+        .flex-container{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .flex-item{
+            
         }
 
     </style>
@@ -76,16 +94,16 @@ session_start();
 <article class='content'>
   <div id='slats'>
 
-
+<ul class="flex-cntainer">
 	<?php while( $row = $sth->fetch() ):?>
-			<a href='topics.php?Name=<?php echo $row['id'] ?>'>
+    <li class="flex-item"><a href='topics.php?Name=<?php echo $row['id'] ?>'></li>
 			<div class='topics'>
 			
-			<img src="<?php echo $row['image'] ?>" alt="">
+			<li class="flex-item"><img src="<?php echo $row['image'] ?>" alt=""></li>
 			
-			<div class='photo'><input class="check" type="checkbox" name="topic" value=<?php echo $row['name'] ?>></div>
+			<li class="flex-item"><div class='photo'><input class="check" type="checkbox" name="topic" value=<?php echo $row['name'] ?>></div></li>
 
-			<p class='topicname'><?php echo $row['name'] ?></p>
+			<li class="flex-item"><p class='topicname'><?php echo $row['name'] ?></p></li>
 			
 			
 
@@ -94,6 +112,8 @@ session_start();
 
 
 	<?php endwhile; ?>
+      
+      </ul>
 
       <button>Get started</button>
 

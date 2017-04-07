@@ -6,9 +6,11 @@ session_start();
 include 'classes/Db.class.php';
 
 if(isset($_POST['SignIn'])){
+    
+    try{
 
     //Retrieve the field values from our login form.
-    $username = $_POST['email'];
+    $email = $_POST['email'];
     $passwordAttempt = $_POST['password'];
 
     //Retrieve the user account information for the given username.
@@ -29,7 +31,7 @@ if(isset($_POST['SignIn'])){
     if($user === false){
         //Could not find a user with that username!
         //PS: You might want to handle this error in a more user-friendly manner!
-        die('Incorrect email / password combination!');
+        $error = "Incorrect email and/or password";
     } else{
         //User account found. Check to see if the given password matches the
         //password hash that we stored in our users table.
@@ -45,16 +47,21 @@ if(isset($_POST['SignIn'])){
             $_SESSION['logged_in'] = time();
 
 
-            header('Location: profile.php');
+            header('Location: index.php');
             exit;
 
         } else{
             //$validPassword was FALSE. Passwords do not match.
-            die('Incorrect email / password combination!');
+            $error = "Incorrect email and/or password";
         }
     }
 
 }
+                    catch(Exception $e){
+                    $error = $e->getMessage();
+                }
+}
+
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -64,13 +71,7 @@ if(isset($_POST['SignIn'])){
 
     <style>
 
-        .error{
-            color: red;
-        }
-        small{
-            color: #fff;
-            background-color: red;
-        }
+
 
     </style>
 </head>
@@ -89,9 +90,9 @@ if(isset($_POST['SignIn'])){
 
     <div class="container">
         <form method="post" action="">
-                    <h2>Log In<?php if( isset( $errMsg ) ): ?>
-                            <div class="error"> <?php echo '<small>' . $errMsg . '</small>' ?> </div>
-                        <?php endif; ?></h2>
+                    <h2>Log In<?php if( isset( $error ) ): ?>
+                                <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
+                            <?php endif; ?></h2>
                     <hr class="colorgraph">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6">

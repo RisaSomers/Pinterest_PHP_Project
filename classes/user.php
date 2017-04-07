@@ -52,7 +52,7 @@ class users
      */
     public function getMSemail()
     {
-        return $this->m_sEmail;
+        return $this->m_semail;
     }
 
     /**
@@ -82,10 +82,10 @@ class users
 
 
     public function save() {
-        $pdo = Db::getInstance();
-        $stmt = $pdo->prepare("INSERT INTO Users (firstname, lastname, password, email) VALUES (:firstname, :lastname, :password, :email)");
+        $conn = Db::getInstance();
+        $stmt = $conn->prepare("INSERT INTO Users (firstname, lastname, password, email) VALUES (:firstname, :lastname, :password, :email)");
         print_r($this);
-        $stmt->bindValue(":fistname", $this->m_sfirstname);
+        $stmt->bindValue(":firstname", $this->m_sfirstname);
         $stmt->bindValue(":lastname", $this->m_slastname);
         $stmt->bindValue(":password", $this->m_spassword);
         $stmt->bindValue(":email", $this->m_semail);

@@ -6,10 +6,10 @@ include_once("classes/Topics.class.php");
 session_start();
 
 
-	if ( isset($_SESSION['email'] ) ){
+	if ( isset($_SESSION['email'] ) )
 
 	if ( isset($_SESSION['user_id'] ) ){
-
+        
 
 	}
 	else{
@@ -25,7 +25,7 @@ session_start();
 <html lang="en">
 
 <head>
-
+    <meta charset="UTF-8">
     <?php include("includes/header.php"); ?>
 
     <title>IMDterest</title>
