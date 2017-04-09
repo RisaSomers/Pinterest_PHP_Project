@@ -6,11 +6,6 @@ include_once("classes/Db.class.php");
 class profilechange extends users
 {
 
-
-
-
-
-
     public function update($name, $email, $pass)
     {
         $conn = Db::getInstance();

@@ -10,13 +10,13 @@ class Topics{
                     $this->m_sDescription = $value;
                     break;
                 }else{
-                    throw new Exception("You need to choose at least One topic");
+                    throw new Exception("You need to choose at least one topic");
                 }
             case "Username":
                 if ($value != "") {
                     $this->m_sUsername = $value;
                 }else{
-                    throw new Exception("You need to choose at least One topic");
+                    throw new Exception("You need to choose at least one topic");
                 }
                 break;
         }
@@ -40,16 +40,16 @@ class Topics{
     }
     public function addToDatabase(){
         $conn = Db::getInstance();
-        $stmt = $conn->prepare("INSERT INTO Users_Topics(email, topics_id) SELECT u.id, t.id from users u, topics t where (u.username = :username and t.description = :description)");
-        $stmt->bindValue(':username', $this->m_sUsername);
-        $stmt->bindValue(':description', $this->m_sDescription);
+        $stmt = $conn->prepare("INSERT INTO Users_Topics(email, topics_id) SELECT u.id, t.id from Users u, Topics t where (u.firstname = :firstname and t.name = :name)");
+        $stmt->bindValue(':firstname', $this->m_sUsername);
+        $stmt->bindValue(':name', $this->m_sDescription);
         $check = $stmt->execute();
         return $check;
     }
     public function checkTopics(){
         $conn = Db::getInstance();
-        $userID = $conn->prepare("select id from Users where username = :username");
-        $userID->bindValue(':username', $this->m_sUsername);
+        $userID = $conn->prepare("select id from Users where firstname = :firstname");
+        $userID->bindValue(':firstname', $this->m_sUsername);
         $userID->execute();
         while ($id = $userID->fetch()){
             $top = $conn->prepare("select * from Users_Topics where email = :userID");

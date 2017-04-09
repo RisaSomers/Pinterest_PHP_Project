@@ -105,11 +105,8 @@ session_start();
 
 			<li class="flex-item"><p class='topicname'><?php echo $row['name'] ?></p></li>
 			
-			
-
 			</div>
 			</a>
-
 
 	<?php endwhile; ?>
       
@@ -120,18 +117,9 @@ session_start();
   </div>
 </article>
 
-
-
      </form>
 
-
-
-
-
     </div>
-
-
-
 
 </body>
 </html>

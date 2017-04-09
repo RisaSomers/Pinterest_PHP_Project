@@ -17,7 +17,7 @@ session_start();
 	}
 
 		$conn= Db::getInstance();
-		$sth = $conn->prepare("SELECT * FROM Topics LIMIT 1;");
+		$sth = $conn->prepare("SELECT * FROM Topics;");
 
 		$sth->execute();
 

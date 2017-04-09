@@ -66,11 +66,16 @@ catch(Exception $e)
 <?php include("includes/menu.php"); ?>
 
 <body>
+
+            <img src="uploads/<?php echo $_SESSION["email"] ?>.jpg">
+
 <form action="" method="post" enctype="multipart/form-data">
     <br>
 
     <input type="submit" value="Upload">
 </form>
+
+<br><br><br>
 
 <div class="col-xs-12 no-padding" >
 
@@ -78,12 +83,12 @@ catch(Exception $e)
         <div class="col-md-6 styleguide">
 
 
-                <div class="alert alert-danger" role="alert" ></div>
+
 
 
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="name">Naam</label>
+                    <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" name="name">
                 </div>
                 <div class="form-group">
@@ -91,23 +96,25 @@ catch(Exception $e)
                     <input type="email" class="form-control" id="email" name="email">
                 </div>
                 <div class="form-group">
-                    <label for="pass">Oud wachtwoord</label>
+                    <label for="pass">Old password</label>
                     <input type="password" class="form-control" id="pass" name="pass">
                 </div>
                 <div class="form-group">
-                    <label for="pass_rep">Nieuw wachtwoord</label>
+                    <label for="pass_rep">New password</label>
                     <input type="password" class="form-control" id="pass_rep" name="pass_rep">
                 </div>
 
 
                 </br>
-                <p>Als u geen wijzigingen wilt doorvoeren, gaat u terug naar Home zonder op onderstaande knop te klikken.</p>
-                <button type="submit" class="btn btn-default">Profiel aanpassen</button>
+
+                <button type="submit" class="btn btn-default">Change profile</button>
+                 <button src="index.php" class="btn btn-default">Cancel changes</button>
+                 
             </form>
         </div>
 </div>
 
-<img src="uploads/<?php echo $_SESSION["email"] ?>.jpg">
+
 
 <ul class="nav">
 
