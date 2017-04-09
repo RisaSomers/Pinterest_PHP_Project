@@ -1,4 +1,7 @@
 <?php
+
+    include_once("classes/Db.class.php");
+
 class users
 {
     private $m_sfirstname;

@@ -16,7 +16,7 @@ echo 'Congratulations! You are logged in!';
 
 
 include_once("classes/user.php");
-include_once("classes/profilechange.class.php");
+include_once("classes/user.php");
 
 //session_start();
 $a = new profilechange();

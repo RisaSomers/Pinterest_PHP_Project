@@ -40,9 +40,9 @@ class Topics{
     }
     public function addToDatabase(){
         $conn = Db::getInstance();
-        $stmt = $conn->prepare("INSERT INTO Users_Topics(email, topics_id) SELECT u.id, t.id from Users u, Topics t where (u.firstname = :firstname and t.name = :name)");
-        $stmt->bindValue(':firstname', $this->m_sUsername);
-        $stmt->bindValue(':name', $this->m_sDescription);
+        $stmt = $conn->prepare("INSERT INTO Users_Topics(email, topics_id) SELECT email, id from Users, Topics WHERE (email = :email and id = :id)");
+        $stmt->bindValue(':email', $this->m_sUsername);
+        $stmt->bindValue(':id', $this->m_sDescription);
         $check = $stmt->execute();
         return $check;
     }
