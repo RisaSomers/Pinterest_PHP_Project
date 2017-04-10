@@ -26,7 +26,7 @@
                     <a href="topics.php">Topics</a>
                 </li>
                 <li>
-                    <a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></a>
+                    <a href="upload.php">Upload</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout</a>
