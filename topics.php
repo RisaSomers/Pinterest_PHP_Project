@@ -24,17 +24,9 @@ session_start();
             $topics->Description = $_POST['topic'];
             $topics->Username = $_SESSION['email'];
             $topics->updateSubscriptions($_POST["topic"]);
-            $topics->addToDatabase();
+            $topics->updateSubscriptions();
             header("Location: index.php");
         }
-
-
-
-
-
-
-
-
 
 ?><!DOCTYPE html>
 <html lang="en">

@@ -58,7 +58,7 @@ class Topics{
         foreach ($subscriptions as $sub) {
             $stmt = $conn->prepare("INSERT INTO Users_Topics (topics_id, email) VALUES (:id, :email)");
             $stmt->bindValue(":email", $_SESSION['email']);
-            $stmt->bindValue(":id", $);
+            $stmt->bindValue(":id", $_SESSION['id']);
             
             if (!$conn->execute()) {
                 throw new Exception("Could not insert subs");
