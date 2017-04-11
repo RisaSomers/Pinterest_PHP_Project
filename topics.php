@@ -1,8 +1,8 @@
 <?php
 
-    include_once("classes/Db.class.php");
-    include_once("classes/Topics.php");
-    include_once("classes/user.php");
+    include_once("classes/db.class.php");
+    include_once("classes/topics.class.php");
+    include_once("classes/user.class.php");
 
 session_start();
 
@@ -24,17 +24,9 @@ session_start();
             $topics->Description = $_POST['topic'];
             $topics->Username = $_SESSION['email'];
             $topics->updateSubscriptions($_POST["topic"]);
-            $topics->addToDatabase();
+            $topics->updateSubscriptions();
             header("Location: index.php");
         }
-
-
-
-
-
-
-
-
 
 ?><!DOCTYPE html>
 <html lang="en">

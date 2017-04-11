@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-    include_once ("classes/user.php");
-    include_once("classes/Db.class.php");
+    include_once ("classes/user.class.php");
+    include_once("classes/db.class.php");
 
     // als we submitten gaan we velden uitlezen
     if(!empty($_POST)){
