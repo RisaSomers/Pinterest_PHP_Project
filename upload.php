@@ -4,19 +4,24 @@ session_start();
 
 
 include 'classes/Db.class.php';
+include_once("classes/Items.class.php");
 
 if(!empty($_POST)){
-    // create prepared statement
-    $sql = "INSERT INTO items (Image, Url, Beschrijving) VALUES (:Image, :Url, :Beschrijving)";
-    $stmt = $pdo->prepare($sql);
+    try {
+        // create prepared statement
+        $item = new Items();
+        $item->setDescription($_POST["beschrijving"]);
+        if (!empty($_FILES["fileToUpload"])) {
+            $item->setImage($_FILES["fileToUpload"]);
+        } else {
+            $item->setUrl($_POST["link"]);
+        }
 
-    // bind parameters to statement
-    $stmt->bindParam(':Image', $_POST['Image']);
-    $stmt->bindParam(':Url', $_POST['Url']);
-    $stmt->bindParam(':Beschrijving', $_POST['Beschrijving']);
-
-    // execute the prepared statement
-    $stmt->execute();
+        $item->create();
+        echo "Item is created";
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
 }
 
 ?><!DOCTYPE html>
@@ -65,7 +70,7 @@ if(!empty($_POST)){
 <h1>Upload your item!</h1>
 <!-- Page Content -->
 <div class="container">
-    <form action="" method="post" id="upload">
+    <form action="" method="post" id="upload" enctype="multipart/form-data">
         <label for="fileToUpload">Image</label>
         <input type="file" name="fileToUpload" id="fileToUpload">
 

@@ -5,11 +5,8 @@ include_once("classes/Topics.php");
 
 session_start();
 
+	if ( !empty($_SESSION['user_id'] ) ){
 
-	if ( isset($_SESSION['email'] ) )
-
-	if ( isset($_SESSION['user_id'] ) ){
-        
 
 	}
 	else{
@@ -17,7 +14,7 @@ session_start();
 	}
 
 		$conn= Db::getInstance();
-		$sth = $conn->prepare("SELECT * FROM Topics;");
+		$sth = $conn->prepare("SELECT * FROM items;");
 
 		$sth->execute();
 
@@ -49,15 +46,15 @@ session_start();
                 <h1 class="page-header">Your feed</h1>
 
             </div>
+                  <?php while( $row = $sth->fetch() ):?>
 
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="#">
-                  <?php while( $row = $sth->fetch() ):?>
-                      <?php echo $row['name'] ?>
-                      <img src="<?php echo $row ['image'] ?>" class="thumbnail"alt="">
-                  <?php endwhile; ?>
+                      <img src="uploads/posts/<?php echo $row['Image'] ?>" class="thumbnail"alt="">
+
                 </a>
             </div>
+                    <?php endwhile; ?>
 
         </div>
 

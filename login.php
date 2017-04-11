@@ -4,7 +4,6 @@ session_start();
 
 
 include 'classes/Db.class.php';
-
 if(isset($_POST['SignIn'])){
     
     try{
