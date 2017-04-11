@@ -6,7 +6,17 @@ session_start();
 include 'classes/Db.class.php';
 
 if(!empty($_POST)){
+    // create prepared statement
+    $sql = "INSERT INTO items (Image, Url, Beschrijving) VALUES (:Image, :Url, :Beschrijving)";
+    $stmt = $pdo->prepare($sql);
 
+    // bind parameters to statement
+    $stmt->bindParam(':Image', $_POST['Image']);
+    $stmt->bindParam(':Url', $_POST['Url']);
+    $stmt->bindParam(':Beschrijving', $_POST['Beschrijving']);
+
+    // execute the prepared statement
+    $stmt->execute();
 }
 
 ?><!DOCTYPE html>
