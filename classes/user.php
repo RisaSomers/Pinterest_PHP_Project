@@ -94,6 +94,26 @@ class users
         $stmt->bindValue(":email", $this->m_semail);
         return $stmt->execute();
     }
+    
+        public function updateSubscriptions(){
+
+        
+        
+        $conn = Db::getInstance();
+        foreach ($topics as $topics) {
+            $stmt = $conn->prepare("INSERT INTO Users_Topics (topics_id, email) VALUES (:email, :id)");
+            $stmt->bindValue(":email", $this->m_sUsername);
+            $stmt->bindValue(":id", $_SESSION["id"]);
+            if (!$conn->execute()) {
+                throw new Exception("Could not insert subs");
+            }
+        }
+            
+          
+        
+        
+        
+    }
 
 
 }

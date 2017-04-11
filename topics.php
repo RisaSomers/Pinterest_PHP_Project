@@ -22,8 +22,20 @@ session_start();
         if(!empty($_POST)){
             $topics = new Topics();
             $topics->Description = $_POST['topic'];
+            $topics->Username = $_SESSION['email'];
+            $topics->updateSubscriptions($_POST["topic"]);
+            $topics->addToDatabase();
             header("Location: index.php");
         }
+
+
+
+
+
+
+
+
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

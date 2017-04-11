@@ -38,13 +38,23 @@ class Topics{
         $stateAllTopics->execute();
         return $stateAllTopics;
     }
-    public function addToDatabase(){
+    
+    public function updateSubscriptions(){
+
+        
+        
         $conn = Db::getInstance();
-        $stmt = $conn->prepare("INSERT INTO Users_Topics(email, topics_id) SELECT email, id from Users, Topics WHERE (email = :email and id = :id)");
-        $stmt->bindValue(':email', $this->m_sUsername);
-        $stmt->bindValue(':id', $this->m_sDescription);
-        $check = $stmt->execute();
-        return $check;
+        foreach ($subscriptions as $sub) {
+            $stmt = $conn->prepare("INSERT INTO Users_Topics (topics_id, email) VALUES (:email, :id)");
+            $stmt->bindValue(":email", $this->m_sUsername);
+            $stmt->bindValue(":id", $_SESSION["id"]);
+            if (!$conn->execute()) {
+                throw new Exception("Could not insert subs");
+            }
+        }
+        
+        
+        
     }
     public function checkTopics(){
         $conn = Db::getInstance();
