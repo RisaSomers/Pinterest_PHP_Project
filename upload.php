@@ -3,7 +3,7 @@
 session_start();
 
 
-include 'classes/Db.class.php';
+include 'classes/db.class.php';
 
 if(!empty($_POST)){
     // create prepared statement

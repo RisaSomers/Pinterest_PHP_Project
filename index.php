@@ -1,8 +1,8 @@
 <?php
 
-include_once("classes/user.php");
-include_once("classes/Db.class.php");
-include_once("classes/Topics.php");
+include_once("classes/user.class.php");
+include_once("classes/db.class.php");
+include_once("classes/topics.class.php");
 
 session_start();
 
