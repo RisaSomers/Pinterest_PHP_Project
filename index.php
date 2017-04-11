@@ -51,6 +51,7 @@ session_start();
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="#">
                       <img src="uploads/posts/<?php echo $row['Image'] ?>" class="thumbnail"alt="">
+                      <p></p><?php echo $row['Beschrijving'] ?></p>
 
                 </a>
             </div>
