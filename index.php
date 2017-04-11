@@ -1,4 +1,5 @@
 <?php
+
 include_once("classes/user.php");
 include_once("classes/Db.class.php");
 include_once("classes/Topics.php");
@@ -6,17 +7,16 @@ include_once("classes/Topics.php");
 session_start();
 
 
-	if ( isset($_SESSION['email'] ) )
-
-	if ( isset($_SESSION['user_id'] ) ){
-        
+	if ( isset($_SESSION['email'] ) ){ 
 
 	}
+
 	else{
 		header('Location: login.php');
 	}
 
 		$conn= Db::getInstance();
+
 		$sth = $conn->prepare("SELECT * FROM Topics;");
 
 		$sth->execute();
@@ -26,6 +26,7 @@ session_start();
 
 <head>
     <meta charset="UTF-8">
+    
     <?php include("includes/header.php"); ?>
 
     <title>IMDterest</title>
@@ -35,6 +36,7 @@ session_start();
 <body>
 
     <!-- Navigation -->
+    
   <?php include("includes/menu.php"); ?>
 
 

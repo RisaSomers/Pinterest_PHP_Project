@@ -1,6 +1,6 @@
 <?php
 
-class Db{
+abstract class Db{
 
     private static $conn = NULL;
 

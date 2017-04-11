@@ -80,7 +80,7 @@ session_start();
 
                         $_SESSION['email'] = $users->email;
                         $_SESSION['lastName'] = $users->lastname;
-                        $_SESSION['fristName'] = $users->firstname;
+                        $_SESSION['firstName'] = $users->firstname;
                         header("Location: topics.php");
                     }
 
