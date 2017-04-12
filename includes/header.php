@@ -4,7 +4,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- Bootstrap Core CSS -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="css/thumbnail-gallery.css" rel="stylesheet">

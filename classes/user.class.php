@@ -75,7 +75,7 @@ class users
     public function save() {
         $conn = Db::getInstance();
         
-        $stmt = $conn->prepare("INSERT INTO Users (firstname, lastname, password, email) VALUES (:firstname, :lastname, :password, :email)");
+        $stmt = $conn->prepare("INSERT INTO users (firstname, lastname, password, email) VALUES (:firstname, :lastname, :password, :email)");
         print_r($this);
         $stmt->bindValue(":firstname", $this->m_sfirstname);
         $stmt->bindValue(":lastname", $this->m_slastname);

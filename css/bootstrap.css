@@ -6755,3 +6755,48 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+.signupbg{
+
+padding-top:25px;
+background-color: #222222;
+
+}
+
+.signupform{
+  background-image: url("../images/bg_signup.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 0;
+}
+
+.signupform .right{
+
+  background-color: whitesmoke;
+  text-align: center;
+}
+
+.logo{
+
+  display: block;
+  margin: 10px auto;
+
+}
+
+p.signup {
+
+  text-align: center;
+}
+
+.btn.red{
+
+  background-color: #d70015;
+  border: none;
+  border-radius : 0px;
+}
+
+.btn.red:hover{
+
+  background-color: #f0001a;
+
+}

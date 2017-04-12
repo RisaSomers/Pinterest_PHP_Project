@@ -14,7 +14,7 @@ if(isset($_POST['SignIn'])){
 
     //Retrieve the user account information for the given username.
     $pdo = Db::getInstance();
-    $sql = "SELECT id, email, password FROM Users WHERE email = :email";
+    $sql = "SELECT id, email, password FROM users WHERE email = :email";
     $stmt = $pdo->prepare($sql);
 
     //Bind value.
@@ -75,48 +75,50 @@ if(isset($_POST['SignIn'])){
     </style>
 </head>
 
-<body>
-
-
-
-<!-- Navigation -->
-<?php include("includes/menu.php"); ?>
+<body class="signupbg">
 
 
 <!-- Page Content -->
 <div class="container">
     <title>Signup form</title>
 
-    <div class="container">
-        <form method="post" action="">
-                    <h2>Log In<?php if( isset( $error ) ): ?>
-                                <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
-                            <?php endif; ?></h2>
-                    <hr class="colorgraph">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <input type="text" name="email" id="usernamelogin" class="form-control input-lg" placeholder="Email" tabindex="8">
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <input type="password" name="password" id="passwordlogin" class="form-control input-lg" placeholder="Password" tabindex="9">
-                            </div>
-                        </div>
-                    </div>
 
+<div class="container-fluid">
 
-                    <hr class="colorgraph">
-                    <div class="form-group">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 signupform">
 
-                          <input name="SignIn" type="submit" value="Sign In" class="btn btn-primary btn-block btn-lg" tabindex="10">
+        <div class="col-md-6 left"></div>
+        <div class="col-md-6 right">
 
-                    </div>
-                </form>
-            </div>
+            <form role="form" method="post">
+                <img class="logo" src="https://www.weareimd.be/img/imd-logo-black.svg">
+                <h2>Log hier in<?php if( isset( $error ) ): ?>
+                        <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
+                    <?php endif; ?></h2>
+
+                <div class="form-group">
+                    <input type="text" name="email" id="emaillogin" class="form-control input-lg" placeholder="E-mail" tabindex="8">
+                </div>
+
+                <div class="form-group">
+                    <input type="password" name="password" id="passwordlogin" class="form-control input-lg" placeholder="Password" tabindex="9">
+                </div>
+
+                <div class="form-group">
+                    <input name="SignIn" type="submit" value="Log in" class="btn btn-primary btn-block btn-lg red" tabindex="7">
+                </div>
+            </form>
+
+            <p class="signup">of <a href="signup.php">Registreer je hier</a> </p>
+
         </div>
+
     </div>
+    <div class="col-md-2"></div>
+
+</div>
+
 
 </div>
 

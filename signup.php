@@ -57,7 +57,7 @@ session_start();
             $conn= Db::getInstance();
 
             if(!isset($error)){
-                $statement = $conn->prepare("SELECT * FROM Users WHERE email = :email");
+                $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
                 $statement->bindValue(":email", $users->getMSemail());
 
                 if($statement->execute() && $statement->rowCount() != 0){
@@ -120,10 +120,7 @@ session_start();
 
 </head>
 
-<body>
-
-  <!-- Navigation -->
-  <?php include("includes/menu.php"); ?>
+<body class="signupbg">
 
 
 
@@ -131,62 +128,60 @@ session_start();
 <div class="container">
     <title>Signup form</title>
 
-    <div class="container">
 
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+
+
+
+
+    <div class="container-fluid">
+
+        <div class="col-md-2"></div>
+        <div class="col-md-8 signupform">
+
+            <div class="col-md-6 left"></div>
+            <div class="col-md-6 right">
+
                 <form role="form" method="post">
+                    <img class="logo" src="https://www.weareimd.be/img/imd-logo-black.svg">
                     <h2>Please Sign Up<?php if( isset( $error ) ): ?>
-                                <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
-                            <?php endif; ?></h2>
-                    <hr class="colorgraph">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <input type="text" name="firstname" id="fullname" class="form-control input-lg" placeholder="Firstname" tabindex="1">
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <input type="text" name="lastname" id="username" class="form-control input-lg" placeholder="Lastname" tabindex="2">
-                            </div>
-                        </div>
+                            <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
+                        <?php endif; ?></h2>
+
+                    <div class="form-group">
+                        <input type="text" name="firstname" id="firstname" class="form-control input-lg" placeholder="Voornaam" tabindex="1">
                     </div>
+
+                    <div class="form-group">
+                        <input type="text" name="lastname" id="lastname" class="form-control input-lg" placeholder="Achternaam" tabindex="2">
+                    </div>
+
                     <div class="form-group">
                         <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="4">
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="form-group">
-                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" tabindex="6">
-                            </div>
-                        </div>
+
+                    <div class="form-group">
+                        <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
                     </div>
-                    <br/>
 
+                    <div class="form-group">
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" tabindex="6">
+                    </div>
 
-
-                    <hr class="colorgraph">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <div class="form-group">
-                            <input name="Registration" type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7">
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <a href="login.php"><input name="SignIn"  value="Sign In" class="btn btn-primary btn-block btn-lg" tabindex="10"></a>
-                        </div>
-                        </div>
+                    <div class="form-group">
+                        <input name="Registration" type="submit" value="Register" class="btn btn-primary btn-block btn-lg red" tabindex="7">
+                    </div>
                 </form>
+
+                <p class="signup">of <a href="login.php">log je hier in</a> </p>
+
             </div>
+
         </div>
+        <div class="col-md-2"></div>
+
     </div>
+
+
 
 </div>
 
