@@ -24,7 +24,6 @@ session_start();
             $topics->Description = $_POST['topic'];
             $topics->Username = $_SESSION['email'];
             $topics->updateSubscriptions($_POST["topic"]);
-            $topics->updateSubscriptions();
             header("Location: index.php");
         }
 
@@ -105,7 +104,7 @@ session_start();
 			
 			<li class="flex-item"><img src="<?php echo $row['image'] ?>" alt=""></li>
 			
-			<li class="flex-item"><div class='photo'><input class="check" type="checkbox" name="topic" value=<?php echo $row['name'] ?>></div></li>
+			<li class="flex-item"><div class='photo'><input class="check" type="checkbox" name="topic[]" value=<?php echo $row['name'] ?>></div></li>
 
 			<li class="flex-item"><p class='topicname'><?php echo $row['name'] ?></p></li>
 			

@@ -44,6 +44,7 @@ if(isset($_POST['SignIn'])){
             //Provide the user with a login session.
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['logged_in'] = time();
+            $_SESSION['email'];
 
 
             header('Location: index.php');

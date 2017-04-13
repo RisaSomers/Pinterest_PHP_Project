@@ -52,19 +52,46 @@ class Topics{
         return $stateAllTopics;
     }
     
-    public function updateSubscriptions(){
+    public function updateSubscriptions($subscriptions){
         $conn = Db::getInstance();
         
-        foreach ($subscriptions as $sub) {
-            $stmt = $conn->prepare("INSERT INTO Users_Topics (topics_id, email) VALUES (:id, :email)");
-            $stmt->bindValue(":email", $_SESSION['email']);
-            $stmt->bindValue(":id", $_SESSION['id']);
-            
-            if (!$conn->execute()) {
-                throw new Exception("Could not insert subs");
-            }
-        }  
+        foreach($subscriptions as $sub){
+            $statement = $conn->prepare("INSERT INTO Users_Topics (email, topics_id) VALUES (:email, :topics_id)");
+            $statement->bindValue(":email", $_SESSION['email']);
+            $statement->bindValue(":topics_id", $sub);
+            $statement->execute();
+        } 
+    }
+    
+    public function getUserPosts() {
+        $conn = Db::getInstance();
         
+        $statement = $conn->prepare("SELECT topics_id FROM Users_Topics WHERE email = :email");
+        $statement->bindValue(":email", $_SESSION["email"]);
+        $statement->execute();
+        $subscribed_tags = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $temp = array_map(function($tag) {
+            return $tag["topics_id"];
+        }, $subscribed_tags);
+        $tags = implode(", ", array_fill(0, count($temp), '?'));
+
+
+        $statement = $conn->prepare("
+            SELECT DISTINCT *
+            FROM items_topics
+            INNER JOIN items ON items_topics.items = items.id
+            WHERE items_topics.item
+            IN (" . $tags . ")
+            GROUP BY items_topics.item
+            ORDER BY items.id DESC
+            LIMIT 3
+        ");
+
+        foreach ($temp as $k => $id)
+            $statement->bindValue(($k+1), $id);
+
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
     
     public function checkTopics(){

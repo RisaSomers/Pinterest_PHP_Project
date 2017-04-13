@@ -1,6 +1,6 @@
 <?php
 include_once("classes/user.class.php");
-include_once("classes/Db.class.php");
+include_once("classes/db.class.php");
 include_once("classes/topics.class.php");
 
 session_start();
@@ -13,10 +13,14 @@ session_start();
 		header('Location: login.php');
 	}
 
-		$conn= Db::getInstance();
-		$sth = $conn->prepare("SELECT * FROM items;");
+		
+    $t = new Topics();
+    $feed = $t->getUserPosts();
+    
 
-		$sth->execute();
+
+
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -46,16 +50,35 @@ session_start();
                 <h1 class="page-header">Your feed</h1>
 
             </div>
-                  <?php while( $row = $sth->fetch() ):?>
 
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-                      <img src="uploads/posts/<?php echo $row['Image'] ?>" class="thumbnail"alt="">
-                      <p></p><?php echo $row['Beschrijving'] ?></p>
-
-                </a>
-            </div>
-                    <?php endwhile; ?>
+        
+        
+        
+        
+        <?php foreach($feed as $f): ?>
+                    <div class="col-md-4">
+                        <div class="post" data-id="<?php echo $f["id"]; ?>">
+                            <div class="post-title"><a href="post.php?id=<?php echo $f["id"]; ?>"><?php echo $f["beschrijving"]; ?></a></div>
+                            <a href="post.php?id=<?php echo $f["id"]; ?>"><div class="post-img" style="background: url('uploads/posts/<?php echo $f["image"]; ?>') center center; background-size: cover;"></div></a>
+                            <div class="post-actions">
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-thumbs-up"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-thumbs-down"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
         </div>
 
