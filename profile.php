@@ -5,44 +5,35 @@ include_once("classes/user.class.php");
 session_start();
 
 
-/*session_start();
-
-if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
-    //User not logged in. Redirect them back to the login.php page.
-@@ -29,16 +31,46 @@ if(!empty($_FILES)) {
-}
-
-echo 'Congratulations! You are logged in!';
-*/
-
-//session_start();
-$a = new profilechange();
-$allusers = $a->getAll();
-
-$conn = Db::getInstance();
-
-$statement = $conn->prepare('SELECT * FROM Users WHERE id=:id');
-
-$statement->bindParam(':id',$_SESSION['id']);
-$statement->execute();
-$user = $statement->fetch(PDO::FETCH_ASSOC);
-
-try
-{
-    if (!empty($_POST))
+if(!isset($_FILES['userfile']))
     {
-        $a->checkPass($_POST['pass'], $_POST['pass_rep']);
-        $a->update($_POST['name'],$_POST['pass'], $_POST['year'], $_POST['branch'], $_POST['description']);
+        $feedback = "Please select a file";
     }
-}
-catch(Exception $e)
-{
-    $error = $e->getMessage();
-}
+else
+    {
+    try    {
+        
+        $conn= Db::getInstance();
+		$sth = $conn->prepare("SELECT * FROM Users;");
+        $sth->execute();
+        
+        $a = new users();
+        
+        $a->upload();
+        /*** give praise and thanks to the php gods ***/
+        $feedback = "Thank you for submitting";
+        $avatar = " ";
+        
+        /*$a->update();*/
+        
+        }
+    catch(Exception $e)
+        {
+        echo '<h4>'.$e->getMessage().'</h4>';
+        }
+    }
 
-?>
-
-<!doctype html>
+?><!doctype html>
 <html lang="en">
 <head>
 
@@ -64,13 +55,29 @@ catch(Exception $e)
 
 <body>
 
-            <img src="uploads/<?php echo $_SESSION["email"] ?>.jpg">
 
-<form action="" method="post" enctype="multipart/form-data">
-    <br>
+            <div class="col-lg-12">
+                <h1 class="page-header">Change your profile</h1>
+                <h4><?php echo $feedback ?></h4>
+            </div>
+             
+             <?php if( isset( $avatar ) ): ?>
+                        <img src="<?php echo $_SESSION["avatar"] ?>" alt="">
+                    <?php endif; ?>
+              
 
-    <input type="submit" value="Upload">
-</form>
+              <form enctype="multipart/form-data" action="<?php echo htmlentities($_SERVER['PHP_SELF']);?>" method="post">
+              
+              
+              
+              
+  <input type="hidden" name="MAX_FILE_SIZE" value="99999999" />
+  <div><input name="userfile" type="file" /></div> <br>
+  <div><input type="submit" value="Submit" /></div>
+  </form>
+
+
+
 
 <br><br><br>
 
@@ -85,29 +92,31 @@ catch(Exception $e)
 
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name">
+                    <label name="firstname" for="name">Name</label>
+                    <input name="firstname" type="text" class="form-control" id="name" name="name">
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email">
+                    <label name="email" for="email">Email</label>
+                    <input name="email" type="email" class="form-control" id="email" name="email">
                 </div>
                 <div class="form-group">
-                    <label for="pass">Old password</label>
-                    <input type="password" class="form-control" id="pass" name="pass">
+                    <label name="password" for="pass">Old password</label>
+                    <input name="password" type="password" class="form-control" id="pass" name="pass">
                 </div>
                 <div class="form-group">
-                    <label for="pass_rep">New password</label>
-                    <input type="password" class="form-control" id="pass_rep" name="pass_rep">
+                    <label name="password" for="pass_rep">New password</label>
+                    <input name="password" type="password" class="form-control" id="pass_rep" name="pass_rep">
                 </div>
 
 
                 </br>
 
-                <button type="submit" class="btn btn-default">Change profile</button>
+                <button name="submit" type="submit" class="btn btn-default">Change profile</button>
                  <button src="index.php" class="btn btn-default">Cancel changes</button>
                  
             </form>
+            
+
         </div>
 </div>
 

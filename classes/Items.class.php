@@ -31,6 +31,7 @@ Class Items {
     public function setImage($image)
     {
         $filename = md5($image["name"] . time()) . "." . pathinfo($image["name"], PATHINFO_EXTENSION);
+        
         if (move_uploaded_file($image["tmp_name"], "uploads/posts/" . $filename)) {
             $this->image = $filename;
         } 
@@ -60,7 +61,7 @@ Class Items {
     }
 
     public function create() {
-        $pdo = Db::getInstance();
+        $conn = Db::getInstance();
         if (!empty($this->image)) {
             $stmt = $pdo->prepare("INSERT INTO items (Image, Beschrijving) VALUES (:image, :beschrijving)");
             $stmt->bindValue(":image", $this->image);

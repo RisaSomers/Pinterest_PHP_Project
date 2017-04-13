@@ -98,81 +98,67 @@ class users
         }
   
     }
-
-
-}
-
-class profilechange extends users
-{
-
-    /*public function update($name, $email, $pass)
-    {
-        $conn = Db::getInstance();
-        
-        $current_id = $_SESSION['id'];
-        
-        if (empty($pass))
-        {
-            $statement = $conn->prepare('UPDATE Users SET name=:firstname,email=:email WHERE id=:id');
-
-        }
-        else
-        {
-            $this->password = $pass;
-            $statement = $conn->prepare('UPDATE Users SET name=:name,password=:password,email=:email,branch=:branch,description=:description WHERE id=:id');
-            $statement->bindValue(':password',$this->password);
-        }
-        
-        $statement->bindValue(':firstname',$name);
-        $statement->bindValue(':email',$email);
-        $statement->bindValue(':id',$current_id);
-        $statement->execute();
-
-        header('location: index.php');
-    }
-
-    public function getAll()
-    {
-        $conn = Db::getInstance();
-        
-        $allposts = $conn->query("SELECT * FROM Users");
-        return $allposts;
-    }*/
     
-    public function oploadAvatar($avater){
-        $imageFileType = pathinfo(basename($avatar["name"]), PATHINFO_EXTENSION);
-        $fileName = md5($this->username.time()) . "." . $imageFileType;
-        $target_file = "oploads/avatars/" . $fileName;
-        
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif"){
-            throw new Exception("Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
-        }
-        
-        if(!move_uploaded_file($avatar["tmp_name"], $target_file)){
-            throw new Exception("Could not upload file");
-        }
-        
-        $current_user = $_SESSION["email"];
+    public function upload(){
+/*** check if a file was uploaded ***/
+if(is_uploaded_file($_FILES['userfile']['tmp_name']) && getimagesize($_FILES['userfile']['tmp_name']) != false)
+    {
+    /***  get the image info. ***/
+    $size = getimagesize($_FILES['userfile']['tmp_name']);
+    /*** assign our variables ***/
+    $type = $size['mime'];
+    $imgfp = fopen($_FILES['userfile']['tmp_name'], 'rb');
+    $size = $size[3];
+    $name = $_FILES['userfile']['name'];
+    $maxsize = 99999999;
+
+
+    /***  check the file is less than the maximum file size ***/
+    if($_FILES['userfile']['size'] < $maxsize )
+        {
+        /*** connect to db ***/
         $conn = Db::getInstance();
+
+                /*** set the error mode ***/
+                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            /*** our sql query ***/
         $statement = $conn->prepare("UPDATE Users SET avatar = :avatar WHERE email = :email");
-        $statement->bindValue(":email", $current_user);
-        $statement->bindValue(":avatar", $fileName);
-        $_SESSION["avatar"] = $fileName;
+
+        /*** bind the params ***/
+       
+        $statement->bindValue(":avatar", $imgfp, PDO::PARAM_LOB);
+        $statement->bindValue(":email", $_SESSION["email"]);
         
-        return $statement->execute();
+
+        /*** execute the query ***/
+        $statement->execute();
+        }
+        
+    else
+        {
+        /*** throw an exception is image is not of type ***/
+        throw new Exception("File Size Error");
+        }
     }
+else
+    {
+    // if the file is not less than the maximum allowed, print an error
+    throw new Exception("Unsupported Image Format!");
+    }
+}
+        
     
-    public function update(){
-        $_SESSION["lastname"] = $this->lastname;
-        $_SESSION["email"] = $this->email;
-        $_SESSION["firstname"] = $this->firstname;
+/*    public function update(){
+        $_SESSION["firstname"] = $firstname;
+        $_SESSION["email"] = $email;
+        $_SESSION["password"] = $password;
         
         if(empty($this->password)){
             $conn = Db::getInstance();
             
-            $statement = $conn->prepare("UPDATE Users SET firstname = :firstname, lastname = :lastname, email = :email WHERE email = :email2");
+            $statement = $conn->prepare("UPDATE Users SET firstname = :firstname, email = :email WHERE email = :email2");
             $statement->bindValue(":firstname", $this->firstname);
-            $statement->bindValue(":lastname", $this->lastname);
             $statement->bindvalue(":email", $this->email);
             $statement->bindValue(":email2", $_SESSION["email"]);
             
@@ -181,8 +167,7 @@ class profilechange extends users
         
         else{
             $conn = Db::getInstance();
-            $statement = $conn->prepare("UPDATE Users SET lastname = :lastname, firstname = :firstname, email = :email, password = :password WHERE email = :email2");
-            $statement->bindValue(":lastname", $this->lastname);
+            $statement = $conn->prepare("UPDATE Users SET firstname = :firstname, email = :email, password = :password WHERE email = :email2");
             $statement->bindValue(":firstname", $this->firstname);
             $statement->bindValue(":email", $this->email);
             
@@ -193,10 +178,18 @@ class profilechange extends users
             $statement->bindValue(":email2", $_SESSIONS["email"]);
             
             return $statement->execute();
-        }
-    }
+        }  
+        
+    }*/
+    
+        public function getAll(){
+            
+        $conn = Db::getInstance();
+        
+        $allposts = $conn->query("SELECT * FROM Users");
+        return $allposts;
+    
+
 
 }
-
-
-
+}

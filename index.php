@@ -16,11 +16,6 @@ session_start();
 		
     $t = new Topics();
     $feed = $t->getUserPosts();
-    
-
-
-
-
 
 ?><!DOCTYPE html>
 <html lang="en">
