@@ -5,7 +5,7 @@ include_once("classes/topics.class.php");
 
 session_start();
 
-	if ( !empty($_SESSION['user_id'] ) ){
+	if ( !empty($_SESSION['email'] ) ){
 
 
 	}
@@ -56,18 +56,14 @@ session_start();
         
         
         <?php foreach($feed as $f): ?>
+                   
                     <div class="col-md-4">
                         <div class="post" data-id="<?php echo $f["id"]; ?>">
-                            <div class="post-title"><a href="post.php?id=<?php echo $f["id"]; ?>"><?php echo $f["beschrijving"]; ?></a></div>
-                            <a href="post.php?id=<?php echo $f["id"]; ?>"><div class="post-img" style="background: url('uploads/posts/<?php echo $f["image"]; ?>') center center; background-size: cover;"></div></a>
-                            <div class="post-actions">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-thumbs-up"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-thumbs-down"></i></a></li>
-                                </ul>
-                            </div>
+                            <div class="post-title"><a href="post.php?id=<?php echo $f["id"]; ?>"><?php echo $f["Beschrijving"]; ?></a></div>
+                            <a href="post.php?id=<?php echo $f["id"]; ?>"><div class="post-img" style="background: url('uploads/posts/<?php echo $f["Image"]; ?>') center center; background-size: cover;"></div></a>
                         </div>
                     </div>
+                    
                 <?php endforeach; ?>
         
         

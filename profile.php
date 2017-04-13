@@ -1,5 +1,7 @@
 <?php
 
+include_once("classes/user.class.php");
+
 session_start();
 
 
@@ -12,11 +14,6 @@ if(!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in'])){
 
 echo 'Congratulations! You are logged in!';
 */
-
-
-
-include_once("classes/user.class.php");
-
 
 //session_start();
 $a = new profilechange();

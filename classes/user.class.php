@@ -105,7 +105,7 @@ class users
 class profilechange extends users
 {
 
-    public function update($name, $email, $pass)
+    /*public function update($name, $email, $pass)
     {
         $conn = Db::getInstance();
         
@@ -137,6 +137,63 @@ class profilechange extends users
         
         $allposts = $conn->query("SELECT * FROM Users");
         return $allposts;
+    }*/
+    
+    public function oploadAvatar($avater){
+        $imageFileType = pathinfo(basename($avatar["name"]), PATHINFO_EXTENSION);
+        $fileName = md5($this->username.time()) . "." . $imageFileType;
+        $target_file = "oploads/avatars/" . $fileName;
+        
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif"){
+            throw new Exception("Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
+        }
+        
+        if(!move_uploaded_file($avatar["tmp_name"], $target_file)){
+            throw new Exception("Could not upload file");
+        }
+        
+        $current_user = $_SESSION["email"];
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("UPDATE Users SET avatar = :avatar WHERE email = :email");
+        $statement->bindValue(":email", $current_user);
+        $statement->bindValue(":avatar", $fileName);
+        $_SESSION["avatar"] = $fileName;
+        
+        return $statement->execute();
+    }
+    
+    public function update(){
+        $_SESSION["lastname"] = $this->lastname;
+        $_SESSION["email"] = $this->email;
+        $_SESSION["firstname"] = $this->firstname;
+        
+        if(empty($this->password)){
+            $conn = Db::getInstance();
+            
+            $statement = $conn->prepare("UPDATE Users SET firstname = :firstname, lastname = :lastname, email = :email WHERE email = :email2");
+            $statement->bindValue(":firstname", $this->firstname);
+            $statement->bindValue(":lastname", $this->lastname);
+            $statement->bindvalue(":email", $this->email);
+            $statement->bindValue(":email2", $_SESSION["email"]);
+            
+            return $statement->execute();
+        }
+        
+        else{
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("UPDATE Users SET lastname = :lastname, firstname = :firstname, email = :email, password = :password WHERE email = :email2");
+            $statement->bindValue(":lastname", $this->lastname);
+            $statement->bindValue(":firstname", $this->firstname);
+            $statement->bindValue(":email", $this->email);
+            
+            $options = ["cost" => 11];
+            
+            $hash = password_hash($this->password, PASSWORD_DEFAULT, $options);
+            $statement->bindValue(":password", $hash);
+            $statement->bindValue(":email2", $_SESSIONS["email"]);
+            
+            return $statement->execute();
+        }
     }
 
 }

@@ -6,7 +6,7 @@
 
 session_start();
 
-	if ( !empty($_SESSION['user_id'] ) ){
+	if ( !empty($_SESSION['email'] ) ){
 
 	}
 	else{
@@ -104,7 +104,7 @@ session_start();
 			
 			<li class="flex-item"><img src="<?php echo $row['image'] ?>" alt=""></li>
 			
-			<li class="flex-item"><div class='photo'><input class="check" type="checkbox" name="topic[]" value=<?php echo $row['name'] ?>></div></li>
+			<li class="flex-item"><div class='photo'><input class="check" type="checkbox" name="topic[]" value=<?php echo $row['id'] ?>></div></li>
 
 			<li class="flex-item"><p class='topicname'><?php echo $row['name'] ?></p></li>
 			
