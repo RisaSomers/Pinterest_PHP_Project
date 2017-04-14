@@ -3,6 +3,7 @@ include_once("classes/user.class.php");
 include_once("classes/db.class.php");
 include_once("classes/topics.class.php");
 
+
 session_start();
 
 	if ( !empty($_SESSION['email'] ) ){
@@ -13,6 +14,10 @@ session_start();
 		header('Location: login.php');
 	}
 
+    $conn = Db::getInstance();
+    $sth = $conn->prepare("SELECT * FROM items;");
+
+		$sth->execute();
 		
     $t = new Topics();
     $feed = $t->getUserPosts();
@@ -45,33 +50,24 @@ session_start();
                 <h1 class="page-header">Your feed</h1>
 
             </div>
+        
+     <?php while( $row = $sth->fetch() ):?>
+
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#">
 
         
-        
-        
-        
-        <?php foreach($feed as $f): ?>
-                   
-                    <div class="col-md-4">
-                        <div class="post" data-id="<?php echo $f["id"]; ?>">
-                            <div class="post-title"><a href="post.php?id=<?php echo $f["id"]; ?>"><?php echo $f["Beschrijving"]; ?></a></div>
-                            <a href="post.php?id=<?php echo $f["id"]; ?>"><div class="post-img" style="background: url('uploads/posts/<?php echo $f["Image"]; ?>') center center; background-size: cover;"></div></a>
-                        </div>
-                    </div>
-                    
-                <?php endforeach; ?>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+<img src="uploads/posts/<?php echo $row['Image'] ?>" class="thumbnail"alt="">
+                <p></p><?php echo $row['Beschrijving'] ?></p>
+
+                </a>
+            </div>
+                    <?php endwhile; ?>        
 
         </div>
+        
+
+
 
         <hr>
 
@@ -89,6 +85,7 @@ session_start();
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
+    
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>

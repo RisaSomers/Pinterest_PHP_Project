@@ -19,7 +19,10 @@ if(!empty($_POST)){
 
         $item->create();
         echo "Item is created";
-    } catch (Exception $e) {
+        header("Location: index.php");
+        
+    }
+    catch (Exception $e) {
         echo $e->getMessage();
     }
 }
