@@ -39,6 +39,7 @@
                 </div>
 
             </ul>
+            
         </div>
         <!-- /.navbar-collapse -->
     </div>
