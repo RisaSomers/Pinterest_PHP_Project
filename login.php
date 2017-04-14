@@ -42,11 +42,11 @@ if(isset($_POST['SignIn'])){
         if($validPassword){
 
             //Provide the user with a login session.
-            $_SESSION['id'] = $user['id'];
+            $_SESSION['user_id'] = $user['id'];
             $_SESSION['logged_in'] = time();
-            $_SESSION['email'] = $_POST["email"];
+            $_SESSION['email'];
 
-            
+
             header('Location: index.php');
             exit;
 

@@ -8,7 +8,6 @@ session_start();
 if(!isset($_FILES['userfile']))
     {
         $feedback = "Please select a file";
-        $feedback2 = "Change your information";
     }
 else
     {
@@ -20,13 +19,12 @@ else
         
         $a = new users();
         
-        
         $a->upload();
         /*** give praise and thanks to the php gods ***/
         $feedback = "Thank you for submitting";
         $avatar = " ";
-        $userData = $a->getAllUser();
-        var_dump($userData);
+        
+        /*$a->update();*/
         
         }
     catch(Exception $e)
@@ -34,22 +32,6 @@ else
         echo '<h4>'.$e->getMessage().'</h4>';
         }
     }
-
-
-if(!isset($_SESSION["email"])){
-        
-	}
-
-
-    if(!empty($_POST)){
-            $update = new users();
-            $update->firstname = $_POST['firstname'];
-            $update->email = $_POST['email'];
-            $update->password = $_POST['password'];
-            $update->email = $_SESSION['email'];
-            $update->update();
-            $feedback2 = "Your changes have been made!";
-        }
 
 ?><!doctype html>
 <html lang="en">
@@ -79,8 +61,8 @@ if(!isset($_SESSION["email"])){
                 <h4><?php echo $feedback ?></h4>
             </div>
              
-             <?php if( !empty( $_POST ) ): ?>
-                        <img src="<?php echo $userData["avatar"] ?>" alt="">
+             <?php if( isset( $avatar ) ): ?>
+                        <img src="<?php echo $_SESSION["avatar"] ?>" alt="">
                     <?php endif; ?>
               
 
@@ -110,7 +92,6 @@ if(!isset($_SESSION["email"])){
 
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                   <h4><?php echo $feedback2 ?></h4>
                     <label name="firstname" for="name">Name</label>
                     <input name="firstname" type="text" class="form-control" id="name" name="name">
                 </div>
@@ -119,7 +100,7 @@ if(!isset($_SESSION["email"])){
                     <input name="email" type="email" class="form-control" id="email" name="email">
                 </div>
                 <div class="form-group">
-                    <label name="oldpassword" for="pass">Old password</label>
+                    <label name="password" for="pass">Old password</label>
                     <input name="password" type="password" class="form-control" id="pass" name="pass">
                 </div>
                 <div class="form-group">

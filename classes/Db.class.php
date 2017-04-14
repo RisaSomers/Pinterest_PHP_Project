@@ -15,9 +15,7 @@ abstract class Db{
             // er is nog connectie, maak aan en geef terug
 
 
-
-            self::$conn = new PDO("mysql:host=localhost;dbname=Pinterest_PHP","root","");
-
+              self::$conn = new PDO("mysql:host=localhost;dbname=Pinterest_PHP","root","root");
 
 
             return self::$conn;

@@ -149,38 +149,38 @@ else
 }
         
     
-    public function update(){
-        /*$_SESSION["firstname"] = $firstname;
+/*    public function update(){
+        $_SESSION["firstname"] = $firstname;
         $_SESSION["email"] = $email;
-        $_SESSION["password"] = $password;*/
+        $_SESSION["password"] = $password;
         
         if(empty($this->password)){
             $conn = Db::getInstance();
             
-            $statement = $conn->prepare("UPDATE Users SET firstname = :firstname, email = :email2 WHERE email = :email");
-            $statement->bindValue(":firstname", $_POST['firstname']);
-            $statement->bindValue(":email2", $_POST['email']);
-            $statement->bindValue(":email", $_SESSION["email"]);
+            $statement = $conn->prepare("UPDATE Users SET firstname = :firstname, email = :email WHERE email = :email2");
+            $statement->bindValue(":firstname", $this->firstname);
+            $statement->bindvalue(":email", $this->email);
+            $statement->bindValue(":email2", $_SESSION["email"]);
+            
             return $statement->execute();
         }
         
         else{
             $conn = Db::getInstance();
-            $statement = $conn->prepare("UPDATE Users SET firstname = :firstname, email = :email2, password = :password WHERE id = :id");
-            $statement->bindValue(":firstname", $_POST['firstname']);
-            $statement->bindValue(":email2", $_POST["email"]);
-            $statement->bindValue(":id", $_SESSION["id"]);
-            
+            $statement = $conn->prepare("UPDATE Users SET firstname = :firstname, email = :email, password = :password WHERE email = :email2");
+            $statement->bindValue(":firstname", $this->firstname);
+            $statement->bindValue(":email", $this->email);
             
             $options = ["cost" => 11];
             
             $hash = password_hash($this->password, PASSWORD_DEFAULT, $options);
             $statement->bindValue(":password", $hash);
-
+            $statement->bindValue(":email2", $_SESSIONS["email"]);
+            
             return $statement->execute();
         }  
         
-    }
+    }*/
     
         public function getAll(){
             
@@ -188,15 +188,8 @@ else
         
         $allposts = $conn->query("SELECT * FROM Users");
         return $allposts;
+    
+
 
 }
-    public function getAllUser(){
-        $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT * FROM Users WHERE id = :id");
-        $statement->bindValue(":id", $_SESSION["id"]);
-        $statement->execute();
-        $allUser = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
-        return $allUse;
-    }
 }

@@ -81,7 +81,6 @@ session_start();
                         $_SESSION['email'] = $users->email;
                         $_SESSION['lastName'] = $users->lastname;
                         $_SESSION['firstName'] = $users->firstname;
-                        $_SESSION['user_id'] = $resultaat['id'];
                         header("Location: topics.php");
                     }
 
