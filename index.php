@@ -2,6 +2,7 @@
 include_once("classes/user.class.php");
 include_once("classes/db.class.php");
 include_once("classes/topics.class.php");
+include_once("classes/comments.class.php");
 
 
 session_start();
@@ -21,6 +22,27 @@ session_start();
 		
     $t = new Topics();
     $feed = $t->getUserPosts();
+
+
+
+    $activity = new Activity();
+	
+	//controleer of er een update wordt verzonden
+	if(!empty($_POST['activitymessage']))
+	{
+		$activity->Text = $_POST['activitymessage'];
+		try 
+		{
+			$activity->Save();
+            
+		} 
+		catch (Exception $e) 
+		{
+			$feedback = $e->getMessage();
+		}
+	}
+
+    $recentActivities = $activity->GetRecentActivities();
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -58,11 +80,55 @@ session_start();
 
         
 <img src="uploads/posts/<?php echo $row['Image'] ?>" class="thumbnail"alt="">
+               
+               
+               </a>
+               
                 <p></p><?php echo $row['Beschrijving'] ?></p>
+                
+                <h5>Comments</h5>
+                
+                <input type="text" value="comments" id="activitymessage" name="activitymessage" />
+		        <input id="btnSubmit" type="submit" value="Share" />
+                
+                <ul id="listupdates">
+		<?php 
+			if(mysqli_num_rows($recentActivities) > 0)
+			{		
+				while($singleActivity = mysqli_fetch_assoc($recentActivities))
+				{
+					echo "<li><h2>GoodBytes.be</h2> ". htmlspecialchars($singleActivity['activity_description'] )."</li>";
+				}
+			}
 
-                </a>
+		?>
+		</ul>
+
+                
+             
+                
+                
+		
+		
+		
+		</div> 
+                
+                
+                
+                
+                
+                
             </div>
-                    <?php endwhile; ?>        
+                    <?php endwhile; ?>     
+                    
+                       
+                          
+                             
+                                
+                         
+                                      
+                                         
+                                               
 
         </div>
         
@@ -85,6 +151,9 @@ session_start();
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
+    <script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
+    
+    <script scr="js/comments.js"></script>
     
 
     <!-- Bootstrap Core JavaScript -->

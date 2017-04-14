@@ -31,7 +31,6 @@ else
         {
         echo '<h4>'.$e->getMessage().'</h4>';
         }
-    }
 
 ?><!doctype html>
 <html lang="en">
