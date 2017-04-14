@@ -3,7 +3,7 @@
 session_start();
 
 
-include 'classes/Db.class.php';
+include_once('classes/db.class.php');
 include_once("classes/Items.class.php");
 
 if(!empty($_POST)){

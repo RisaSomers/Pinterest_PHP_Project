@@ -1,5 +1,9 @@
 <?php
 
+    include_once("classes/db.class.php");
+    include_once("classes/user.class.php");
+
+
 class Topics{
     private $m_sDescription;
     private $m_sUsername;

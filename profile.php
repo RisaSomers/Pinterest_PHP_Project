@@ -1,5 +1,6 @@
 <?php
 
+include_once("classes/db.class.php");
 include_once("classes/user.class.php");
 
 session_start();
@@ -33,6 +34,7 @@ else
         {
         echo '<h4>'.$e->getMessage().'</h4>';
         }
+    }
 
 
 if(!isset($_SESSION["email"])){
@@ -134,13 +136,9 @@ if(!isset($_SESSION["email"])){
                  
             </form>
             
-
+    
         </div>
 </div>
-
-
-
-<ul class="nav">
 
 </body>
 </html>

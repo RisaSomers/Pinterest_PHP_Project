@@ -3,7 +3,7 @@
 session_start();
 
 
-include 'classes/Db.class.php';
+include_once('classes/db.class.php');
 if(isset($_POST['SignIn'])){
     
     try{

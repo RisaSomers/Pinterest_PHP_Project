@@ -1,4 +1,5 @@
 <?php
+
 include_once("classes/user.class.php");
 include_once("classes/db.class.php");
 include_once("classes/topics.class.php");
@@ -103,37 +104,14 @@ session_start();
 
 		?>
 		</ul>
-
-                
-             
-                
-                
-		
-		
 		
 		</div> 
-                
-                
-                
-                
-                
-                
+  
             </div>
                     <?php endwhile; ?>     
-                    
-                       
-                          
-                             
-                                
-                         
-                                      
-                                         
-                                               
+                                  
 
         </div>
-        
-
-
 
         <hr>
 

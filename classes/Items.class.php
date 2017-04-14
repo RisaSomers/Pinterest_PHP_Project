@@ -1,5 +1,8 @@
 <?php
 
+    include_once("classes/db.class.php");
+    include_once("classes/user.class.php");
+
 Class Items {
     private $url;
     private $image;
@@ -63,11 +66,13 @@ Class Items {
 
     public function create() {
         $conn = Db::getInstance();
+        
         if (!empty($this->image)) {
             $stmt = $conn->prepare("INSERT INTO items (Image,  user_id, Beschrijving) VALUES (:image, :user_id, :beschrijving)");
             $stmt->bindValue(":image", $this->image);
-            $stmt->bindValue(":user_id", $_SESSION["id"]);
-        } else {
+            $stmt->bindValue(":user_id", $_SESSION["id"]);}
+        
+        else {
             $stmt = $conn->prepare("INSERT INTO items (Url, Beschrijving) VALUES (:url, :beschrijving)");
             $stmt->bindValue(":url", $this->url);
         }
