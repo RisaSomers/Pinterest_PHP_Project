@@ -161,7 +161,7 @@ else
             return $statement->execute();
         }
         
-        else{
+        elseif(!empty($_POST["firstname"]) && !empty($_POST["email"])){
             $conn = Db::getInstance();
             $statement = $conn->prepare("UPDATE Users SET firstname = :firstname, email = :email2, password = :password WHERE id = :id");
             $statement->bindValue(":firstname", $_POST['firstname']);

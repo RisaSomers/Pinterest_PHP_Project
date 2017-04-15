@@ -43,7 +43,7 @@ session_start();
 	}
 
     $recentActivities = $comments->GetRecentActivities();
-    var_dump($recentActivities);
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -82,16 +82,17 @@ session_start();
         
 <img src="uploads/posts/<?php echo $row['Image'] ?>" class="thumbnail"alt="">
                
+               <p></p><?php echo $row['Beschrijving'] ?></p>
                
                </a>
                
-                <p></p><?php echo $row['Beschrijving'] ?></p>
+                
                 
                 <h5>Comments</h5>
                 
                 <form action="" method="post">
                 
-                <input type="text" value="comments" id="activitymessage" name="activitymessage" />
+                <input type="text" value="" placeholder="comments" id="activitymessage" name="activitymessage" />
                 <input type="hidden" name="item_id" value="<?php echo $row["id"] ?>">
 		        <input id="btnSubmit" type="submit" value="Share" />
                
@@ -102,10 +103,9 @@ session_start();
 		<?php if($comments->getItemComments($row["id"])["comments"] != ""){
              echo "<li>" . $comments->getItemComments($row["id"])["comments"] . "</li>"; 
 
-            echo "<li>" . . "</li>";
+
     
     
-            echo "<li>" . . "</li>";
 }?>
              
              

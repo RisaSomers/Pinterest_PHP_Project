@@ -25,6 +25,7 @@ Class Items {
     public function setUrl($url)
     {
         $this->url = $url;
+        
     }
 
     /**
@@ -72,8 +73,9 @@ Class Items {
             $stmt->bindValue(":user_id", $_SESSION["id"]);}
         
         else {
-            $stmt = $conn->prepare("INSERT INTO items (Url, Beschrijving) VALUES (:url, :beschrijving)");
+            $stmt = $conn->prepare("INSERT INTO items (Url, Beschrijving, user_id) VALUES (:url, :beschrijving, :user_id)");
             $stmt->bindValue(":url", $this->url);
+            $stmt->bindValue(":user_id", $_SESSION["id"]);
         }
         $stmt->bindValue(":beschrijving", $this->description);
         return $stmt->execute();

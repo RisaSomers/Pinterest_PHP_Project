@@ -32,7 +32,6 @@ class comments
 	}
 	
 	public function Save($item_id){
-
         
         $conn = Db::getInstance();
         
@@ -51,7 +50,6 @@ class comments
             $statement->execute();
 	        return $statement->fetchAll(PDO::FETCH_ASSOC);
 
-		
 			
 	}
     
@@ -62,6 +60,23 @@ class comments
         $statement->bindValue("id_item", $item);
         $statement->execute();
         return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    public function getCommentNameAvatar($id){
+        $conn = Db::getInstance();
+        
+        $statement = $conn->prepare("SELECT firstname, avatar FROM Users WHERE id = :id");
+        $statement->bindValue("id", $id);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC);    
+    }
+    
+    public function getCommentsData(){
+        $conn = Db::getInstance();
+        
+        $statement = $conn->prepare("SELECT * FROM comments");
+        $statement->execute();
+        return $statement->fetchAll();          
     }
 }
 ?>
