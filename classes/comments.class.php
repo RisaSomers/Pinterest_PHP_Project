@@ -3,7 +3,7 @@
 Deze klasse dient om subscribers te laten inschrijven 
 op onze nieuwsbrief.
 */
-class Activity
+class comments
 {
 	private $m_sText;
 	
@@ -31,35 +31,16 @@ class Activity
 		return $vResult;
 	}
 	
-	public function Save()
-	/*
-	De methode Save dient om een nieuwe activity te bewaren in onze databank.
-	De methode geeft boolean "true" terug wanneer het invoegen geslaagd is.
-	Wanneer het invoegen van de subscriber niet gelukt is, geeft de functie "false" terug.
-	Databank gegevens kunnen eventueel in een aparte klasse DbConnectie gestopt worden.
-	*/
-	{
+	public function Save($item_id){
 
-		$bResult = false;
-		
-		$conn = Db::getInstance();
-			
-				//vergeet niet te beschermen tegen SQL Injection wanneer je een query uitvoert
-				$statement = $conn->prepare("INSERT INTO comments (comments) VALUES ('".mysqli_real_escape_string($conn, $this->Text)."');");				
-				if ($rResult = mysqli_query($conn, $statement) != false)
-				{	
-					$bResult = true;	
-				}
-				else
-				{
-					// er zijn geen query resultaten, dus query is gefaald
-					throw new Exception('Caramba! Could not update your status!');	
-				}
-			
-
-		
-	
-		return $bResult;
+        
+        $conn = Db::getInstance();
+        
+        $statement = $conn->prepare("INSERT INTO comments (comments, id_user, id_item) VALUES :comments, :id_user, :id_item");
+        $statement->bindValue(":comments", $this->Text);
+        $statement->bindValue(":id_user", $SESSION["id"]);
+        $statement->bindValue(":id_item", $item_id);
+        $statement->execute();
 	}
 	
 	public function GetRecentActivities()
@@ -67,11 +48,20 @@ class Activity
 		  $conn = Db::getInstance();
         
 			$statement = $conn->prepare("select * from comments ORDER BY id DESC LIMIT 5");
-			$rResult = mysqli_query($conn, $statement);
-			return $rResult;
+            $statement->execute();
+	        return $statement->fetchAll(PDO::FETCH_ASSOC);
 
 		
 			
 	}
+    
+    public function getItemComments($item){
+        $conn = Db::getInstance();
+        
+        $statement = $conn->prepare("SELECT comments FROM comments WHERE id_item = :id_item");
+        $statement->bindValue("id_item", $item);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
 }
 ?>

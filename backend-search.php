@@ -1,6 +1,8 @@
 <?php
 
-include_once("classes/db.class.php");
+spl_autoload_register(function($class){
+    include_once("classes/".$class.".class.php");
+});
 /* Attempt MySQL server connection. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
 try{

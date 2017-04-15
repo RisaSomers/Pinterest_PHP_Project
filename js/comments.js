@@ -17,14 +17,7 @@ $(document).ready(function(){
                // code + message
                if( response.code == 200 ){
 
-                   // iets plaatsen?
-                    var li = $("<li style='display: none;'>");
-                    li.html("<h2>GoodBytes.be</h2>" + response.message);
-
-                   // waar?
-                   $("#listupdates").prepend( li );
-                   $("#listupdates li").first().slideDown();
-                   $("#activitymessage").val("").focus();
+                  
                }
            });
 

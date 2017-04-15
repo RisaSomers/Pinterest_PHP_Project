@@ -1,9 +1,12 @@
 <?php
 
+spl_autoload_register(function($class){
+    include_once("classes/".$class.".class.php");
+});
+
 session_start();
 
 
-include_once('classes/db.class.php');
 if(isset($_POST['SignIn'])){
     
     try{
@@ -13,18 +16,17 @@ if(isset($_POST['SignIn'])){
     $passwordAttempt = $_POST['password'];
 
     //Retrieve the user account information for the given username.
-    $pdo = Db::getInstance();
-    $sql = "SELECT id, email, password FROM users WHERE email = :email";
-    $stmt = $pdo->prepare($sql);
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("SELECT id, email, password FROM users WHERE email = :email");
 
     //Bind value.
-    $stmt->bindValue(':email', $email);
+    $statement->bindValue(':email', $email);
 
     //Execute.
-    $stmt->execute();
+    $statement->execute();
 
     //Fetch row.
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     //If $row is FALSE.
     if($user === false){
@@ -45,6 +47,10 @@ if(isset($_POST['SignIn'])){
             $_SESSION['id'] = $user['id'];
             $_SESSION['logged_in'] = time();
             $_SESSION['email'] = $_POST["email"];
+            
+            $_SESSION['firstname'] = $user['firstname'];
+            $_SESSION['lastname'] = $user['lastname'];
+            $_SESSION['avatar'] = $user['avatar'];
 
 
             header('Location: index.php');

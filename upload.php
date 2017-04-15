@@ -1,10 +1,11 @@
 <?php
 
+spl_autoload_register(function($class){
+    include_once("classes/".$class.".class.php");
+});
+
 session_start();
 
-
-include_once('classes/db.class.php');
-include_once("classes/Items.class.php");
 
 if(!empty($_POST)){
     try {

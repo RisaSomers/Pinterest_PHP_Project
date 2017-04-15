@@ -1,7 +1,6 @@
 <?php
 
-    include_once("classes/db.class.php");
-    include_once("classes/user.class.php");
+
 
 Class Items {
     private $url;

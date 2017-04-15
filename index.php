@@ -1,9 +1,8 @@
 <?php
 
-include_once("classes/user.class.php");
-include_once("classes/db.class.php");
-include_once("classes/topics.class.php");
-include_once("classes/comments.class.php");
+spl_autoload_register(function($class){
+    include_once("classes/".$class.".class.php");
+});
 
 
 session_start();
@@ -19,22 +18,22 @@ session_start();
     $conn = Db::getInstance();
     $sth = $conn->prepare("SELECT * FROM items;");
 
-		$sth->execute();
+    $sth->execute();
 		
     $t = new Topics();
     $feed = $t->getUserPosts();
 
 
 
-    $activity = new Activity();
+    $comments = new Comments();
 	
 	//controleer of er een update wordt verzonden
 	if(!empty($_POST['activitymessage']))
 	{
-		$activity->Text = $_POST['activitymessage'];
+		$comments->Text = $_POST['activitymessage'];
 		try 
 		{
-			$activity->Save();
+			
             
 		} 
 		catch (Exception $e) 
@@ -43,7 +42,8 @@ session_start();
 		}
 	}
 
-    $recentActivities = $activity->GetRecentActivities();
+    $recentActivities = $comments->GetRecentActivities();
+    var_dump($recentActivities);
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -89,20 +89,28 @@ session_start();
                 
                 <h5>Comments</h5>
                 
+                <form action="" method="post">
+                
                 <input type="text" value="comments" id="activitymessage" name="activitymessage" />
+                <input type="hidden" name="item_id" value="<?php echo $row["id"] ?>">
 		        <input id="btnSubmit" type="submit" value="Share" />
+               
+                </form>
                 
                 <ul id="listupdates">
-		<?php 
-			if(mysqli_num_rows($recentActivities) > 0)
-			{		
-				while($singleActivity = mysqli_fetch_assoc($recentActivities))
-				{
-					echo "<li><h2>GoodBytes.be</h2> ". htmlspecialchars($singleActivity['activity_description'] )."</li>";
-				}
-			}
+		
+		<?php if($comments->getItemComments($row["id"])["comments"] != ""){
+             echo "<li>" . $comments->getItemComments($row["id"])["comments"] . "</li>"; 
 
-		?>
+            echo "<li>" . . "</li>";
+    
+    
+            echo "<li>" . . "</li>";
+}?>
+             
+             
+             
+		
 		</ul>
 		
 		</div> 
@@ -129,9 +137,10 @@ session_start();
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
-    <script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
     
-    <script scr="js/comments.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
+    
+    <script src="js/comments.js"></script>
     
 
     <!-- Bootstrap Core JavaScript -->

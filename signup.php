@@ -1,8 +1,12 @@
 <?php
+
+spl_autoload_register(function($class){
+    include_once("classes/".$class.".class.php");
+});
+
 session_start();
 
-    include_once ("classes/user.class.php");
-    include_once("classes/db.class.php");
+
 
     // als we submitten gaan we velden uitlezen
     if(!empty($_POST)){
@@ -82,6 +86,8 @@ session_start();
                         $_SESSION['lastName'] = $users->lastname;
                         $_SESSION['firstName'] = $users->firstname;
                         $_SESSION['id'] = $resultaat['id'];
+                        
+        
                         header("Location: topics.php");
                     }
 
@@ -89,23 +95,14 @@ session_start();
                         $fail = "oops, something went wrong! try again!";
                         header("Location: signup.php");
                     }
-
-
-
                 } 
-                
-                
+
             }
 
         }
-
-
-    
                 catch(Exception $e){
                     $error = $e->getMessage();
                 }
-
-
             }
 
          
