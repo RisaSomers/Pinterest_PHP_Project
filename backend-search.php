@@ -3,8 +3,7 @@
 spl_autoload_register(function($class){
     include_once("classes/".$class.".class.php");
 });
-/* Attempt MySQL server connection. Assuming you are running MySQL
-server with default setting (user 'root' with no password) */
+
 try{
     $conn = Db::getInstance();
     // Set the PDO error mode to exception
@@ -26,7 +25,9 @@ try{
         $stmt->execute();
         if($stmt->rowCount() > 0){
             while($row = $stmt->fetch()){
-                echo "<p>" . $row['name'] . "</p>";
+                echo "<a href=\"topics.php\">";
+                echo "<p>". $row['name'] . "</p>";
+                echo "</a>";
             }
         } else{
             echo "<p>No matches found";
