@@ -16,33 +16,11 @@ session_start();
 	}
 
     $conn = Db::getInstance();
-    $sth = $conn->prepare("SELECT * FROM items;");
-
-    $sth->execute();
+    $results = $conn->prepare("SELECT * FROM items;");
+    $results->execute();
 		
     $t = new Topics();
     $feed = $t->getUserPosts();
-
-
-
-    $comments = new Comments();
-	
-	//controleer of er een update wordt verzonden
-	if(!empty($_POST['activitymessage']))
-	{
-		$comments->Text = $_POST['activitymessage'];
-		try 
-		{
-			
-            
-		} 
-		catch (Exception $e) 
-		{
-			$feedback = $e->getMessage();
-		}
-	}
-
-    $recentActivities = $comments->GetRecentActivities();
 
 
 ?><!DOCTYPE html>
@@ -73,53 +51,60 @@ session_start();
                 <h1 class="page-header">Your feed</h1>
 
             </div>
-        
-     <?php while( $row = $sth->fetch() ):?>
-
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="#">
-
-        
-<img src="uploads/posts/<?php echo $row['Image'] ?>" class="thumbnail"alt="">
-               
-               <p></p><?php echo $row['Beschrijving'] ?></p>
-               
-               </a>
-               
-                
-                
-                <h5>Comments</h5>
-                
-                <form action="" method="post">
-                
-                <input type="text" value="" placeholder="comments" id="activitymessage" name="activitymessage" />
-                <input type="hidden" name="item_id" value="<?php echo $row["id"] ?>">
-		        <input id="btnSubmit" type="submit" value="Share" />
-               
-                </form>
-                
-                <ul id="listupdates">
-		
-		<?php if($comments->getItemComments($row["id"])["comments"] != ""){
-             echo "<li>" . $comments->getItemComments($row["id"])["comments"] . "</li>"; 
-
-
+            
+            
+     <form action="" method="post">    
+            
+<div class="wrapper">
+    <ul id="results"> 
     
     
-}?>
-             
-             
-             
-		
-		</ul>
-		
-		</div> 
-  
-            </div>
-                    <?php endwhile; ?>     
-                                  
-
+    <div class="container" style="margin:35px auto;">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 results"> </div>
         </div>
+    
+    
+    
+    <?php while( $row = $results->fetch() ):?>
+
+    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+        <a class="thumbnail" href="#">
+
+        
+            <img src="uploads/posts/<?php echo $row['Image'] ?>" class="thumbnail"alt="">
+               
+            <p><?php echo $row['Beschrijving'] ?></p>
+               
+        </a>
+    </div> 
+  
+    </div>  
+    
+    <?php endwhile; ?>  
+    
+    </ul>
+</div>   
+      </form>   
+       
+           
+        <div class="text-center">
+            <button class="btn btn-default" id="loadmorebtn">
+                <img src="ajax-loader.gif" class="ani_image" style="float:left">
+                &nbsp; Load More
+            </button>
+        </div>
+                                         
+        </div>
+
+       
+        </div>
+        
+        
+
+
+        
+        
 
         <hr>
 
@@ -136,15 +121,41 @@ session_start();
     <!-- /.container -->
 
     <!-- jQuery -->
+    
     <script src="js/jquery.js"></script>
+    
     
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
     
     <script src="js/comments.js"></script>
+    <script src="js/loadmore.js" ></script>
     
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    
+    
+    
+   <script>
+    var mypage = 1;
+    mycontent(mypage);
+    $('#loadmorebtn').click(function(e){
+        mypage++;
+        mycontent(mypage);
+    })
+    function mycontent(mypage){
+        $('.ani_image').show()
+        $.post('data.php', {page: mypage}, function(data){
+            if(data.trim().length == 0){
+                $('#loadmorebtn').text("No more posts").prop("disabled", true)
+            }
+            $('.results').append(data)
+            $("html, body").animate({scrollTop: $("#loadmorebtn").offset().top}, 800)
+            $('.ani_image').hide()
+        })
+    }
+    </script> 
+    
 
 </body>
 

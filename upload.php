@@ -12,7 +12,7 @@ if(!empty($_POST)){
         // create prepared statement
         $item = new Items();
         $item->setDescription($_POST["beschrijving"]);
-        if (!empty($_POST["fileToUpload"])) {
+        if (!empty($_FILES["fileToUpload"])) {
             $item->setImage($_FILES["fileToUpload"]);
         } else {
             $item->setUrl($_POST["link"]);

@@ -1,7 +1,5 @@
 <?php
 
-
-
 Class Items {
     private $url;
     private $image;
@@ -25,7 +23,6 @@ Class Items {
     public function setUrl($url)
     {
         $this->url = $url;
-        
     }
 
     /**
@@ -34,13 +31,9 @@ Class Items {
     public function setImage($image)
     {
         $filename = md5($image["name"] . time()) . "." . pathinfo($image["name"], PATHINFO_EXTENSION);
-        
-        
         if (move_uploaded_file($image["tmp_name"], "uploads/posts/" . $filename)) {
             $this->image = $filename;
-        } 
-        
-        else {
+        } else {
             throw new Exception("File could not be uploaded");
         }
     }
