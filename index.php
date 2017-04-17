@@ -66,14 +66,25 @@ session_start();
         <?php  $items = $statement->fetchAll(PDO::FETCH_ASSOC);
 
    foreach( $items as $key => $row ){
- 
+            $pp = new Items();
+            $pp->setId($row["id"]);
+            $likes = $pp->getLike();
+            $dislikes = $pp->getDislike();
             echo "<h2>" . $row['Beschrijving'] . "</h2>  
                            <a href='detail.php?id=" . $row['id'] . "'>
                            
                                <div class='post_img'>
-                                   <img src='uploads/posts/" . $row['Image'] . "' alt='" . $row['id'] . "'>
+                                   ";
+                                        if (!empty($row['Url'])) {
+                                            echo "<img src='" . $row['Url'] . "' alt='" . $row['id'] . "'>";
+                                        } else {
+                                            echo "<img src='uploads/posts/" . $row['Image'] . "' alt='" . $row['id'] . "'>";
+                                        }
+                                   echo "
                                </div>
-                           </a>";
+                           </a>
+                           <a href='#' class='like' data-id='". $row["id"] . "'>LIKE - " . $likes . "</a>
+                           <a href='#' class='dislike' data-id='". $row["id"] . "'>DISLIKE - " . $dislikes . "</a>";
 }?>
 
                 </div>
@@ -118,9 +129,28 @@ session_start();
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-    
-    
-    
+
+    <script>
+        $(".like").bind("click", function(e) {
+            e.preventDefault();
+            var el = $(this);
+            $.get("ajax/like.php", {post_id: this.getAttribute("data-id")}, function(data) {
+                if (data.success == true) {
+                    el.html("LIKE - " + data.count++);
+                }
+            })
+        });
+
+        $(".dislike").bind("click", function(e) {
+            e.preventDefault();
+            var el = $(this);
+            $.get("ajax/dislike.php", {post_id: this.getAttribute("data-id")}, function(data) {
+                if (data.success == true) {
+                    el.html("DISLIKE - " + data.count++);
+                }
+            })
+        });
+    </script>
    <script>
     $(document).ready(function(){
         $("#more").click(function(){

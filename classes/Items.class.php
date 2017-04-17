@@ -4,6 +4,17 @@ Class Items {
     private $url;
     private $image;
     private $description;
+    private $id;
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
 
     public function __construct() {
 
@@ -73,7 +84,7 @@ Class Items {
         }
 
         $stmt->bindValue(":beschrijving", $this->description);
-        $test = $stmt->execute();
+        $stmt->execute();
 
     }
     
@@ -83,5 +94,44 @@ Class Items {
         $statement = $conn->prepare("SELECT Image, Beschrijving FROM items WHERE id = :id");
         $statement->bindValue(":id", $_SESSION["id"]);
         $statement->execute();
+    }
+
+    public function getLike() {
+        $pdo = Db::getInstance();
+        $stmt = $pdo->prepare("SELECT count(*) as 'likes' FROM likes WHERE post_id = :postid");
+        $stmt->bindValue(":postid", $this->id);
+        $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC)["likes"];
+    }
+
+    public function getDislike() {
+        $pdo = Db::getInstance();
+        $stmt = $pdo->prepare("SELECT count(*) as 'dislikes' FROM dislikes WHERE post_id = :postid");
+        $stmt->bindValue(":postid", $this->id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)["dislikes"];
+    }
+
+    public function checkIfInteracted() {
+        $pdo = Db::getInstance();
+        $stmt = $pdo->prepare("SELECT count(*) as 'dislikes' FROM dislikes WHERE user_id = :userid AND post_id = :postid");
+        $stmt->bindValue(":userid", $_SESSION["id"]);
+        $stmt->bindValue(":postid", $this->id);
+        $stmt->execute();
+        if ($stmt->fetch(PDO::FETCH_ASSOC)["dislikes"] == 1) {
+            return true;
+        }
+
+        $pdo = Db::getInstance();
+        $stmt = $pdo->prepare("SELECT count(*) as 'likes' FROM likes WHERE user_id = :userid AND post_id = :postid");
+        $stmt->bindValue(":userid", $_SESSION["id"]);
+        $stmt->bindValue(":postid", $this->id);
+        $stmt->execute();
+        if ($stmt->fetch(PDO::FETCH_ASSOC)["likes"] == 1) {
+            return true;
+        }
+
+        return false;
     }
 }
