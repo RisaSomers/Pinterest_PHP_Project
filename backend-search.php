@@ -27,7 +27,7 @@ try{
         if($stmt->rowCount() > 0){
             while($row = $stmt->fetch()){
               echo "<p>";
-              echo "<a href=\"topics.php\">";
+              echo "<a href=\"detail.php?id={$row['id']}\">";
               echo "<img src=\"{$row['image']}" . "\" alt=\"\" />";
               echo $row['name'] . "</p>";
               echo "</a>";
