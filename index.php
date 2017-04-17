@@ -16,8 +16,9 @@ session_start();
 	}
 
     $conn = Db::getInstance();
-    $results = $conn->prepare("SELECT * FROM items;");
-    $results->execute();
+    
+    $statement = $conn->prepare("select * from items order by id DESC limit 0,20");
+    $statement->execute();
 		
     $t = new Topics();
     $feed = $t->getUserPosts();
@@ -42,9 +43,9 @@ session_start();
 
     <!-- Page Content -->
 
-
-    <div class="container">
-
+        <div id="container">
+        
+        
         <div class="row">
 
             <div class="col-lg-12">
@@ -52,8 +53,7 @@ session_start();
 
             </div>
             
-            
-     <form action="" method="post">    
+            <form action="" method="post">    
             
 <div class="wrapper">
     <ul id="results"> 
@@ -61,54 +61,35 @@ session_start();
     
     <div class="container" style="margin:35px auto;">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3 results"> </div>
+            <div class="col-md-6 col-md-offset-3 results">
+
+        <?php  $items = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+   foreach( $items as $key => $row ){
+ 
+            echo "<h2>" . $row['Beschrijving'] . "</h2>  
+                           <a href='detail.php?id=" . $row['id'] . "'>
+                           
+                               <div class='post_img'>
+                                   <img src='uploads/posts/" . $row['Image'] . "' alt='" . $row['id'] . "'>
+                               </div>
+                           </a>";
+}?>
+
+                </div>
         </div>
-    
-    
-    
-    <?php while( $row = $results->fetch() ):?>
-    
-        
 
-    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-        <a class="thumbnail" href="detail.php?id=<?php echo $row['id']; ?>">
-
-        
-            <img src="uploads/posts/<?php echo $row['Image'] ?>" class="thumbnail"alt="">
-               
-            <p><?php echo $row['Beschrijving'] ?></p>
-               
-        </a>
-    </div> 
-  
-    </div>  
-    
-       
-    
-    <?php endwhile; ?>  
-    
-    </ul>
+         </ul>
 </div>   
-      </form>   
-       
-           
-        <div class="text-center">
-            <button class="btn btn-default" id="loadmorebtn">
-                <img src="ajax-loader.gif" class="ani_image" style="float:left">
-                &nbsp; Load More
-            </button>
-        </div>
-                                         
-        </div>
-
-       
-        </div>
+      </form>  
         
-        
-
-
-        
-        
+        <input type="hidden" id="result_no" value="20">
+    </div>
+    <button type='submit' name='more' id='more'>Load more</button>
+    
+    
+</div>
+    </div>
 
         <hr>
 
@@ -141,23 +122,45 @@ session_start();
     
     
    <script>
-    var mypage = 1;
-    mycontent(mypage);
-    $('#loadmorebtn').click(function(e){
-        mypage++;
-        mycontent(mypage);
-    })
-    function mycontent(mypage){
-        $('.ani_image').show()
-        $.post('data.php', {page: mypage}, function(data){
-            if(data.trim().length == 0){
-                $('#loadmorebtn').text("No more posts").prop("disabled", true)
-            }
-            $('.results').append(data)
-            $("html, body").animate({scrollTop: $("#loadmorebtn").offset().top}, 800)
-            $('.ani_image').hide()
+    $(document).ready(function(){
+        $("#more").click(function(){
+            loadmore();
+        });
+
+        $("#like").click(function () {
+            like();
         })
+    });
+
+    function loadmore() {
+        var val = document.getElementById("result_no").value;
+        $.ajax({
+            type: 'post',
+            url: 'AJAX/loadMore.php',
+            data: {     getresult:val   },
+            success: function (response) {
+                var content = document.getElementById("items");
+                content.innerHTML = content.innerHTML+response;
+                // LIMIT + 20
+                document.getElementById("result_no").value = Number(val)+20;
+            }
+        });
     }
+
+    function like(){
+        $.ajax({
+            type: 'post',
+            url: 'AJAX/like.php',
+            data: {     getresult:val   },
+            success: function (response) {
+                var like = document.getElementById("likes");
+                like.innerHTML = like.innerHTML+response;
+                // LIMIT + 20
+                document.getElementById("result_no").value = Number(val)+20;
+            }
+        });
+    }
+
     </script> 
     
 
