@@ -74,4 +74,12 @@ Class Items {
         return $stmt->execute();
 
     }
+    
+    public function getDetail(){
+        $conn = Db::getInstance();
+        
+        $statement = $conn->prepare("SELECT Image, Beschrijving FROM items WHERE id = :id");
+        $statement->bindValue(":id", $_SESSION["id"]);
+        $statement->execute();
+    }
 }

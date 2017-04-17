@@ -67,9 +67,11 @@ session_start();
     
     
     <?php while( $row = $results->fetch() ):?>
+    
+        
 
     <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-        <a class="thumbnail" href="#">
+        <a class="thumbnail" href="detail.php?id=<?php echo $row['id']; ?>">
 
         
             <img src="uploads/posts/<?php echo $row['Image'] ?>" class="thumbnail"alt="">
@@ -80,6 +82,8 @@ session_start();
     </div> 
   
     </div>  
+    
+       
     
     <?php endwhile; ?>  
     

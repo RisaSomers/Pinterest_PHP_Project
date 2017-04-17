@@ -36,11 +36,6 @@
         box-sizing: border-box;
     }
     /* Formatting result items */
-    .result img{
-      width:50px;
-      height: 50px;
-      padding: 2px 5px;
-    }
     .result p{
         margin: 0;
         padding: 7px 10px;
