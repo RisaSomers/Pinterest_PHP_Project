@@ -26,7 +26,11 @@ try{
         $stmt->execute();
         if($stmt->rowCount() > 0){
             while($row = $stmt->fetch()){
-                echo "<p>" . $row['name'] . "</p>";
+              echo "<p>";
+              echo "<a href=\"topics.php\">";
+              echo "<img src=\"{$row['image']}" . "\" alt=\"\" />";
+              echo $row['name'] . "</p>";
+              echo "</a>";
             }
         } else{
             echo "<p>No matches found";

@@ -43,6 +43,12 @@
         border-top: none;
         cursor: pointer;
     }
+    .result img{
+      width:50px;
+      height: 50px;
+      padding: 2px 5px;
+    }
+    
     .result p:hover{
         background: #f2f2f2;
     }
