@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Gegenereerd op: 14 apr 2017 om 16:37
+-- Gegenereerd op: 17 apr 2017 om 19:46
 -- Serverversie: 10.1.21-MariaDB
 -- PHP-versie: 5.6.30
 
@@ -29,8 +29,16 @@ SET time_zone = "+00:00";
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `id_item` int(11) NOT NULL,
   `comments` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `comments`
+--
+
+INSERT INTO `comments` (`id`, `id_user`, `id_item`, `comments`) VALUES
+(1, 42, 3, 'Hallo');
 
 -- --------------------------------------------------------
 
@@ -51,9 +59,28 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `user_id`, `Image`, `Url`, `Beschrijving`) VALUES
-(3, 0, '49048cd46d6fa23c6d6fdc2cb6ce4762.png', '', 'sxksqksqkl'),
-(4, 0, 'ac525979dfc38f0809df7e644784551e.png', '', 'jdjdjdsdsjk'),
-(5, 0, 'cf4741e2ff6e2631de5e773c34906a0b.png', '', 'Logo design');
+(22, 72, '347b70ad4a62a5c5851cace08f36ae65.jpg', '', 'Cute black pug'),
+(23, 72, '7131224c59b7973b2b143dc132d0b972.jpeg', '', 'Look the eyes'),
+(24, 72, '48b13d221e11869dbc266658c2718e32.jpg', '', 'Yellow'),
+(25, 72, '14d8600161fd27aeb8d3cb7198781bf9.jpg', '', 'Blue babedie babeda'),
+(26, 72, 'd04ff43b94332890c92c428d26eb7934.jpg', '', 'Black pugles'),
+(27, 72, 'c6ac6954a974a2061085d11b830cd0e9.jpg', '', 'smile'),
+(28, 72, '5ce5fc7dd2295147b13e73c456645e8a.JPG', '', 'Look up'),
+(29, 72, 'f36b420e4d48af97534ef826dda961ea.jpg', '', 'baby'),
+(30, 72, 'ef90e803c3051784f66b4bdeb8955e91.jpg', '', 'Twin'),
+(32, 72, 'ad69baab1414c422b6927cb2650cd09a.jpg', '', 'red'),
+(33, 72, '5abda4b2104625448e7c90834b042ef1.jpg', '', 'Howdy'),
+(34, 85, 'e506356dcb01d6a7309939c16d84b751.jpg', '', 'tongetje'),
+(35, 85, '9c92fbcd7d5e5e5d8ea7dca5dc61a37d.jpg', '', 'fat'),
+(36, 85, 'e453c430ab60f7818d0b50fe7fb69cf9.jpg', '', 'shy'),
+(37, 85, '119f9969cc6dff5280a139ce65e147af.jpg', '', 'got3'),
+(38, 85, '7477d8c2976c11f55304dcfe7adbb27d.jpg', '', 'black pugles'),
+(39, 85, '563cdf9152c527b8b5448be6ec2c2443.jpg', '', 'proud'),
+(40, 85, 'c3e1903627d621fd36f6e10cc91e2293.jpg', '', 'cowboy'),
+(41, 85, 'e453842484580fadcce87f934aa2c9ec.jpeg', '', 'hello'),
+(42, 85, '02db9cded3eea6ef638358702afae71e.jpg', '', 'lay down'),
+(43, 85, '77aad3e37ec154c2326f9c7c8bc50103.jpg', '', 'cool'),
+(44, 85, '3a218ad317919028cc0d4262ab057eeb.jpg', '', 'cute');
 
 -- --------------------------------------------------------
 
@@ -150,14 +177,13 @@ INSERT INTO `Users` (`id`, `firstname`, `lastname`, `email`, `avatar`, `password
 (72, 'Kjell', 'Knapen', 'kjell@gmail.com', '', '$2y$12$Yueyz13bxScbVgS9o0lgKePtS84yCUZmh5EjWd6yfo9on0FnD/Oeu'),
 (73, 'Luc', 'VDA', 'luc@gmail.com', '', '$2y$12$fqI.tePMmUHrjrWPxdfZTeKSJq9tKWhhWdhmo/mco84Gvkiw3d6t.'),
 (74, 'Yann', 'VDA', 'yann@gmail.com', '', '$2y$12$JFZy8F3e/ZtfFulHZ.7KH.B2l/sc76OKj.ycO.3xNBT3kP0fqHSCK'),
-(75, 'Lieve', 'Steens', 'lieve@gmail.com', '', '$2y$12$iSDFIix8ONHTD4KGAn3BHe6v.TDUAXgKntldsINOfb8uAlZ4AbvMG'),
+(75, 'Lieveke', 'Steens', 'lieveke@gmail.com', '', '$2y$11$JjjmSSgJn1IuU28DYBNJuukx.7f8/i5V7yiU5FJ1nRczkSdeIykQG'),
 (76, 'Lore', 'Cornet', 'lore@gmail.com', '', '$2y$12$F5/oBgrPrioNtEnOhJOcnO63xTL/1C0gg5tV3ZP6OYvHfdv0u2c9K'),
 (77, 'Ronald', 'DB', 'ronald@gmail.com', '', '$2y$12$qXZP8Ocn1exoPC/XKi/obOrCw1AMuRdUwtxq4.L8L6A6rnqiX7AQO'),
 (78, 'Laurens', 'DR', 'laurens@gmail.com', '', '$2y$12$q.78HvZLEvnUn5VYvpb0EuURAtgEy/hCYcP.ARo4bZIoRKn9QOeQa'),
 (79, 'Joke', 'Schouw', 'joke@gmail.com', '', '$2y$12$VpKAlq1LVjPGHxZVOyh6AOmCO9nrOYr0ZVki10UBz1tH2u8XqW78y'),
 (80, 'Dorien', 'Macke', 'dorien@gmail.com', '', '$2y$12$9NDw69oZWlUIMOqUAfo45.kc/QYvsQkxuht/Fo7CwD0Xe3IMLe.SO'),
-(81, 'Lowieke', 'Janse', 'lowieke@gmail.com', 'ÿØÿà\0JFIF\0\0\0\0\0\0ÿÛ\0C\0		\n\r\Z\Z $.\' \",#(7),01444\'9=82<.342ÿÛ\0C			\r\r2!!22222222222222222222222222222222222222222222222222ÿÀ\08€\"\0ÿÄ\0\0\0\0\0\0\0\0\0\0\0\0\0ÿÄ\0B\0\0\0\0!1AQa\"q‘2¡±BÁÑáð#Rñ3b$rCc‚’4S%¢²ÿÄ\0\Z\0\0\0\0\0\0\0\0\0\0\0\0ÿÄ\0%\0\0\0\0\0\0!1A\"2QaqBÿÚ\0\0\0?\0øFS3û\"JÄ¢JÙ”9XÈà˜Ô±„R³•åDï…``RH%@l!¡ÐT¤‰ÙÂ†jð¢NØ\\#eÄe\0JíSºâDØÊ„Balû­¡Ü ÖŽWÂ”º#d(\n#²áìŠ2\"\n0Þë‚íP†˜’Ù	niE¬®™XËP¢èÀR@', '$2y$11$xYHXUXQ0QHoWWuFd1skiO.5QW7vBad30yMzMJFadZAYwcgynBThn.'),
-(85, 'Joost', 'Hans', 'joost@gmail.com', '', '$2y$12$JWBMHCXIRies/tpjKM6bsO.jKzk03PIHJrLMJbK1XFHbpIyYKCozy'),
+(85, 'Joost', 'Hans', 'joost@gmail.com', '', '$2y$11$KxbFahkprIvbfTDhY1kY5OSdcGTDhUUrgO9FUkyU2Zgbca.p9l9vG'),
 (86, 'Hanna', 'Tolenaren', 'hanna@gmail.com', '', '$2y$12$iWni4CCVfmwyBMW7Wg9KCuvZ3PRkkamXdi6ZAPRrU.05MRwIe7I26');
 
 -- --------------------------------------------------------
@@ -204,7 +230,14 @@ INSERT INTO `Users_Topics` (`id`, `email`, `topics_id`) VALUES
 (38, 'hanna@gmail.com', '1'),
 (39, 'hanna@gmail.com', '2'),
 (40, 'hanna@gmail.com', '5'),
-(41, 'hanna@gmail.com', '6');
+(41, 'hanna@gmail.com', '6'),
+(42, 'bart@gmail.com', '1'),
+(43, 'bart@gmail.com', '3'),
+(44, 'bart@gmail.com', '5'),
+(45, 'bob@gmail.com', '1'),
+(46, 'bob@gmail.com', '3'),
+(47, 'bob@gmail.com', '5'),
+(48, 'bob@gmail.com', '6');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -254,12 +287,12 @@ ALTER TABLE `Users_Topics`
 -- AUTO_INCREMENT voor een tabel `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT voor een tabel `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT voor een tabel `items_topics`
 --
@@ -279,7 +312,7 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT voor een tabel `Users_Topics`
 --
 ALTER TABLE `Users_Topics`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
