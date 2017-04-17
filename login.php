@@ -42,7 +42,6 @@ if(isset($_POST['SignIn'])){
 
         //If $validPassword is TRUE, the login has been successful.
         if($validPassword){
-
             //Provide the user with a login session.
             $_SESSION['id'] = $user['id'];
             $_SESSION['logged_in'] = time();

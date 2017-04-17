@@ -12,7 +12,7 @@ if(!empty($_POST)){
         // create prepared statement
         $item = new Items();
         $item->setDescription($_POST["beschrijving"]);
-        if (!empty($_FILES["fileToUpload"])) {
+        if (empty($_POST["link"])) {
             $item->setImage($_FILES["fileToUpload"]);
         } else {
             $item->setUrl($_POST["link"]);
@@ -20,7 +20,7 @@ if(!empty($_POST)){
 
         $item->create();
         echo "Item is created";
-        header("Location: index.php");
+        header("Location: index.php?success=true");
         
     }
     catch (Exception $e) {
