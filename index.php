@@ -61,7 +61,7 @@ session_start();
     
     <div class="container" style="margin:35px auto;">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3 results">
+            <div id="items" class="col-md-6 col-md-offset-3 results">
 
         <?php  $items = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -88,6 +88,7 @@ session_start();
 }?>
 
                 </div>
+        </div>
         </div>
 
          </ul>
@@ -171,20 +172,6 @@ session_start();
             success: function (response) {
                 var content = document.getElementById("items");
                 content.innerHTML = content.innerHTML+response;
-                // LIMIT + 20
-                document.getElementById("result_no").value = Number(val)+20;
-            }
-        });
-    }
-
-    function like(){
-        $.ajax({
-            type: 'post',
-            url: 'AJAX/like.php',
-            data: {     getresult:val   },
-            success: function (response) {
-                var like = document.getElementById("likes");
-                like.innerHTML = like.innerHTML+response;
                 // LIMIT + 20
                 document.getElementById("result_no").value = Number(val)+20;
             }
