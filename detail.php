@@ -104,7 +104,7 @@ session_start();
   
   <div class="col-lg-3 col-md-4 col-xs-6 thumb">
    <h1><?php echo $detail['Beschrijving']; ?></h1>
-<h5><?php echo $_SESSION['email']; ?></h5>
+
 <a class="thumbnail" href="">
 <img src="uploads/posts/<?php echo $detail['Image']; ?>" class="thumbnail"alt="">
     </a>
