@@ -27,8 +27,7 @@ else
         /*** give praise and thanks to the php gods ***/
         $feedback = "Thank you for submitting";
         $avatar = " ";
-        $userData = $a->getAllUser();
-        var_dump($userData);
+        /*$userData = $a->getAllUser();*/
         
         }
     catch(Exception $e)
@@ -113,19 +112,19 @@ if(!isset($_SESSION["email"])){
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                    <h4><?php echo $feedback2 ?></h4>
-                    <label name="firstname" for="name">Name</label>
+                    <label for="name">Name</label>
                     <input name="firstname" type="text" class="form-control" id="name" name="name">
                 </div>
                 <div class="form-group">
-                    <label name="email" for="email">Email</label>
+                    <label for="email">Email</label>
                     <input name="email" type="email" class="form-control" id="email" name="email">
                 </div>
                 <div class="form-group">
-                    <label name="oldpassword" for="pass">Old password</label>
+                    <label for="pass">Old password</label>
                     <input name="password" type="password" class="form-control" id="pass" name="pass">
                 </div>
                 <div class="form-group">
-                    <label name="password" for="pass_rep">New password</label>
+                    <label for="pass_rep">New password</label>
                     <input name="password" type="password" class="form-control" id="pass_rep" name="pass_rep">
                 </div>
 

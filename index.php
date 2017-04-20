@@ -50,6 +50,14 @@ session_start();
 
 </head>
 
+    <style>
+    
+        img{
+            70%;
+        }
+        
+    </style>
+
 <body>
 
     <!-- Navigation -->
