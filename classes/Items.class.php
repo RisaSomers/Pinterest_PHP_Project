@@ -134,4 +134,34 @@ Class Items {
 
         return false;
     }
+
+
+
+
+    public function checkIfLiked($post) {
+        $pdo = Db::getInstance();
+        $stmt = $pdo->prepare("SELECT * FROM likes WHERE post_id = :postid AND user_id = :userid");
+        $stmt->bindValue(":userid", $_SESSION["id"]);
+        $stmt->bindValue(":postid", $post);
+        $stmt->execute();
+        if (empty($stmt->fetch())) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public function checkIfDisliked($post) {
+        $pdo = Db::getInstance();
+        $stmt = $pdo->prepare("SELECT * FROM dislikes WHERE post_id = :postid AND user_id = :userid");
+        $stmt->bindValue(":userid", $_SESSION["id"]);
+        $stmt->bindValue(":postid", $post);
+        $stmt->execute();
+        if (empty($stmt->fetch())) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }

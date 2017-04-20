@@ -23,6 +23,8 @@ session_start();
     $t = new Topics();
     $feed = $t->getUserPosts();
 
+    $u = new users();
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -32,6 +34,19 @@ session_start();
     <?php include("includes/header.php"); ?>
 
     <title>IMDterest</title>
+
+    <style>
+
+
+        .liked, .liked:hover, .liked:focus {
+            font-weight: bold;
+        }
+
+        .disliked, .disliked:hover, .disliked:focus {
+            font-weight: bold;
+        }
+
+    </style>
 
 </head>
 
@@ -82,9 +97,20 @@ session_start();
                                         }
                                    echo "
                                </div>
-                           </a>
-                           <a href='#' class='like' data-id='". $row["id"] . "'>LIKE - " . $likes . "</a>
-                           <a href='#' class='dislike' data-id='". $row["id"] . "'>DISLIKE - " . $dislikes . "</a>";
+                           </a>";
+
+                           if($pp->checkIfLiked($row['id'])): ?>
+                                <a href='#' class='like liked' data-id='<?php echo $row["id"] ?>'>UNLIKE - <?php echo $likes ?></a>
+                            <?php else: ?>
+                               <a href='#' class='like' data-id='<?php echo $row["id"] ?>'>LIKE - <?php echo $likes ?></a>
+                            <?php endif; ?>
+
+                <?php if($pp->checkIfDisliked($row['id'])): ?>
+                    <a href='#' class='dislike disliked' data-id='<?php echo $row["id"] ?>'>UNDISLIKE - <?php echo $dislikes ?></a>
+                <?php else: ?>
+                    <a href='#' class='dislike' data-id='<?php echo $row["id"] ?>'>DISLIKE - <?php echo $dislikes ?></a>
+                <?php endif;
+
 }?>
 
                 </div>
@@ -132,25 +158,54 @@ session_start();
     <script src="js/bootstrap.min.js"></script>
 
     <script>
-        $(".like").bind("click", function(e) {
-            e.preventDefault();
-            var el = $(this);
-            $.get("ajax/like.php", {post_id: this.getAttribute("data-id")}, function(data) {
-                if (data.success == true) {
-                    el.html("LIKE - " + data.count++);
-                }
-            })
-        });
+       function refreshEventListeners() {
+           $(".like, .dislike, .liked, .disliked").off();
 
-        $(".dislike").bind("click", function(e) {
-            e.preventDefault();
-            var el = $(this);
-            $.get("ajax/dislike.php", {post_id: this.getAttribute("data-id")}, function(data) {
-                if (data.success == true) {
-                    el.html("DISLIKE - " + data.count++);
-                }
-            })
-        });
+           $(".like:not(.liked)").bind("click", function(e) {
+               e.preventDefault();
+               var el = $(this);
+               $.get("ajax/like.php", {post_id: this.getAttribute("data-id")}, function(data) {
+                   if (data.success == true) {
+                       el.html("UNLIKE - " + data.count++).addClass("liked");
+                       refreshEventListeners();
+                   }
+               })
+           });
+
+           $(".dislike:not(.disliked)").bind("click", function(e) {
+               e.preventDefault();
+               var el = $(this);
+               $.get("ajax/dislike.php", {post_id: this.getAttribute("data-id")}, function(data) {
+                   if (data.success == true) {
+                       el.html("UNDISLIKE - " + data.count++).addClass("disliked");
+                       refreshEventListeners();
+                   }
+               })
+           });
+
+           $(".liked").bind("click", function(e) {
+               e.preventDefault();
+               var el = $(this);
+               $.get("ajax/unlike.php", {post_id: this.getAttribute("data-id")}, function(data) {
+                   if (data.success == true) {
+                       el.html("LIKE - " + data.count--).removeClass("liked");
+                       refreshEventListeners();
+                   }
+               })
+           });
+
+           $(".disliked").bind("click", function(e) {
+               e.preventDefault();
+               var el = $(this);
+               $.get("ajax/undislike.php", {post_id: this.getAttribute("data-id")}, function(data) {
+                   if (data.success == true) {
+                       el.html("DISLIKE - " + data.count--).removeClass("disliked");
+                       refreshEventListeners();
+                   }
+               })
+           });
+       }
+       refreshEventListeners();
     </script>
    <script>
     $(document).ready(function(){
@@ -160,7 +215,7 @@ session_start();
 
         $("#like").click(function () {
             like();
-        })
+        });
     });
 
     function loadmore() {
