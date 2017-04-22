@@ -100,7 +100,9 @@ session_start();
 
 <!-- Page Content -->
 <div class="container">
-
+    <?php if($detail["user_id"] == $_SESSION["id"]): ?>
+    <a href="delete_post.php?id=<?php echo htmlentities($_GET["id"]); ?>">DELETE MEs</a>
+        <?php endif; ?>
   
   <div class="col-lg-3 col-md-4 col-xs-6 thumb">
    <h1 id="post" data-id="<?php echo $detail['id'] ?>"><?php echo $detail['Beschrijving']; ?></h1>
