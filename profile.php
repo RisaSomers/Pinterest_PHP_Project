@@ -20,7 +20,7 @@ else
             $upload = new users();
             
             $upload->upload($_FILES);
-            $feedback = "Please select a file";
+            $feedback = "Your avatar was uploaded!";
             $feedback2 = "Change your information";
         }
     }
@@ -31,7 +31,7 @@ if(!isset($_SESSION["email"])){
 	}
 
 
-    if(!empty($_POST)){
+    if(!empty($_POST['email'])){
         
          
         $_SESSION['email'] = $_POST['email'];

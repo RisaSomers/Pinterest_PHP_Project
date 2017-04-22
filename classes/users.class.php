@@ -147,8 +147,25 @@ class users
     
     public function update(){
       
+        if(empty($this->password) && empty($this->firstname)){
+            $conn = Db::getInstance();
+            
+            $statement = $conn->prepare("UPDATE users SET email = :email2 WHERE id = :id");
+            $statement->bindValue(":email2", $_SESSION["email"]);
+            $statement->bindValue(":id", $_SESSION["id"]);
+            return $statement->execute();
+        }
         
-        if(empty($this->password)){
+        elseif(empty($this->password) && empty($this->email)){
+            $conn = Db::getInstance();
+            
+            $statement = $conn->prepare("UPDATE users SET firstname = :firstname WHERE id = :id");
+            $statement->bindValue(":firstname", $_SESSION["firstname"] );
+            $statement->bindValue(":id", $_SESSION["id"]);
+            return $statement->execute();
+        }
+        
+        elseif(empty($this->password)){
             $conn = Db::getInstance();
             
             $statement = $conn->prepare("UPDATE users SET firstname = :firstname, email = :email2 WHERE id = :id");
@@ -158,8 +175,7 @@ class users
             return $statement->execute();
         }
         
-        elseif
-            (!empty($_POST["firstname"]) && !empty($_POST["email"])){
+        elseif(!empty($_POST["firstname"]) && !empty($_POST["email"])){
             $conn = Db::getInstance();
             $statement = $conn->prepare("UPDATE users SET firstname = :firstname, email = :email2, password = :password WHERE id = :id");
             $statement->bindValue(":firstname", $_POST['firstname']);
