@@ -7,32 +7,21 @@ spl_autoload_register(function($class){
 session_start();
 
 
-if(!isset($_FILES['userfile']))
+
+
+if(!isset($_FILES['avatar']))
     {
         $feedback = "Please select a file";
         $feedback2 = "Change your information";
     }
 else
     {
-    try    {
-        
-        $conn= Db::getInstance();
-		$sth = $conn->prepare("SELECT * FROM Users;");
-        $sth->execute();
-        
-        $a = new users();
-        
-        
-        $a->upload();
-        /*** give praise and thanks to the php gods ***/
-        $feedback = "Thank you for submitting";
-        $avatar = " ";
-        /*$userData = $a->getAllUser();*/
-        
-        }
-    catch(Exception $e)
-        {
-        echo '<h4>'.$e->getMessage().'</h4>';
+        if (!empty($_POST)){
+            $upload = new users();
+            
+            $upload->upload($_FILES);
+            $feedback = "Please select a file";
+            $feedback2 = "Change your information";
         }
     }
 
@@ -43,14 +32,18 @@ if(!isset($_SESSION["email"])){
 
 
     if(!empty($_POST)){
+        
+         
+        $_SESSION['email'] = $_POST['email'];
+        $_SESSION['firstname'] = $_POST['firstname'];
+        
             $update = new users();
-            $update->firstname = $_POST['firstname'];
-            $update->email = $_POST['email'];
-            $update->password = $_POST['password'];
+            
             $update->email = $_SESSION['email'];
             $update->update();
             $feedback2 = "Your changes have been made!";
         }
+
 
 ?><!doctype html>
 <html lang="en">
@@ -79,10 +72,10 @@ if(!isset($_SESSION["email"])){
                 <h1 class="page-header">Change your profile</h1>
                 <h4><?php echo $feedback ?></h4>
             </div>
-             
-             <?php if( !empty( $_POST ) ): ?>
-                        <img src="<?php echo $userData["avatar"] ?>" alt="">
-                    <?php endif; ?>
+
+
+              <img src="<?php echo !empty($_SESSION['avatar']) ? $_SESSION["avatar"] : 'uploads\64e102140c60d231fdd9d4449fc09b60.jpg'; ?>" alt="" style=" width: 10%; margin-left: 50px;" class="">
+
               
 
               <form enctype="multipart/form-data" action="<?php echo htmlentities($_SERVER['PHP_SELF']);?>" method="post">
@@ -91,7 +84,7 @@ if(!isset($_SESSION["email"])){
               
               
   <input type="hidden" name="MAX_FILE_SIZE" value="99999999" />
-  <div><input name="userfile" type="file" /></div> <br>
+  <div><input name="avatar" type="file" /></div> <br>
   <div><input type="submit" value="Submit" /></div>
   </form>
 
@@ -102,7 +95,7 @@ if(!isset($_SESSION["email"])){
 
 <div class="col-xs-12 no-padding" >
 
-    <form id="loginform" action="" method="post" enctype="multipart/form-data">
+   
         <div class="col-md-6 styleguide">
 
 
@@ -113,19 +106,19 @@ if(!isset($_SESSION["email"])){
                 <div class="form-group">
                    <h4><?php echo $feedback2 ?></h4>
                     <label for="name">Name</label>
-                    <input name="firstname" type="text" class="form-control" id="name" name="name">
+                    <input name="firstname" type="text" class="form-control" id="name">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input name="email" type="email" class="form-control" id="email" name="email">
+                    <input name="email" type="email" class="form-control" id="email" >
                 </div>
                 <div class="form-group">
                     <label for="pass">Old password</label>
-                    <input name="password" type="password" class="form-control" id="pass" name="pass">
+                    <input name="password" type="password" class="form-control" id="pass" >
                 </div>
                 <div class="form-group">
                     <label for="pass_rep">New password</label>
-                    <input name="password" type="password" class="form-control" id="pass_rep" name="pass_rep">
+                    <input type="password" class="form-control" id="pass_rep" name="pass_rep">
                 </div>
 
 

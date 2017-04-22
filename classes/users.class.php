@@ -85,7 +85,7 @@ class users
         $conn = Db::getInstance();
         
         foreach ($topics as $topics) {
-            $stmt = $conn->prepare("INSERT INTO Users_Topics (topics_id, email) VALUES (:email, :id)");
+            $stmt = $conn->prepare("INSERT INTO users_topics (topics_id, email) VALUES (:email, :id)");
             $stmt->bindValue(":email", $this->m_sUsername);
             $stmt->bindValue(":id", $_SESSION["id"]);
             
@@ -95,75 +95,73 @@ class users
         }
   
     }
-    
-    public function upload(){
-/*** check if a file was uploaded ***/
-if(is_uploaded_file($_FILES['userfile']['tmp_name']) && getimagesize($_FILES['userfile']['tmp_name']) != false)
+
+    public function upload($test)
     {
-    /***  get the image info. ***/
-    $size = getimagesize($_FILES['userfile']['tmp_name']);
-    /*** assign our variables ***/
-    $type = $size['mime'];
-    $imgfp = fopen($_FILES['userfile']['tmp_name'], 'rb');
-    $size = $size[3];
-    $name = $_FILES['userfile']['name'];
-    $maxsize = 99999999;
-
-
-    /***  check the file is less than the maximum file size ***/
-    if($_FILES['userfile']['size'] < $maxsize )
-        {
-        /*** connect to db ***/
-        $conn = Db::getInstance();
-
-                /*** set the error mode ***/
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            /*** our sql query ***/
-        $statement = $conn->prepare("UPDATE Users SET avatar = :avatar WHERE email = :email");
-
-        /*** bind the params ***/
-       
-        $statement->bindValue(":avatar", $imgfp, PDO::PARAM_LOB);
-        $statement->bindValue(":email", $_SESSION["email"]);
-        
-
-        /*** execute the query ***/
-        $statement->execute();
+        $target_dir ="uploads/";
+        $uploadOk = 1;
+        $imageFileType = pathinfo(basename($test['avatar']['name']),PATHINFO_EXTENSION);
+        $target_file = $target_dir .md5($_SESSION['email'].time()).".". $imageFileType;
+        $check = getimagesize($test['avatar']['tmp_name']);
+        if ($check !== false){
+            $uploadOk = 1;
         }
-        
-    else
-        {
-        /*** throw an exception is image is not of type ***/
-        throw new Exception("File Size Error");
+        else {
+            echo "file is not an image";
+            $uploadOk = 0;
+
         }
+
+
+        if (file_exists($target_file)){
+            $uploadOk = 0;
+
+        }
+        if ($_FILES["avatar"]["size"] > 500000000000000) {
+            echo "Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif" ) {
+            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+        if ($uploadOk == 0) {
+            echo "Sorry, your file was not uploaded.";
+        }
+        else {
+            if (move_uploaded_file($test["avatar"]["tmp_name"], $target_file)) {
+                $conn = db::getInstance();
+                $statement = $conn->prepare("UPDATE users SET avatar = :avatar WHERE id = :id");
+                $statement->bindValue(":avatar",$target_file);
+                $statement->bindValue(":id",$_SESSION["id"]);
+                $statement->execute();
+                $_SESSION['avatar'] = $target_file;
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+            }
+        }
+
     }
-else
-    {
-    // if the file is not less than the maximum allowed, print an error
-    throw new Exception("Unsupported Image Format!");
-    }
-}
         
     
     public function update(){
-        /*$_SESSION["firstname"] = $firstname;
-        $_SESSION["email"] = $email;
-        $_SESSION["password"] = $password;*/
+      
         
         if(empty($this->password)){
             $conn = Db::getInstance();
             
-            $statement = $conn->prepare("UPDATE Users SET firstname = :firstname, email = :email2 WHERE email = :email");
-            $statement->bindValue(":firstname", $_POST['firstname']);
-            $statement->bindValue(":email2", $_POST['email']);
-            $statement->bindValue(":email", $_SESSION["email"]);
+            $statement = $conn->prepare("UPDATE users SET firstname = :firstname, email = :email2 WHERE id = :id");
+            $statement->bindValue(":firstname", $_SESSION["firstname"] );
+            $statement->bindValue(":email2", $_SESSION["email"]);
+            $statement->bindValue(":id", $_SESSION["id"]);
             return $statement->execute();
         }
         
-        elseif(!empty($_POST["firstname"]) && !empty($_POST["email"])){
+        elseif
+            (!empty($_POST["firstname"]) && !empty($_POST["email"])){
             $conn = Db::getInstance();
-            $statement = $conn->prepare("UPDATE Users SET firstname = :firstname, email = :email2, password = :password WHERE id = :id");
+            $statement = $conn->prepare("UPDATE users SET firstname = :firstname, email = :email2, password = :password WHERE id = :id");
             $statement->bindValue(":firstname", $_POST['firstname']);
             $statement->bindValue(":email2", $_POST["email"]);
             $statement->bindValue(":id", $_SESSION["id"]);
@@ -177,19 +175,21 @@ else
             return $statement->execute();
         }  
         
+       
+        
     }
     
         public function getAll(){
             
         $conn = Db::getInstance();
         
-        $allposts = $conn->query("SELECT * FROM Users");
+        $allposts = $conn->query("SELECT * FROM users");
         return $allposts;
 
 }
     public function getAllUser(){
         $conn = Db::getInstance();
-        $statement = $conn->prepare("SELECT * FROM Users WHERE id = :id");
+        $statement = $conn->prepare("SELECT * FROM users WHERE id = :id");
         $statement->bindValue(":id", $_SESSION["id"]);
         $statement->execute();
         $allUser = $statement->fetchAll(PDO::FETCH_ASSOC);
