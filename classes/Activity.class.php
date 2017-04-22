@@ -35,25 +35,12 @@ class Activity
 
 	{
         $conn = Db::getInstance();
-		$bResult = false;
-
-
-				//vergeet niet te beschermen tegen SQL Injection wanneer je een query uitvoert
-				$statement = $conn->prepare("INSERT INTO comments (id_user, id_item, comments) VALUES (':id_user, :id_item,".mysqli_real_escape_string($link, $this->Text)."');");
-                $statement = bindValue(":id_user", $_SESSION["id"]);
-                $statement = bindValue(":id_item", $row['id']);
-                
-				if ($rResult = mysqli_query($link, $statement) != false)
-				{	
-					$bResult = true;	
-				}
-				else
-				{
-					// er zijn geen query resultaten, dus query is gefaald
-					throw new Exception('Caramba! Could not update your status!');	
-				}
-
-		return $bResult;
+		
+        $statement = $conn->prepare("INSERT INTO comments (id_user, id_item, comments) VALUES (:iduser, :iditem, :comments)");
+        $statement->bindValue(":iduser", $_SESSION['id']);
+        $statement->bindValue(":iditem", $_POST["postID"]);
+        $statement->bindValue(":comments", $_POST["update"]);
+        return $statement->execute();
 	}
 	
 	public function GetRecentActivities()

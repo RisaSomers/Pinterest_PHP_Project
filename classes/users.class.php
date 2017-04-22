@@ -208,10 +208,20 @@ class users
         $statement = $conn->prepare("SELECT * FROM users WHERE id = :id");
         $statement->bindValue(":id", $_SESSION["id"]);
         $statement->execute();
-        $allUser = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $allUser = $statement->fetch(PDO::FETCH_ASSOC);
         
-        return $allUse;
+        return $allUser;
     }
     
+    
+    public function getFirstnameUser(){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT firstname FROM users WHERE id = :id");
+        $statement->bindValue(":id", $_SESSION["id"]);
+        $statement->execute();
+        $allUser = $statement->fetchAll(PDO::FETCH_OBJ);
+        
+        return $allUser;
+    }
     
 }

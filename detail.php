@@ -103,7 +103,7 @@ session_start();
 
   
   <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-   <h1><?php echo $detail['Beschrijving']; ?></h1>
+   <h1 id="post" data-id="<?php echo $detail['id'] ?>"><?php echo $detail['Beschrijving']; ?></h1>
 
 <a class="thumbnail" href="">
 <img src="uploads/posts/<?php echo $detail['Image']; ?>" class="thumbnail"alt="">
@@ -165,8 +165,6 @@ session_start();
     
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
     
-    <script src="js/comments.js"></script>
-    <script src="js/loadmore.js" ></script>
     
 
     <!-- Bootstrap Core JavaScript -->
@@ -179,12 +177,12 @@ $(document).ready(function(){
 
        // tekst vak uitlezen
        var update = $("#activitymessage").val();
-
+       var postID = document.getElementById("post").getAttribute("data-id");
        // via AJAX update naar databank sturen
        $.ajax({
            method: "POST",
            url: "AJAX/save_update.php",
-           data: { update: update } //update: is de naam en update is de waarde (value)
+           data: { update: update, postID: postID } //update: is de naam en update is de waarde (value)
        })
 
            .done(function( response ) {
@@ -194,7 +192,7 @@ $(document).ready(function(){
 
                    // iets plaatsen?
                     var li = $("<li style='display: none;'>");
-                    li.html("<h2>GoodBytes.be</h2>" + response.message);
+                    li.html(response.user + ": " + response.message);
 
                    // waar?
                    $("#listupdates").prepend( li );
