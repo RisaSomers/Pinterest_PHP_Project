@@ -113,6 +113,10 @@ session_start();
             display: block;
             margin-top: 40px;
         }
+        
+        img{
+            width: 100%;
+        }
 
 
     </style>
@@ -157,7 +161,7 @@ session_start();
 	<form method="post" action="">
 		<div class="statusupdates">
 		<h5>Comments</h5>
-		<input type="text" value="What's on your mind?" id="activitymessage" name="activitymessage" />
+		<input type="text" placeholder="What's on your mind?" id="activitymessage" name="activitymessage" />
 		<input id="btnSubmit" type="submit" value="Share" />
 		
 		<ul id="listupdates">
