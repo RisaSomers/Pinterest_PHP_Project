@@ -21,5 +21,6 @@ if ($stmt->execute()) {
     // successvol verwijderd
     header("Location: index.php");
 } else {
-    //  wilde error schrijf hier maar iets
+    //  niet verwijderd
+    echo "Item couldn't be deleted";
 }
