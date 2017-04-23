@@ -73,17 +73,18 @@ Class Items {
         
         if (empty($this->url)) {
             echo "IMG";
-            $stmt = $conn->prepare("INSERT INTO items (Image,  user_id, Beschrijving) VALUES (:image, :user_id, :beschrijving)");
+            $stmt = $conn->prepare("INSERT INTO items (Image,  user_id, Beschrijving, uploaded) VALUES (:image, :user_id, :beschrijving, :uploaded)");
             $stmt->bindValue(":image", $this->image);
             $stmt->bindValue(":user_id", $_SESSION["id"]);
         } else {
             echo "URL";
-            $stmt = $conn->prepare("INSERT INTO items (Url, Beschrijving, user_id) VALUES (:url, :beschrijving, :user_id)");
+            $stmt = $conn->prepare("INSERT INTO items (Url, Beschrijving, user_id, uploaded) VALUES (:url, :beschrijving, :user_id, :uploaded)");
             $stmt->bindValue(":url", $this->url);
             $stmt->bindValue(":user_id", $_SESSION["id"]);
         }
 
         $stmt->bindValue(":beschrijving", $this->description);
+        $stmt->bindValue(":uploaded", time());
         $stmt->execute();
 
     }

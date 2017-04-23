@@ -1,5 +1,34 @@
 <?php
 
+function time_elapsed_string($datetime, $full = false) {
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
+
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => 'year',
+        'm' => 'month',
+        'w' => 'week',
+        'd' => 'day',
+        'h' => 'hour',
+        'i' => 'minute',
+        's' => 'second',
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full) $string = array_slice($string, 0, 1);
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
+}
+
 spl_autoload_register(function($class){
     include_once("classes/".$class.".class.php");
 });
@@ -100,6 +129,7 @@ session_start();
 
 <!-- Page Content -->
 <div class="container">
+    <?php echo time_elapsed_string('@' . $detail["uploaded"]); ?>
     <?php if($detail["user_id"] == $_SESSION["id"]): ?>
     <a href="delete_post.php?id=<?php echo htmlentities($_GET["id"]); ?>">Delete</a>
         <?php endif; ?>
@@ -108,7 +138,13 @@ session_start();
    <h1 id="post" data-id="<?php echo $detail['id'] ?>"><?php echo $detail['Beschrijving']; ?></h1>
 
 <a class="thumbnail" href="">
-<img src="uploads/posts/<?php echo $detail['Image']; ?>" class="thumbnail"alt="">
+    <?php if(empty($detail["Image"])): ?>
+
+    <img src="<?php echo $detail['Url']; ?>" class="thumbnail"alt="">
+    <?php else: ?>
+
+    <img src="uploads/posts/<?php echo $detail['Image']; ?>" class="thumbnail"alt="">
+    <?php endif; ?>
     </a>
     </div>
    
