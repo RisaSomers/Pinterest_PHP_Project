@@ -234,7 +234,7 @@ $(document).ready(function(){
 
                    // iets plaatsen?
                     var li = $("<li style='display: none;'>");
-                    li.html(response.user + ": " + response.message);
+                    li.html("<a href='http://localhost/GIT/Pinterest_PHP_Project/userprofile.php?user=" + response.id + "'>" + response.user + "</a>: " + response.message);
 
                    // waar?
                    $("#listupdates").prepend( li );

@@ -224,4 +224,14 @@ class users
         return $allUser;
     }
     
+        public function getFirstnameUserO($id){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT firstname FROM users WHERE id = :id");
+        $statement->bindValue(":id", $id);
+        $statement->execute();
+        $allUser = $statement->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $allUser;
+    }
+    
 }

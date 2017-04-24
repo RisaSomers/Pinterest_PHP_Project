@@ -74,7 +74,7 @@ if(!isset($_SESSION["email"])){
             </div>
 
 
-              <img src="<?php echo !empty($_SESSION['avatar']) ? $_SESSION["avatar"] : 'uploads\64e102140c60d231fdd9d4449fc09b60.jpg'; ?>" alt="" style=" width: 10%; margin-left: 50px;" class="">
+              <img src="<?php echo $_SESSION["avatar"] ; ?>" alt="" style=" width: 10%; margin-left: 50px;" class="">
 
               
 

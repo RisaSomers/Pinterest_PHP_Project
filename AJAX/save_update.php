@@ -11,12 +11,14 @@ include_once("../classes/users.class.php");
     if(!empty($_POST['update'])){
         $activity->Text = $_POST['update'];
         $commentUser = $user->getAllUser()['firstname'];
+        $commentUserId = $user->getAllUser()['id'];
         try{
             $activity->Save();
             $feedback = [
                 "code" => 200,
                 "message" => htmlspecialchars( $_POST['update']),
-                "user" => $commentUser
+                "user" => $commentUser,
+                "id" => $commentUserId
             ];
         }
         catch (Exception $e){
