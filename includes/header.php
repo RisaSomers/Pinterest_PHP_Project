@@ -48,11 +48,12 @@
       height: 50px;
       padding: 2px 5px;
     }
-    
+
     .result p:hover{
         background: #f2f2f2;
     }
 </style>
+
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
