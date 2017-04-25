@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
-# Host: 127.0.0.1 (MySQL 5.5.5-10.1.21-MariaDB)
+# Host: localhost (MySQL 5.5.5-10.1.21-MariaDB)
 # Database: Pinterest_PHP
-# Generation Time: 2017-04-24 18:13:36 +0000
+# Generation Time: 2017-04-25 09:56:14 +0000
 # ************************************************************
 
 
@@ -89,36 +89,37 @@ CREATE TABLE `items` (
   `Image` varchar(200) NOT NULL,
   `Url` varchar(200) NOT NULL,
   `Beschrijving` varchar(2000) NOT NULL,
+  `uploaded` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
 
-INSERT INTO `items` (`id`, `user_id`, `Image`, `Url`, `Beschrijving`)
+INSERT INTO `items` (`id`, `user_id`, `Image`, `Url`, `Beschrijving`, `uploaded`)
 VALUES
-	(22,72,'347b70ad4a62a5c5851cace08f36ae65.jpg','','Cute black pug'),
-	(23,72,'7131224c59b7973b2b143dc132d0b972.jpeg','','Look the eyes'),
-	(24,72,'48b13d221e11869dbc266658c2718e32.jpg','','Yellow'),
-	(25,72,'14d8600161fd27aeb8d3cb7198781bf9.jpg','','Blue babedie babeda'),
-	(26,72,'d04ff43b94332890c92c428d26eb7934.jpg','','Black pugles'),
-	(27,72,'c6ac6954a974a2061085d11b830cd0e9.jpg','','smile'),
-	(28,72,'5ce5fc7dd2295147b13e73c456645e8a.JPG','','Look up'),
-	(29,72,'f36b420e4d48af97534ef826dda961ea.jpg','','baby'),
-	(30,72,'ef90e803c3051784f66b4bdeb8955e91.jpg','','Twin'),
-	(32,72,'ad69baab1414c422b6927cb2650cd09a.jpg','','red'),
-	(33,72,'5abda4b2104625448e7c90834b042ef1.jpg','','Howdy'),
-	(34,85,'e506356dcb01d6a7309939c16d84b751.jpg','','tongetje'),
-	(35,85,'9c92fbcd7d5e5e5d8ea7dca5dc61a37d.jpg','','fat'),
-	(36,85,'e453c430ab60f7818d0b50fe7fb69cf9.jpg','','shy'),
-	(37,85,'119f9969cc6dff5280a139ce65e147af.jpg','','got3'),
-	(38,85,'7477d8c2976c11f55304dcfe7adbb27d.jpg','','black pugles'),
-	(39,85,'563cdf9152c527b8b5448be6ec2c2443.jpg','','proud'),
-	(40,85,'c3e1903627d621fd36f6e10cc91e2293.jpg','','cowboy'),
-	(41,85,'e453842484580fadcce87f934aa2c9ec.jpeg','','hello'),
-	(42,85,'02db9cded3eea6ef638358702afae71e.jpg','','lay down'),
-	(43,85,'77aad3e37ec154c2326f9c7c8bc50103.jpg','','cool'),
-	(44,85,'3a218ad317919028cc0d4262ab057eeb.jpg','','cute');
+	(22,72,'347b70ad4a62a5c5851cace08f36ae65.jpg','','Cute black pug',0),
+	(23,72,'7131224c59b7973b2b143dc132d0b972.jpeg','','Look the eyes',0),
+	(24,72,'48b13d221e11869dbc266658c2718e32.jpg','','Yellow',0),
+	(25,72,'14d8600161fd27aeb8d3cb7198781bf9.jpg','','Blue babedie babeda',0),
+	(26,72,'d04ff43b94332890c92c428d26eb7934.jpg','','Black pugles',0),
+	(27,72,'c6ac6954a974a2061085d11b830cd0e9.jpg','','smile',0),
+	(28,72,'5ce5fc7dd2295147b13e73c456645e8a.JPG','','Look up',0),
+	(29,72,'f36b420e4d48af97534ef826dda961ea.jpg','','baby',0),
+	(30,72,'ef90e803c3051784f66b4bdeb8955e91.jpg','','Twin',0),
+	(32,72,'ad69baab1414c422b6927cb2650cd09a.jpg','','red',0),
+	(33,72,'5abda4b2104625448e7c90834b042ef1.jpg','','Howdy',0),
+	(34,85,'e506356dcb01d6a7309939c16d84b751.jpg','','tongetje',0),
+	(35,85,'9c92fbcd7d5e5e5d8ea7dca5dc61a37d.jpg','','fat',0),
+	(36,85,'e453c430ab60f7818d0b50fe7fb69cf9.jpg','','shy',0),
+	(37,85,'119f9969cc6dff5280a139ce65e147af.jpg','','got3',0),
+	(38,85,'7477d8c2976c11f55304dcfe7adbb27d.jpg','','black pugles',0),
+	(39,85,'563cdf9152c527b8b5448be6ec2c2443.jpg','','proud',0),
+	(40,85,'c3e1903627d621fd36f6e10cc91e2293.jpg','','cowboy',0),
+	(41,85,'e453842484580fadcce87f934aa2c9ec.jpeg','','hello',0),
+	(42,85,'02db9cded3eea6ef638358702afae71e.jpg','','lay down',0),
+	(43,85,'77aad3e37ec154c2326f9c7c8bc50103.jpg','','cool',0),
+	(44,85,'3a218ad317919028cc0d4262ab057eeb.jpg','','cute',0);
 
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
