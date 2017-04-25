@@ -156,6 +156,7 @@ if(!isset($_SESSION["email"])){
             <div class="col-lg-12">
                 <h1 class="page-header">Profile</h1>
                 <h4>Create your own board!</h4>
+
             </div>
             <div class="col-xs-12 no-padding">
                 <a href="#ex1" rel="modal:open"><button type="button" class="btn btn-info btn-lg" >Create Board</button></a>
@@ -177,7 +178,6 @@ if(!isset($_SESSION["email"])){
         <p><a href="#" rel="modal:close">Close</a> or press ESC</p>
   </div>
 
-            </div>
 
             <div class="col-lg-12">
                 <h4><?php echo $feedback ?></h4>
