@@ -31,7 +31,7 @@ if (!isset($_SESSION["email"])) {
         $_SESSION['email'] = $_POST['email'];
         $_SESSION['firstname'] = $_POST['firstname'];
 
-        $update = new users();
+        $update = new Users();
 
         $update->email = $_SESSION['email'];
         $update->update();
@@ -173,13 +173,17 @@ if (!isset($_SESSION["email"])) {
   </div>
 
 
-            <div class="col-lg-12">
+           <div class="col-lg-12">
+                <h1 class="page-header">Change your profile</h1>
                 <h4><?php echo $feedback ?></h4>
             </div>
-            <div class="col-xs-12 no-padding">
-                <img src="<?php echo $_SESSION[" avatar "] ; ?>" alt="" style=" width: 10%; margin-left: 50px;" class="">
-                <form enctype="multipart/form-data" action="<?php echo htmlentities($_SERVER['PHP_SELF']);?>" method="post"></form>
-            </div>
+
+
+              <img src="<?php echo $_SESSION["avatar"] ; ?>" alt="" style=" width: 10%; margin-left: 50px;" class="">
+
+              
+
+              <form enctype="multipart/form-data" action="<?php echo htmlentities($_SERVER['PHP_SELF']);?>" method="post">
 
 
 

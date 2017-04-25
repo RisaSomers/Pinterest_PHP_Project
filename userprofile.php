@@ -53,7 +53,8 @@ $feed = $t->getUserPosts();
             <h1 class="page-header"><?php echo $user->getFirstnameUserO($userid)["0"]["firstname"] . "'s profile"; ?></h1>
 
        
-       <button>Follow</button>
+       <button id="btnfollow">Follow</button>
+       <button id="btnfriend" >Add friend</button>
         </div>
 
         <form action="" method="post">
@@ -103,3 +104,10 @@ $feed = $t->getUserPosts();
 
 
 </div>
+
+
+<script src="js/jquery.js"></script>
+    
+    
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
+<script src="js/addFriend.js"></script>
