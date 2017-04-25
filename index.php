@@ -84,7 +84,7 @@ session_start();
     <style>
     
         img{
-            70%;
+            width:  70%;
         }
         
     </style>
@@ -119,13 +119,16 @@ session_start();
 
         <?php  $items = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-   foreach( $items as $key => $row ){
+foreach( $items as $key => $row ){
             $pp = new Items();
             $pp->setId($row["id"]);
             $likes = $pp->getLike();
             $dislikes = $pp->getDislike();
-            echo "<h2>" . $row['Beschrijving'] . "</h2>  
+            echo "<h2>" . $row['Beschrijving'] . "</h2> 
+            <a href= http://localhost/GIT/Pinterest_PHP_Project/userprofile.php?user=" . $u->getAllUserSpecific($row['user_id'])['id'] . ">" .  $u->getFirstnameUserO($row['user_id'])['0']['firstname'] . "</a>
                            <a href='detail.php?id=" . $row['id'] . "'>
+                           
+                           
                            
                                <div class='post_img'>
                                    ";

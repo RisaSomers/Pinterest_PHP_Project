@@ -213,6 +213,16 @@ class users
         return $allUser;
     }
     
+    public function getAllUserSpecific($id){
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("SELECT * FROM users WHERE id = :id");
+        $statement->bindValue(":id", $id);
+        $statement->execute();
+        $allUser = $statement->fetch(PDO::FETCH_ASSOC);
+        
+        return $allUser;
+    }
+    
     
     public function getFirstnameUser(){
         $conn = Db::getInstance();
