@@ -1,25 +1,23 @@
 <?php
 
-spl_autoload_register(function($class){
+spl_autoload_register(function ($class) {
     include_once("classes/".$class.".class.php");
 });
 
 session_start();
 
-	if ( !empty($_SESSION['email'] ) ){
+    if (!empty($_SESSION['email'])) {
+    } else {
+        header('Location: login.php');
+    }
 
-	}
-	else{
-		header('Location: login.php');
-	}
+        $conn= Db::getInstance();
+        $sth = $conn->prepare("SELECT * FROM Topics;");
 
-		$conn= Db::getInstance();
-		$sth = $conn->prepare("SELECT * FROM Topics;");
-
-		$sth->execute();
+        $sth->execute();
 
 
-        if(!empty($_POST)){
+        if (!empty($_POST)) {
             $topics = new Topics();
             $topics->Description = $_POST['topic'];
             $topics->Username = $_SESSION['email'];
@@ -98,7 +96,7 @@ session_start();
   <div id='slats'>
 
 <ul class="flex-cntainer">
-	<?php while( $row = $sth->fetch() ):?>
+	<?php while ($row = $sth->fetch()):?>
     <li class="flex-item"><a href='topics.php?Name=<?php echo $row['id'] ?>'></li>
 			<div class='topics'>
 			

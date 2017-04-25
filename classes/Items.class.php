@@ -1,6 +1,7 @@
 <?php
 
-Class Items {
+class Items
+{
     private $url;
     private $image;
     private $description;
@@ -16,8 +17,8 @@ Class Items {
 
 
 
-    public function __construct() {
-
+    public function __construct()
+    {
     }
 
     /**
@@ -63,12 +64,12 @@ Class Items {
         if (empty($description)) {
             throw new Exception("Description may not be empty");
         } else {
-
             $this->description = $description;
         }
     }
 
-    public function create() {
+    public function create()
+    {
         $conn = Db::getInstance();
         
         if (empty($this->url)) {
@@ -86,10 +87,10 @@ Class Items {
         $stmt->bindValue(":beschrijving", $this->description);
         $stmt->bindValue(":uploaded", time());
         $stmt->execute();
-
     }
     
-    public function getDetail(){
+    public function getDetail()
+    {
         $conn = Db::getInstance();
         
         $statement = $conn->prepare("SELECT Image, Beschrijving FROM items WHERE id = :id");
@@ -97,16 +98,18 @@ Class Items {
         $statement->execute();
     }
 
-    public function getLike() {
+    public function getLike()
+    {
         $pdo = Db::getInstance();
         $stmt = $pdo->prepare("SELECT count(*) as 'likes' FROM likes WHERE post_id = :postid");
         $stmt->bindValue(":postid", $this->id);
         $stmt->execute();
 
-            return $stmt->fetch(PDO::FETCH_ASSOC)["likes"];
+        return $stmt->fetch(PDO::FETCH_ASSOC)["likes"];
     }
 
-    public function getDislike() {
+    public function getDislike()
+    {
         $pdo = Db::getInstance();
         $stmt = $pdo->prepare("SELECT count(*) as 'dislikes' FROM dislikes WHERE post_id = :postid");
         $stmt->bindValue(":postid", $this->id);
@@ -114,7 +117,8 @@ Class Items {
         return $stmt->fetch(PDO::FETCH_ASSOC)["dislikes"];
     }
 
-    public function checkIfInteracted() {
+    public function checkIfInteracted()
+    {
         $pdo = Db::getInstance();
         $stmt = $pdo->prepare("SELECT count(*) as 'dislikes' FROM dislikes WHERE user_id = :userid AND post_id = :postid");
         $stmt->bindValue(":userid", $_SESSION["id"]);
@@ -139,7 +143,8 @@ Class Items {
 
 
 
-    public function checkIfLiked($post) {
+    public function checkIfLiked($post)
+    {
         $pdo = Db::getInstance();
         $stmt = $pdo->prepare("SELECT * FROM likes WHERE post_id = :postid AND user_id = :userid");
         $stmt->bindValue(":userid", $_SESSION["id"]);
@@ -152,7 +157,8 @@ Class Items {
         }
     }
 
-    public function checkIfDisliked($post) {
+    public function checkIfDisliked($post)
+    {
         $pdo = Db::getInstance();
         $stmt = $pdo->prepare("SELECT * FROM dislikes WHERE post_id = :postid AND user_id = :userid");
         $stmt->bindValue(":userid", $_SESSION["id"]);
@@ -164,5 +170,4 @@ Class Items {
             return true;
         }
     }
-
 }

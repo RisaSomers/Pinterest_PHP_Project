@@ -1,13 +1,13 @@
 <?php
 
-spl_autoload_register(function($class){
+spl_autoload_register(function ($class) {
     include_once("classes/".$class.".class.php");
 });
 
 session_start();
 
 
-if(!empty($_POST)){
+if (!empty($_POST)) {
     try {
         // create prepared statement
         $item = new Items();
@@ -21,9 +21,7 @@ if(!empty($_POST)){
         $item->create();
         echo "Item is created";
         header("Location: index.php?success=true");
-
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
         echo $e->getMessage();
     }
 }

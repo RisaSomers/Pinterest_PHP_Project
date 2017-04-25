@@ -69,7 +69,8 @@ class users
     
 
 
-    public function save() {
+    public function save()
+    {
         $conn = Db::getInstance();
         
         $stmt = $conn->prepare("INSERT INTO users (firstname, lastname, password, email) VALUES (:firstname, :lastname, :password, :email)");
@@ -81,7 +82,8 @@ class users
         return $stmt->execute();
     }
     
-    public function updateSubscriptions(){
+    public function updateSubscriptions()
+    {
         $conn = Db::getInstance();
         
         foreach ($topics as $topics) {
@@ -93,89 +95,77 @@ class users
                 throw new Exception("Could not insert subs");
             }
         }
-  
     }
 
     public function upload($test)
     {
         $target_dir ="uploads/";
         $uploadOk = 1;
-        $imageFileType = pathinfo(basename($test['avatar']['name']),PATHINFO_EXTENSION);
+        $imageFileType = pathinfo(basename($test['avatar']['name']), PATHINFO_EXTENSION);
         $target_file = $target_dir .md5($_SESSION['email'].time()).".". $imageFileType;
         $check = getimagesize($test['avatar']['tmp_name']);
-        if ($check !== false){
+        if ($check !== false) {
             $uploadOk = 1;
-        }
-        else {
+        } else {
             echo "file is not an image";
             $uploadOk = 0;
-
         }
 
 
-        if (file_exists($target_file)){
+        if (file_exists($target_file)) {
             $uploadOk = 0;
-
         }
         if ($_FILES["avatar"]["size"] > 500000000000000) {
             echo "Sorry, your file is too large.";
             $uploadOk = 0;
         }
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif" ) {
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif") {
             echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
             $uploadOk = 0;
         }
         if ($uploadOk == 0) {
             echo "Sorry, your file was not uploaded.";
-        }
-        else {
+        } else {
             if (move_uploaded_file($test["avatar"]["tmp_name"], $target_file)) {
                 $conn = db::getInstance();
                 $statement = $conn->prepare("UPDATE users SET avatar = :avatar WHERE id = :id");
-                $statement->bindValue(":avatar",$target_file);
-                $statement->bindValue(":id",$_SESSION["id"]);
+                $statement->bindValue(":avatar", $target_file);
+                $statement->bindValue(":id", $_SESSION["id"]);
                 $statement->execute();
                 $_SESSION['avatar'] = $target_file;
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }
         }
-
     }
         
     
-    public function update(){
-      
-        if(empty($this->password) && empty($this->firstname)){
+    public function update()
+    {
+        if (empty($this->password) && empty($this->firstname)) {
             $conn = Db::getInstance();
             
             $statement = $conn->prepare("UPDATE users SET email = :email2 WHERE id = :id");
             $statement->bindValue(":email2", $_SESSION["email"]);
             $statement->bindValue(":id", $_SESSION["id"]);
             return $statement->execute();
-        }
-        
-        elseif(empty($this->password) && empty($this->email)){
+        } elseif (empty($this->password) && empty($this->email)) {
             $conn = Db::getInstance();
             
             $statement = $conn->prepare("UPDATE users SET firstname = :firstname WHERE id = :id");
-            $statement->bindValue(":firstname", $_SESSION["firstname"] );
+            $statement->bindValue(":firstname", $_SESSION["firstname"]);
             $statement->bindValue(":id", $_SESSION["id"]);
             return $statement->execute();
-        }
-        
-        elseif(empty($this->password)){
+        } elseif (empty($this->password)) {
             $conn = Db::getInstance();
             
             $statement = $conn->prepare("UPDATE users SET firstname = :firstname, email = :email2 WHERE id = :id");
-            $statement->bindValue(":firstname", $_SESSION["firstname"] );
+            $statement->bindValue(":firstname", $_SESSION["firstname"]);
             $statement->bindValue(":email2", $_SESSION["email"]);
             $statement->bindValue(":id", $_SESSION["id"]);
             return $statement->execute();
-        }
-        
-        elseif(!empty($_POST["firstname"]) && !empty($_POST["email"])){
+        } elseif (!empty($_POST["firstname"]) && !empty($_POST["email"])) {
             $conn = Db::getInstance();
             $statement = $conn->prepare("UPDATE users SET firstname = :firstname, email = :email2, password = :password WHERE id = :id");
             $statement->bindValue(":firstname", $_POST['firstname']);
@@ -189,21 +179,18 @@ class users
             $statement->bindValue(":password", $hash);
 
             return $statement->execute();
-        }  
-        
-       
-        
+        }
     }
     
-        public function getAll(){
-            
+    public function getAll()
+    {
         $conn = Db::getInstance();
         
         $allposts = $conn->query("SELECT * FROM users");
         return $allposts;
-
-}
-    public function getAllUser(){
+    }
+    public function getAllUser()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT * FROM users WHERE id = :id");
         $statement->bindValue(":id", $_SESSION["id"]);
@@ -213,7 +200,8 @@ class users
         return $allUser;
     }
     
-    public function getAllUserSpecific($id){
+    public function getAllUserSpecific($id)
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT * FROM users WHERE id = :id");
         $statement->bindValue(":id", $id);
@@ -224,7 +212,8 @@ class users
     }
     
     
-    public function getFirstnameUser(){
+    public function getFirstnameUser()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT firstname FROM users WHERE id = :id");
         $statement->bindValue(":id", $_SESSION["id"]);
@@ -234,7 +223,8 @@ class users
         return $allUser;
     }
     
-        public function getFirstnameUserO($id){
+    public function getFirstnameUserO($id)
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT firstname FROM users WHERE id = :id");
         $statement->bindValue(":id", $id);
@@ -243,5 +233,4 @@ class users
         
         return $allUser;
     }
-    
 }

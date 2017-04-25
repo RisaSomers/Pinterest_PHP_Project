@@ -1,6 +1,6 @@
 <?php
 
-spl_autoload_register(function($class){
+spl_autoload_register(function ($class) {
     include_once("classes/".$class.".class.php");
 });
 
@@ -9,8 +9,8 @@ session_start();
 
 
     // als we submitten gaan we velden uitlezen
-    if(!empty($_POST)){
-        try{
+    if (!empty($_POST)) {
+        try {
             $options = [
                 'cost' => 12
             ];
@@ -22,30 +22,17 @@ session_start();
             $MinLength = 6;
 
             //error voor legen velden
-            if(empty($users->fullname = $_POST['firstname'])){
+            if (empty($users->fullname = $_POST['firstname'])) {
                 $error = "Firstname can not be empty.";
-            }
-
-
-            elseif(empty($users->lastname = $_POST['lastname'])){
+            } elseif (empty($users->lastname = $_POST['lastname'])) {
                 $error = "Lastname can not be empty";
-            }
-
-
-            elseif(empty($users->email = $_POST['email'])){
+            } elseif (empty($users->email = $_POST['email'])) {
                 $error = "Email can not be empty";
-            }
-
-            elseif(empty($users->password = $_POST['password'])){
+            } elseif (empty($users->password = $_POST['password'])) {
                 $error = "Password can not be empty";
-            }
-
-
-            elseif(empty($users->passwordcon = $_POST['password_confirmation'])){
+            } elseif (empty($users->passwordcon = $_POST['password_confirmation'])) {
                 $error = "Password confirmation can not be empty";
-            }
-
-            elseif(strlen($users->password) < $MinLength){
+            } elseif (strlen($users->password) < $MinLength) {
                 $error = "Your password has to be at least 6 characters long";
             }
 
@@ -54,24 +41,22 @@ session_start();
             $users->setMSemail($_POST['email']);
             $users->setMSpassword(password_hash($_POST['password'], PASSWORD_DEFAULT, $options));
 
-            if ($_POST['password'] != $_POST['password_confirmation']){
+            if ($_POST['password'] != $_POST['password_confirmation']) {
                 throw new exception("Password and confirmation password are not the same!");
             }
 
             $conn= Db::getInstance();
 
-            if(!isset($error)){
+            if (!isset($error)) {
                 $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
                 $statement->bindValue(":email", $users->getMSemail());
 
-                if($statement->execute() && $statement->rowCount() != 0){
+                if ($statement->execute() && $statement->rowCount() != 0) {
                     $resultaat = $statement->fetch(PDO::FETCH_ASSOC);
                     $error = "Mail is already used";
                     $res = false;
-                }
-
-                else{
-                    if($res != false){
+                } else {
+                    if ($res != false) {
                         $succes = "Welcome, you are registered";
                         $register = new users();
                         $register->setMSfirstname($_POST['firstname']);
@@ -89,21 +74,16 @@ session_start();
                         
         
                         header("Location: topics.php");
-                    }
-
-                    else{
+                    } else {
                         $fail = "oops, something went wrong! try again!";
                         header("Location: signup.php");
                     }
-                } 
-
-            }
-
-        }
-                catch(Exception $e){
-                    $error = $e->getMessage();
                 }
             }
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+        }
+    }
 
          
 ?><!DOCTYPE html>
@@ -141,7 +121,7 @@ session_start();
 
                 <form role="form" method="post">
                     <img class="logo" src="https://www.weareimd.be/img/imd-logo-black.svg">
-                    <h2>Please Sign Up<?php if( isset( $error ) ): ?>
+                    <h2>Please Sign Up<?php if (isset($error)): ?>
                             <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
                         <?php endif; ?></h2>
 

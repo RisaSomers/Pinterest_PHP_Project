@@ -1,8 +1,8 @@
 <?php
 
-include_once ('classes/board.class.php');
+include_once('classes/board.class.php');
 
-if(!empty($_POST)){
+if (!empty($_POST)) {
     try {
         // create prepared statement
         $newBoard = new boards();
@@ -10,13 +10,7 @@ if(!empty($_POST)){
         $newBoard->create();
         echo "Item is created";
         header("Location: index.php?success=true");
-
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
         echo $e->getMessage();
     }
 }
-
-
-
-

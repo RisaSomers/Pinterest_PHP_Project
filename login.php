@@ -1,23 +1,22 @@
 <?php
 
-spl_autoload_register(function($class){
+spl_autoload_register(function ($class) {
     include_once("classes/".$class.".class.php");
 });
 
 session_start();
 
 
-if(isset($_POST['SignIn'])){
-    
-    try{
+if (isset($_POST['SignIn'])) {
+    try {
 
     //Retrieve the field values from our login form.
     $email = $_POST['email'];
-    $passwordAttempt = $_POST['password'];
+        $passwordAttempt = $_POST['password'];
 
     //Retrieve the user account information for the given username.
     $conn = Db::getInstance();
-    $statement = $conn->prepare("SELECT id, email, password FROM users WHERE email = :email");
+        $statement = $conn->prepare("SELECT id, email, password FROM users WHERE email = :email");
 
     //Bind value.
     $statement->bindValue(':email', $email);
@@ -29,11 +28,11 @@ if(isset($_POST['SignIn'])){
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     //If $row is FALSE.
-    if($user === false){
+    if ($user === false) {
         //Could not find a user with that username!
         //PS: You might want to handle this error in a more user-friendly manner!
         $error = "Incorrect email and/or password";
-    } else{
+    } else {
         //User account found. Check to see if the given password matches the
         //password hash that we stored in our users table.
 
@@ -41,7 +40,7 @@ if(isset($_POST['SignIn'])){
         $validPassword = password_verify($passwordAttempt, $user['password']);
 
         //If $validPassword is TRUE, the login has been successful.
-        if($validPassword){
+        if ($validPassword) {
             //Provide the user with a login session.
             $_SESSION['id'] = $user['id'];
             $_SESSION['logged_in'] = time();
@@ -54,17 +53,14 @@ if(isset($_POST['SignIn'])){
 
             header('Location: index.php');
             exit;
-
-        } else{
+        } else {
             //$validPassword was FALSE. Passwords do not match.
             $error = "Incorrect email and/or password";
         }
     }
-
-}
-                    catch(Exception $e){
-                    $error = $e->getMessage();
-                }
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    }
 }
 
 ?><!DOCTYPE html>
@@ -99,7 +95,7 @@ if(isset($_POST['SignIn'])){
 
             <form role="form" method="post">
                 <img class="logo" src="https://www.weareimd.be/img/imd-logo-black.svg">
-                <h2>Log hier in<?php if( isset( $error ) ): ?>
+                <h2>Log hier in<?php if (isset($error)): ?>
                         <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
                     <?php endif; ?></h2>
 

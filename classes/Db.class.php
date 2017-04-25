@@ -1,27 +1,25 @@
 <?php
 
-abstract class Db{
+abstract class Db
+{
+    private static $conn = null;
 
-    private static $conn = NULL;
+    public static function getInstance()
+    { //bij static moet je geen object maken maar meteen aanspreken
 
-    public static function getInstance(){ //bij static moet je geen object maken maar meteen aanspreken
-
-        if( isset( self::$conn ) ){ // geen $this omdat er geen huidig obejct is, self kijkt naar de basis klasse
+        if (isset(self::$conn)) { // geen $this omdat er geen huidig obejct is, self kijkt naar de basis klasse
             // er is al connectie, geen deze terug
             return self::$conn;
-        }
-
-        else{
+        } else {
             // er is nog connectie, maak aan en geef terug
 
 
-              self::$conn = new PDO("mysql:host=localhost;dbname=Pinterest_PHP","root","");
+              self::$conn = new PDO("mysql:host=localhost;dbname=Pinterest_PHP", "root", "");
 
 
             return self::$conn;
         }
 
         // :: zijn statische functies zodat je geen onnodige zaken moet coderen
-
     }
 }

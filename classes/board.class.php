@@ -1,4 +1,5 @@
 <?php
+include_once('classes/Db.class.php');
 
 class boards
 {
@@ -7,7 +8,6 @@ class boards
 
     public function __construct()
     {
-
     }
 
     /**
@@ -56,7 +56,6 @@ class boards
         if (empty($boardTitle)) {
             throw new Exception("Title can not be empty!");
         } else {
-
             $this->boardTitle = $boardTitle;
         }
     }

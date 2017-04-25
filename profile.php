@@ -1,6 +1,6 @@
 <?php
 
-spl_autoload_register(function($class){
+spl_autoload_register(function ($class) {
     include_once("classes/".$class.".class.php");
 });
 
@@ -9,40 +9,34 @@ session_start();
 
 
 
-if(!isset($_FILES['avatar']))
-    {
-        $feedback = "Please select a file";
+if (!isset($_FILES['avatar'])) {
+    $feedback = "Please select a file";
+    $feedback2 = "Change your information";
+} else {
+    if (!empty($_POST)) {
+        $upload = new users();
+
+        $upload->upload($_FILES);
+        $feedback = "Your avatar was uploaded!";
         $feedback2 = "Change your information";
     }
-else
-    {
-        if (!empty($_POST)){
-            $upload = new users();
-
-            $upload->upload($_FILES);
-            $feedback = "Your avatar was uploaded!";
-            $feedback2 = "Change your information";
-        }
-    }
+}
 
 
-if(!isset($_SESSION["email"])){
-
-	}
-
-
-    if(!empty($_POST['email'])){
+if (!isset($_SESSION["email"])) {
+}
 
 
+    if (!empty($_POST['email'])) {
         $_SESSION['email'] = $_POST['email'];
         $_SESSION['firstname'] = $_POST['firstname'];
 
-            $update = new users();
+        $update = new users();
 
-            $update->email = $_SESSION['email'];
-            $update->update();
-            $feedback2 = "Your changes have been made!";
-        }
+        $update->email = $_SESSION['email'];
+        $update->update();
+        $feedback2 = "Your changes have been made!";
+    }
 
 
 ?>
@@ -162,7 +156,7 @@ if(!isset($_SESSION["email"])){
                 <a href="#ex1" rel="modal:open"><button type="button" class="btn btn-info btn-lg" >Create Board</button></a>
 
                 <div id="ex1" style="display:none;">
-    <p>Let's make a board.<?php if( isset( $error ) ): ?>
+    <p>Let's make a board.<?php if (isset($error)): ?>
                     <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
                     <?php endif; ?></p>
 

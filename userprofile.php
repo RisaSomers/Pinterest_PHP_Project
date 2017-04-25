@@ -1,24 +1,19 @@
 <?php
 
-spl_autoload_register(function($class){
+spl_autoload_register(function ($class) {
     include_once("classes/".$class.".class.php");
 });
 
 
 session_start();
 
-if ( !empty($_SESSION['email'] ) ){
-
-
-}
-else{
+if (!empty($_SESSION['email'])) {
+} else {
     header('Location: login.php');
 }
 
-if( !empty($_GET["user"]) ){
-    
+if (!empty($_GET["user"])) {
     $userid = $_GET["user"];
-    
 }
 
 $conn = Db::getInstance();
@@ -73,7 +68,7 @@ $feed = $t->getUserPosts();
 
                                 <?php
 
-                                foreach( $res as $key => $row ){
+                                foreach ($res as $key => $row) {
                                     $pp = new Items();
                                     $pp->setId($row["id"]);
                                     $likes = $pp->getLike();

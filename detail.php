@@ -1,6 +1,7 @@
 <?php
 
-function time_elapsed_string($datetime, $full = false) {
+function time_elapsed_string($datetime, $full = false)
+{
     $now = new DateTime;
     $ago = new DateTime($datetime);
     $diff = $now->diff($ago);
@@ -25,21 +26,21 @@ function time_elapsed_string($datetime, $full = false) {
         }
     }
 
-    if (!$full) $string = array_slice($string, 0, 1);
+    if (!$full) {
+        $string = array_slice($string, 0, 1);
+    }
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
-spl_autoload_register(function($class){
+spl_autoload_register(function ($class) {
     include_once("classes/".$class.".class.php");
 });
 
 
 session_start();
 
-	if ( !empty($_SESSION['email'] ) ){
-
-
-	}
+    if (!empty($_SESSION['email'])) {
+    }
 
     $conn = Db::getInstance();
     $details = new Items();
@@ -55,27 +56,23 @@ session_start();
 
 
 
-	//Eerst bouwen we onze applicatie uit zodat ze werkt, ook zonder JavaScript
+    //Eerst bouwen we onze applicatie uit zodat ze werkt, ook zonder JavaScript
 
-	
-	$activity = new Activity();
-	
-	//controleer of er een update wordt verzonden
-	if(!empty($_POST['activitymessage']))
-	{
-		$activity->Text = $_POST['activitymessage'];
-		try 
-		{
-			$activity->Save();
-		} 
-		catch (Exception $e) 
-		{
-			$feedback = $e->getMessage();
-		}
-	}
-	
-	//altijd alle laatste activiteiten ophalen
-	$recentActivities = $activity->GetRecentActivities();
+    
+    $activity = new Activity();
+    
+    //controleer of er een update wordt verzonden
+    if (!empty($_POST['activitymessage'])) {
+        $activity->Text = $_POST['activitymessage'];
+        try {
+            $activity->Save();
+        } catch (Exception $e) {
+            $feedback = $e->getMessage();
+        }
+    }
+    
+    //altijd alle laatste activiteiten ophalen
+    $recentActivities = $activity->GetRecentActivities();
 
 
 
@@ -138,12 +135,12 @@ session_start();
 
 <a href="index.php">Go back to your dashboard</a>
 
-<?php foreach($details as $row => $detail): ?>
+<?php foreach ($details as $row => $detail): ?>
 
 <!-- Page Content -->
 <div class="container">
     <?php echo time_elapsed_string('@' . $detail["uploaded"]); ?>
-    <?php if($detail["user_id"] == $_SESSION["id"]): ?>
+    <?php if ($detail["user_id"] == $_SESSION["id"]): ?>
     <a href="delete_post.php?id=<?php echo htmlentities($_GET["id"]); ?>">Delete</a>
         <?php endif; ?>
   
@@ -151,7 +148,7 @@ session_start();
    <h1 id="post" data-id="<?php echo $detail['id'] ?>"><?php echo $detail['Beschrijving']; ?></h1>
 
 <a class="thumbnail" href="">
-    <?php if(empty($detail["Image"])): ?>
+    <?php if (empty($detail["Image"])): ?>
 
     <img src="<?php echo $detail['Url']; ?>" class="thumbnail"alt="">
     <?php else: ?>
@@ -178,15 +175,13 @@ session_start();
             
             
             
-			if($recentActivities > 0)
-			{		
-				while($singleActivity = mysqli_fetch_assoc($recentActivities))
-				{
-					echo "<li><h2>GoodBytes.be</h2> ". htmlspecialchars($singleActivity['activity_description'] )."</li>";
-				}
-			}
+            if ($recentActivities > 0) {
+                while ($singleActivity = mysqli_fetch_assoc($recentActivities)) {
+                    echo "<li><h2>GoodBytes.be</h2> ". htmlspecialchars($singleActivity['activity_description'])."</li>";
+                }
+            }
 
-		?>
+        ?>
 		</ul>
 		
 		</div>

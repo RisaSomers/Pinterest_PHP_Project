@@ -1,6 +1,7 @@
 <?php
 
-function time_elapsed_string($datetime, $full = false) {
+function time_elapsed_string($datetime, $full = false)
+{
     $now = new DateTime;
     $ago = new DateTime($datetime);
     $diff = $now->diff($ago);
@@ -25,32 +26,29 @@ function time_elapsed_string($datetime, $full = false) {
         }
     }
 
-    if (!$full) $string = array_slice($string, 0, 1);
+    if (!$full) {
+        $string = array_slice($string, 0, 1);
+    }
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
-spl_autoload_register(function($class){
+spl_autoload_register(function ($class) {
     include_once("classes/".$class.".class.php");
 });
 
 
 session_start();
 
-	if ( !empty($_SESSION['email'] ) ){
-
-
-	}
-
-
-	else{
-		header('Location: login.php');
-	}
+    if (!empty($_SESSION['email'])) {
+    } else {
+        header('Location: login.php');
+    }
 
     $conn = Db::getInstance();
     
     $statement = $conn->prepare("select * from items order by id DESC limit 0,20");
     $statement->execute();
-		
+        
     $t = new Topics();
     $feed = $t->getUserPosts();
 
@@ -119,12 +117,12 @@ session_start();
 
         <?php  $items = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-foreach( $items as $key => $row ){
-            $pp = new Items();
-            $pp->setId($row["id"]);
-            $likes = $pp->getLike();
-            $dislikes = $pp->getDislike();
-            echo "<h2>" . $row['Beschrijving'] . "</h2> 
+foreach ($items as $key => $row) {
+    $pp = new Items();
+    $pp->setId($row["id"]);
+    $likes = $pp->getLike();
+    $dislikes = $pp->getDislike();
+    echo "<h2>" . $row['Beschrijving'] . "</h2> 
             <a href= http://localhost/GIT/Pinterest_PHP_Project/userprofile.php?user=" . $u->getAllUserSpecific($row['user_id'])['id'] . ">" .  $u->getFirstnameUserO($row['user_id'])['0']['firstname'] . "</a>
                            <a href='detail.php?id=" . $row['id'] . "'>
                            
@@ -132,29 +130,28 @@ foreach( $items as $key => $row ){
                            
                                <div class='post_img'>
                                    ";
-                                        if (!empty($row['Url'])) {
-                                            echo "<img src='" . $row['Url'] . "' alt='" . $row['id'] . "'>";
-                                        } else {
-                                            echo "<img src='uploads/posts/" . $row['Image'] . "' alt='" . $row['id'] . "'>";
-                                        }
-                                   echo "
+    if (!empty($row['Url'])) {
+        echo "<img src='" . $row['Url'] . "' alt='" . $row['id'] . "'>";
+    } else {
+        echo "<img src='uploads/posts/" . $row['Image'] . "' alt='" . $row['id'] . "'>";
+    }
+    echo "
                                </div>
                            </a>";
 
-                           if($pp->checkIfLiked($row['id'])): ?>
+    if ($pp->checkIfLiked($row['id'])): ?>
                                 <a href='#' class='like liked' data-id='<?php echo $row["id"] ?>'>UNLIKE - <?php echo $likes ?></a>
                             <?php else: ?>
                                <a href='#' class='like' data-id='<?php echo $row["id"] ?>'>LIKE - <?php echo $likes ?></a>
                             <?php endif; ?>
 
-                <?php if($pp->checkIfDisliked($row['id'])): ?>
+                <?php if ($pp->checkIfDisliked($row['id'])): ?>
                     <a href='#' class='dislike disliked' data-id='<?php echo $row["id"] ?>'>UNDISLIKE - <?php echo $dislikes ?></a>
                 <?php else: ?>
                     <a href='#' class='dislike' data-id='<?php echo $row["id"] ?>'>DISLIKE - <?php echo $dislikes ?></a>
                 <?php endif;
-                echo "<br>";
-                echo time_elapsed_string('@' . $row["uploaded"]);
-
+    echo "<br>";
+    echo time_elapsed_string('@' . $row["uploaded"]);
 }?>
 
                 </div>
