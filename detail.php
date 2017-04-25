@@ -117,6 +117,15 @@ session_start();
         img{
             width: 100%;
         }
+        
+        #avatar{
+            width: 5%;
+        }
+        
+        li{
+            list-style-type: none;
+            margin-top: 5px;
+        }
 
 
     </style>
@@ -234,8 +243,7 @@ $(document).ready(function(){
 
                    // iets plaatsen?
                     var li = $("<li style='display: none;'>");
-                    li.html("<a href='http://localhost/GIT/Pinterest_PHP_Project/userprofile.php?user=" + response.id + "'>" + response.user + "</a>: " + response.message);
-
+                    li.html("<img id='avatar' src='" + response.avatar + "' </img>" + "   " + "  " +  "<a href='http://localhost/GIT/Pinterest_PHP_Project/userprofile.php?user=" + response.id + "'>" + response.user + "</a>: " + response.message);
                    // waar?
                    $("#listupdates").prepend( li );
                    $("#listupdates li").first().slideDown();
