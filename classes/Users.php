@@ -1,5 +1,5 @@
 <?php
-class users
+class Users
 {
     private $m_sfirstname;
     private $m_slastname;

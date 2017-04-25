@@ -1,7 +1,7 @@
 <?php
 
 spl_autoload_register(function ($class) {
-    include_once("classes/".$class.".class.php");
+    include_once("classes/".$class.".php");
 });
 /* Attempt MySQL server connection. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */

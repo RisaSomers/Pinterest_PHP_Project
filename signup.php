@@ -1,7 +1,7 @@
 <?php
 
 spl_autoload_register(function ($class) {
-    include_once("classes/".$class.".class.php");
+    include_once("classes/".$class.".php");
 });
 
 session_start();
@@ -16,7 +16,7 @@ session_start();
             ];
 
             //lezen de velden uit en steken die waarden in class user
-            $users = new users();
+            $users = new Users();
 
             $res = "succes";
             $MinLength = 6;

@@ -1,11 +1,12 @@
 <?php
     session_start();
     header('Content-Type: application/json');
-    include_once("../classes/Db.class.php");
-    include_once("../classes/Activity.class.php");
-include_once("../classes/users.class.php");
+
+spl_autoload_register(function ($class) {
+    include_once("../classes/".$class.".php");
+});
         $activity = new Activity();
-        $user = new users();
+        $user = new Users();
 
         //controleer of er een update wordt verzonden
   if (!empty($_POST['update'])) {

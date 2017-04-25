@@ -33,7 +33,7 @@ function time_elapsed_string($datetime, $full = false)
 }
 
 spl_autoload_register(function ($class) {
-    include_once("classes/".$class.".class.php");
+    include_once("classes/".$class.".php");
 });
 
 
@@ -52,7 +52,7 @@ session_start();
     $t = new Topics();
     $feed = $t->getUserPosts();
 
-    $u = new users();
+    $u = new Users();
 
 
 ?><!DOCTYPE html>

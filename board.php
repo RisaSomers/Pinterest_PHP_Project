@@ -1,11 +1,13 @@
 <?php
 
-include_once('classes/board.class.php');
+spl_autoload_register(function ($class) {
+    include_once("../classes/".$class.".php");
+});
 
 if (!empty($_POST)) {
     try {
         // create prepared statement
-        $newBoard = new boards();
+        $newBoard = new Boards();
         $newBoard->setBoardName($_POST["boardTitle"]);
         $newBoard->create();
         echo "Item is created";

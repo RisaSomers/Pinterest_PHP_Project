@@ -1,9 +1,9 @@
 <?php
 header("Content-Type: application/json");
 session_start();
-include_once "../classes/Db.class.php";
-include_once "../classes/Items.class.php";
-include_once "../classes/users.class.php";
+spl_autoload_register(function ($class) {
+    include_once("../classes/".$class.".php");
+});
 
 
 $error = array(
@@ -14,7 +14,7 @@ $error = array(
 if (!empty($_GET["post_id"])) {
     $p = new Items();
     $p->setId($_GET["post_id"]);
-    $u = new users();
+    $u = new Users();
     if ($p->checkIfDisliked($_GET["post_id"])) {
         $pdo = Db::getInstance();
         $stmt = $pdo->prepare("DELETE FROM dislikes WHERE user_id = :userid AND post_id = :postid");

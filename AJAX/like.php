@@ -6,8 +6,8 @@
  * Time: 20:20
  */
 header("Content-Type: application/json");
-include_once "../classes/Db.class.php";
-include_once "../classes/Items.class.php";
+include_once "../classes/Db.php";
+include_once "../classes/Items.php";
 
 
 $error = array(

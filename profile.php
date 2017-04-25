@@ -1,7 +1,7 @@
 <?php
 
 spl_autoload_register(function ($class) {
-    include_once("classes/".$class.".class.php");
+    include_once("classes/".$class.".php");
 });
 
 session_start();
@@ -14,7 +14,7 @@ if (!isset($_FILES['avatar'])) {
     $feedback2 = "Change your information";
 } else {
     if (!empty($_POST)) {
-        $upload = new users();
+        $upload = new Users();
 
         $upload->upload($_FILES);
         $feedback = "Your avatar was uploaded!";

@@ -33,7 +33,7 @@ function time_elapsed_string($datetime, $full = false)
 }
 
 spl_autoload_register(function ($class) {
-    include_once("classes/".$class.".class.php");
+    include_once("classes/".$class.".php");
 });
 
 
@@ -49,7 +49,7 @@ session_start();
     $details->execute();
 
 
-    $user = new users();
+    $user = new Users();
     $user = $conn->prepare("SELECT * FROM Users WHERE id = $id;");
     $user->execute();
 

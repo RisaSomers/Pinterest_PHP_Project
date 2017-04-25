@@ -1,7 +1,7 @@
 <?php
 
 spl_autoload_register(function ($class) {
-    include_once("classes/".$class.".class.php");
+    include_once("classes/".$class.".php");
 });
 
 
@@ -17,7 +17,7 @@ if (!empty($_GET["user"])) {
 }
 
 $conn = Db::getInstance();
-$user = new users();
+$user = new Users();
 $statement = $conn->prepare("select * from items WHERE user_id = :userid order by id DESC limit 0,20");
 $statement->bindValue(":userid", $userid);
 $statement->execute();
@@ -52,6 +52,8 @@ $feed = $t->getUserPosts();
         <div class="col-lg-12">
             <h1 class="page-header"><?php echo $user->getFirstnameUserO($userid)["0"]["firstname"] . "'s profile"; ?></h1>
 
+       
+       <button>Follow</button>
         </div>
 
         <form action="" method="post">
@@ -60,11 +62,11 @@ $feed = $t->getUserPosts();
                 <ul id="results">
 
 
-                    <div class="container" style="margin:35px auto;">
+                    <div class="container" style="margin:35px auto;"> 
                         <div class="row">
                             <div class="col-md-6 col-md-offset-3 results">
                                 
-                                <button>Follow</button>
+                                
 
                                 <?php
 
