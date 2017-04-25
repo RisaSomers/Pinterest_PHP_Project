@@ -68,6 +68,8 @@ $feed = $t->getUserPosts();
                     <div class="container" style="margin:35px auto;">
                         <div class="row">
                             <div class="col-md-6 col-md-offset-3 results">
+                                
+                                <button>Follow</button>
 
                                 <?php
 
