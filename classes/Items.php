@@ -43,11 +43,21 @@ class Items
     public function setImage($image)
     {
         $filename = md5($image["name"] . time()) . "." . pathinfo($image["name"], PATHINFO_EXTENSION);
+
+        $extension = pathinfo($image["name"], PATHINFO_EXTENSION);
+
+        if ($extension != "jpg" && $extension != "png" && $extension != "jpeg" && $extension != "gif")
+            throw new Exception("Only JPG, JPEG, PNG & GIF files are allowed");
+
+        if ($image["size"] > 3000000)
+            throw new Exception("Your file is to big, maximum 3MB");
+
         if (move_uploaded_file($image["tmp_name"], "uploads/posts/" . $filename)) {
             $this->image = $filename;
         } else {
             throw new Exception("File could not be uploaded");
         }
+
     }
 
     /**
