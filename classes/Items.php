@@ -6,6 +6,8 @@ class Items
     private $image;
     private $description;
     private $id;
+    private $status;
+    private $points;
 
     /**
      * @param mixed $id
@@ -180,4 +182,58 @@ class Items
             return true;
         }
     }
+
+    public function makeInappropriate($item_id) {
+        $id = $_SESSION['id'];
+
+        $pdo = Db::getInstance();
+
+        // Check if user has already send feedback about this post
+        $stmt = $pdo->prepare("SELECT count(*) as 'items' FROM item_inappropriate WHERE user_id = :user_id AND item_id = :item_id");
+        $stmt->bindValue(":user_id", $id);
+        $stmt->bindValue(":item_id", $item_id);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC)['items'];
+
+        // If feedback is not already sent, place feedback now
+        if ($result == 0) {
+            $stmt = $pdo->prepare("INSERT INTO item_inappropriate (user_id, item_id) VALUES (:user_id, :item_id)");
+            $stmt->bindValue(":user_id", $id);
+            $stmt->bindValue(":item_id", $item_id);
+            $this->addInappropriatePoint($item_id);
+            return $stmt->execute();
+        } else {
+            return false;
+        }
+    }
+
+    /* Deel feature 10 */
+
+    private function addInappropriatePoint($item_id) {
+        $pdo = Db::getInstance();
+
+        $stmt = $pdo->prepare("UPDATE items SET points = points + 1 WHERE id = :item_id");
+        $stmt->bindValue(":item_id", $item_id);
+        $ret = $stmt->execute();
+
+        $stmt = $pdo->prepare("SELECT points FROM items WHERE id = :item_id");
+        $stmt->bindValue(":item_id", $item_id);
+        $points = $stmt->execute();
+
+        if ($points >= 3) {
+            $this->disableItem($item_id);
+        }
+
+        return $ret;
+    }
+
+    private function disableItem($item_id) {
+        $pdo = Db::getInstance();
+
+        $stmt = $pdo->prepare("UPDATE items SET status = false WHERE id = :item_id");
+        $stmt->bindValue(":item_id", $item_id);
+        return $stmt->execute();
+    }
+
+    /* end feature 10*/
 }
