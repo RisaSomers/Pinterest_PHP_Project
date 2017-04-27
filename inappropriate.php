@@ -9,7 +9,7 @@ session_start();
 
 $id = $_GET['id']; //leest van url balk welk item uit db dit is
 
-$item = new Items();
+$item = new Items(); // items is naam van de class
 $result = $item->makeInappropriate($id);
 
 ?>

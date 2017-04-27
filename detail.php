@@ -40,7 +40,9 @@ spl_autoload_register(function ($class) {
 session_start();
 
 if (!empty($_SESSION['email'])) {
+
 }
+
 
 $conn = Db::getInstance();
 $details = new Items();
@@ -49,14 +51,13 @@ $details = $conn->prepare("SELECT * FROM items WHERE id = $id;");
 $details->execute();
 $item = $details->fetch(PDO::FETCH_ASSOC);
 
-
 $user = new Users();
 $user = $conn->prepare("SELECT * FROM Users WHERE id = $id;");
 $user->execute();
 
 if (!(bool)$item['status']) {
-	header('Location:blocked.php');
-	die(); // dit gaat functie oproepen om te zien of item(id geblokkeerd is)
+	header('Location:/blocked.php');
+	die();
 }
 
 //Eerst bouwen we onze applicatie uit zodat ze werkt, ook zonder JavaScript
@@ -135,65 +136,51 @@ $recentActivities = $activity->GetRecentActivities();
 <a href="index.php">Go back to your dashboard</a>
 <p><a href="inappropriate.php?id=<?php print $id ?>">Markeer als ongepast</a></p>
 
-<?php foreach ($details as $row => $detail): ?>
+<!-- Page Content -->
+<div class="container">
+	<?php echo time_elapsed_string('@' . $item["uploaded"]); ?>
+	<?php if ($item["user_id"] == $_SESSION["id"]): ?>
+      <a href="delete_post.php?id=<?php echo htmlentities($_GET["id"]); ?>">Delete</a>
+	<?php endif; ?>
 
-    <!-- Page Content -->
-    <div class="container">
-			<?php echo time_elapsed_string('@' . $detail["uploaded"]); ?>
-			<?php if ($detail["user_id"] == $_SESSION["id"]): ?>
-          <a href="delete_post.php?id=<?php echo htmlentities($_GET["id"]); ?>">Delete</a>
-			<?php endif; ?>
+    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+        <h1 id="post" data-id="<?php echo $item['id'] ?>"><?php echo $item['Beschrijving']; ?></h1>
 
-        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-            <h1 id="post" data-id="<?php echo $detail['id'] ?>"><?php echo $detail['Beschrijving']; ?></h1>
+        <a class="thumbnail" href="">
+					<?php if (empty($item["Image"])): ?>
 
-            <a class="thumbnail" href="">
-							<?php if (empty($detail["Image"])): ?>
+              <img src="<?php echo $item['Url']; ?>" class="thumbnail" alt="">
+					<?php else: ?>
 
-                  <img src="<?php echo $detail['Url']; ?>" class="thumbnail" alt="">
-							<?php else: ?>
-
-                  <img src="uploads/posts/<?php echo $detail['Image']; ?>" class="thumbnail" alt="">
-							<?php endif; ?>
-            </a>
-        </div>
+              <img src="uploads/posts/<?php echo $item['Image']; ?>" class="thumbnail" alt="">
+					<?php endif; ?>
+        </a>
     </div>
+</div>
 
-    <div class="errors"></div>
-    <form method="post" action="">
-        <div class="statusupdates">
-            <h5>Comments</h5>
-            <input type="text" placeholder="What's on your mind?" id="activitymessage" name="activitymessage"/>
-            <input id="btnSubmit" type="submit" value="Share"/>
+<div class="errors"></div>
+<form method="post" action="">
+    <div class="statusupdates">
+        <h5>Comments</h5>
+        <input type="text" placeholder="What's on your mind?" id="activitymessage" name="activitymessage"/>
+        <input id="btnSubmit" type="submit" value="Share"/>
 
-            <ul id="listupdates">
-							<?php
+        <ul id="listupdates">
+					<?php
 
-							if ($recentActivities > 0) {
-								while ($singleActivity = mysqli_fetch_assoc($recentActivities)) {
-									echo "<li><h2>GoodBytes.be</h2> " . htmlspecialchars($singleActivity['activity_description']) . "</li>";
-								}
-							}
+					if ($recentActivities > 0) {
+						while ($singleActivity = mysqli_fetch_assoc($recentActivities)) {
+							echo "<li><h2>GoodBytes.be</h2> " . htmlspecialchars($singleActivity['activity_description']) . "</li>";
+						}
+					}
 
-							?>
-            </ul>
-
-        </div>
-    </form>
+					?>
+        </ul>
 
     </div>
+</form>
 
-
-<?php endforeach; ?>
-
-<!-- Footer -->
-<footer>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Copyright &copy; IMDterest 2017</p>
-        </div>
-    </div>
-</footer>
+<?php include_once ('includes/footer.php') ?>
 
 
 <!-- /.container -->

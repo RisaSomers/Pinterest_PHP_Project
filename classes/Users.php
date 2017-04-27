@@ -5,6 +5,25 @@ class Users
     private $m_slastname;
     private $m_semail;
     private $m_spassword;
+    private $m_savatar;
+
+    private $avatar_url = 'uploads/users/default/avatar.png';
+
+	/**
+	 * @return mixed
+	 */
+	public function getMSavatar()
+	{
+		return $this->m_savatar;
+	}
+
+	/**
+	 * @param mixed $m_savatar
+	 */
+	public function setMSavatar($m_savatar)
+	{
+		$this->m_savatar = $m_savatar;
+	}
 
     public function getMSfirstname()
     {
@@ -73,12 +92,12 @@ class Users
     {
         $conn = Db::getInstance();
         
-        $stmt = $conn->prepare("INSERT INTO users (firstname, lastname, password, email) VALUES (:firstname, :lastname, :password, :email)");
-        print_r($this);
+        $stmt = $conn->prepare("INSERT INTO users (firstname, lastname, password, email, avatar) VALUES (:firstname, :lastname, :password, :email, :avatar)");
         $stmt->bindValue(":firstname", $this->m_sfirstname);
         $stmt->bindValue(":lastname", $this->m_slastname);
         $stmt->bindValue(":password", $this->m_spassword);
         $stmt->bindValue(":email", $this->m_semail);
+        $stmt->bindValue(":avatar", $this->avatar_url);
         return $stmt->execute();
     }
     

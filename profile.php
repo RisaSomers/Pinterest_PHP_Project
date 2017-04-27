@@ -6,8 +6,8 @@ spl_autoload_register(function ($class) {
 
 session_start();
 
-
-
+$user = new Users();
+$user = $user->getAllUserSpecific($_SESSION['id']);
 
 if (!isset($_FILES['avatar'])) {
     $feedback = "Please select a file";
@@ -147,7 +147,7 @@ if (!isset($_SESSION["email"])) {
 
         <body>
 
-        
+
 
 
            <div class="col-lg-12">
@@ -156,9 +156,9 @@ if (!isset($_SESSION["email"])) {
             </div>
 
 
-              <img src="<?php echo $_SESSION["avatar"] ; ?>" alt="" style=" width: 10%; margin-left: 50px;" class="">
+              <img src="<?php print $user['avatar'] ?>" alt="" style=" width: 10%; margin-left: 50px;" class="">
 
-              
+
 
               <form enctype="multipart/form-data" action="<?php echo htmlentities($_SERVER['PHP_SELF']);?>" method="post">
 
@@ -225,5 +225,7 @@ if (!isset($_SESSION["email"])) {
             </div>
 
         </body>
+
+    <script src="js/bootstrap.min.js"></script>
 
     </html>
