@@ -17,7 +17,7 @@ try {
 try {
     if (isset($_REQUEST['term'])) {
         // create prepared statement
-        $sql = "SELECT * FROM Topics WHERE name LIKE :term";
+        $sql = "SELECT * FROM items WHERE Beschrijving LIKE :term";
         $stmt = $conn->prepare($sql);
         $term = $_REQUEST['term'] . '%';
         // bind parameters to statement
@@ -28,8 +28,7 @@ try {
             while ($row = $stmt->fetch()) {
                 echo "<p>";
                 echo "<a href=\"detail.php?id={$row['id']}\">";
-                echo "<img src=\"{$row['image']}" . "\" alt=\"\" />";
-                echo $row['name'] . "</p>";
+                echo $row['Beschrijving'] . "</p>";
                 echo "</a>";
             }
         } else {
