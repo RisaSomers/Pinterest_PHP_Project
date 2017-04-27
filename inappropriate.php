@@ -1,13 +1,13 @@
 <?php
 
-spl_autoload_register(function ($class) {
+spl_autoload_register(function ($class) { //zoekt alle classes die je nodig heeft autoload
 	include_once("classes/" . $class . ".php");
 });
 
 session_start();
 
-$conn = Db::getInstance(); /* eventueel verwijderen */
-$id = $_GET['id'];
+
+$id = $_GET['id']; //leest van url balk welk item uit db dit is
 
 $item = new Items();
 $result = $item->makeInappropriate($id);

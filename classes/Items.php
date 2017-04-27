@@ -197,7 +197,7 @@ class Items
         $result = $stmt->fetch(PDO::FETCH_ASSOC)['items'];
 
         // If feedback is not already sent, place feedback now
-        if ($result == 0) {
+        if ((int)$result == 0) {
             $stmt = $pdo->prepare("INSERT INTO item_inappropriate (user_id, item_id) VALUES (:user_id, :item_id)");
             $stmt->bindValue(":user_id", $id);
             $stmt->bindValue(":item_id", $item_id);

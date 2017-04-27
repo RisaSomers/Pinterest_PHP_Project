@@ -56,7 +56,7 @@ $user->execute();
 
 if (!(bool)$item['status']) {
 	header('Location:/blocked.php');
-	die();
+	die(); // dit gaat functie oproepen om te zien of item(id geblokkeerd is)
 }
 
 //Eerst bouwen we onze applicatie uit zodat ze werkt, ook zonder JavaScript
