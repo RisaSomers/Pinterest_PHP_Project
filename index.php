@@ -46,7 +46,30 @@ if (!empty($_SESSION['email'])) {
 
 $conn = Db::getInstance();
 
-$statement = $conn->prepare("select * from items order by id DESC limit 0,20");
+if (!empty($_GET["filter"])) {
+    switch ($_GET["filter"]) {
+        case "mostlikes":
+            $statement = $conn->prepare("
+                    select DISTINCT i.id, i.Image, i.Url, i.Beschrijving, l.post_id,l.user_id, i.uploaded,count(l.id) from items i
+                    inner join likes l ON i.id = l.post_id
+                    GROUP BY l.post_id
+                    order by count(l.id) DESC limit 0,20");
+            break;
+        case "leastlikes":
+            $statement = $conn->prepare("
+                    select DISTINCT i.id, i.Image, i.Url, i.Beschrijving, l.post_id,l.user_id, i.uploaded,count(l.id) from items i
+                    inner join dislikes l ON i.id = l.post_id
+                    GROUP BY l.post_id
+                    order by count(l.id) DESC limit 0,20");
+            break;
+        default:
+            $statement = $conn->prepare("select * from items order by id DESC limit 0,20");
+            break;
+    }
+} else {
+    $statement = $conn->prepare("select * from items order by id DESC limit 0,20");
+}
+
 $statement->execute();
 
 $t = new Topics();
@@ -102,6 +125,36 @@ $u = new Users();
 
         <div class="col-lg-12">
             <h1 class="page-header">Your feed</h1>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="filter">Filter:</label>
+                            <select name="filter" id="filter" class="form-control">
+                                <?php if(empty($_GET["filter"])): ?>
+                                    <option selected="selected" value="none">None</option>
+                                <?php else: ?>
+                                    <option value="none">None</option>
+                                <?php endif; ?>
+
+                                <?php if($_GET["filter"] == "mostlikes"): ?>
+                                    <option selected="selected" value="mostlikes">Most Likes</option>
+                                <?php else: ?>
+                                    <option value="mostlikes">Most Likes</option>
+                                <?php endif; ?>
+
+                                <?php if($_GET["filter"] == "leastlikes"): ?>
+                                    <option selected="selected" value="leastlikes">Least Likes</option>
+                                <?php else: ?>
+                                    <option value="leastlikes">Least Likes</option>
+                                <?php endif; ?>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
@@ -243,7 +296,14 @@ $u = new Users();
                 }
             })
         });
+
+        $("#filter").bind("change select", function(e) {
+            window.location.href = 'index.php?filter=' + $("#filter").find("option:selected").val();
+
+        })
     }
+
+
     refreshEventListeners();
 </script>
 <script>
