@@ -48,6 +48,10 @@ session_start();
     $details = $conn->prepare("SELECT * FROM items WHERE id = $id;");
     $details->execute();
 
+    if (!(bool)$detail['status']) {
+    header('Location:/blocked.php');
+    die();
+}
 
     $user = new Users();
     $user = $conn->prepare("SELECT * FROM Users WHERE id = $id;");
