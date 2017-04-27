@@ -49,7 +49,7 @@ session_start();
     $details->execute();
 
     if (!(bool)$detail['status']) {
-    header('Location:/blocked.php');
+    header('Location:blocked.php');
     die();
 }
 
