@@ -134,6 +134,7 @@ session_start();
 <?php include("includes/menu.php"); ?>
 
 <a href="index.php">Go back to your dashboard</a>
+<p><a href="inappropriate.php?id=<?php print $id ?>">Markeer als ongepast</a></p>
 
 <?php foreach ($details as $row => $detail): ?>
 
