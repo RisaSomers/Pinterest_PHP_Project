@@ -8,7 +8,7 @@ spl_autoload_register(function ($class) {
         $activity = new Activity();
         $user = new Users();
 
-        //controleer of er een update wordt verzonden
+       
   if (!empty($_POST['update'])) {
       $activity->Text = $_POST['update'];
       $commentUser = $user->getAllUser()['firstname'];
@@ -31,5 +31,5 @@ spl_autoload_register(function ($class) {
             ];
       }
 
-      echo json_encode($feedback); // {"code": 500, "message:"}
+      echo json_encode($feedback); 
   }

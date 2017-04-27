@@ -51,4 +51,14 @@ class Activity
             throw new Exception('Ooh my, something terrible happened to the database connection');
         }
     }
+    
+    public function GetCommentsFromPost()
+    {
+        $conn = Db::getInstance();
+        
+        $statement = $conn->prepare("SELECT * FROM comments WHERE id_item = :id_item");
+        $statement->bindValue(":id_item", $_GET["id"]);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
 }

@@ -172,9 +172,7 @@ session_start();
 		
 		<ul id="listupdates">
 		<?php 
-            
-            
-            
+   
             if ($recentActivities > 0) {
                 while ($singleActivity = mysqli_fetch_assoc($recentActivities)) {
                     echo "<li><h2>GoodBytes.be</h2> ". htmlspecialchars($singleActivity['activity_description'])."</li>";
@@ -188,8 +186,6 @@ session_start();
 	</form>
 	
 </div>
-
-
 
 
 <?php endforeach; ?>
