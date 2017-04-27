@@ -34,7 +34,6 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="profile.php">Instellingen</a></li>
                         <li><a href="user_uploads.php">Mijn uploads</a></li>
-                        <li><a href="user_uploads.php">Mijn uploads</a></li>
                         <li role="separator" class="divider"></li>
                        <li></li><a href="logout.php">Logout</a></li>
                     </ul>
