@@ -24,7 +24,7 @@ session_start();
 	<div class="container">
         <h2>Sorry, dit item is niet meer beschikbaar</h2>
         <p><i>Het bericht werd gemarkeerd als aanstootgevend of ongepast.</i></p>
-        <p><a href="/index.php" class="">Home</a></p>
+        <p><a href="index.php" class="">Home</a></p>
 	</div>
 
 	<div class="errors"></div>
