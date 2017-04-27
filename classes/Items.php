@@ -190,15 +190,15 @@ class Items
         $pdo = Db::getInstance();
 
         // Check if user has already send feedback about this post
-        $stmt = $pdo->prepare("SELECT count(*) as 'items' FROM item_inappropriate WHERE user_id = :user_id AND item_id = :item_id"); // welke user heeft welk item gemarkeerd
+        $stmt = $pdo->prepare("SELECT count(*) as 'items' FROM item_inappropriate WHERE user_id = :user_id AND item_id = :item_id");
         $stmt->bindValue(":user_id", $id);
         $stmt->bindValue(":item_id", $item_id);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC)['items']; // aantal rijen terugkrijgen die aan vooorwaarden voldoen
+        $result = $stmt->fetch(PDO::FETCH_ASSOC)['items'];
 
         // If feedback is not already sent, place feedback now
-        if ((int)$result == 0) { // dan kan je markeren
-            $stmt = $pdo->prepare("INSERT INTO item_inappropriate (user_id, item_id) VALUES (:user_id, :item_id)"); // hier voegt hij de markering in de row welke item_id gelinkt is aan welke gebruiker id
+        if ($result == 0) {
+            $stmt = $pdo->prepare("INSERT INTO item_inappropriate (user_id, item_id) VALUES (:user_id, :item_id)");
             $stmt->bindValue(":user_id", $id);
             $stmt->bindValue(":item_id", $item_id);
             $this->addInappropriatePoint($item_id);
@@ -210,7 +210,7 @@ class Items
 
     /* Deel feature 10 */
 
-    private function addInappropriatePoint($item_id) { // punt toevoegen aan kolom items als punt op 3 staat word item blocked
+    private function addInappropriatePoint($item_id) {
         $pdo = Db::getInstance();
 
         $stmt = $pdo->prepare("UPDATE items SET points = points + 1 WHERE id = :item_id");
@@ -222,7 +222,7 @@ class Items
         $stmt->execute();
         $points = $stmt->fetch(PDO::FETCH_ASSOC)['points'];
 
-        if ((int)$points >= 3) { // als points op 3 staat disable item
+        if ((int)$points >= 3) {
             $this->disableItem($item_id);
         }
 
@@ -235,7 +235,7 @@ class Items
         $stmt = $pdo->prepare("UPDATE items SET status = false WHERE id = :item_id");
         $stmt->bindValue(":item_id", $item_id);
         return $stmt->execute();
-    } // status is boolean 1 true dus staat live 0 is false dus wordt blocked
+    }
 
     /* end feature 10*/
 }

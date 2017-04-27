@@ -7,6 +7,7 @@ class Users
     private $m_spassword;
     private $m_savatar;
 
+    // link naar default avatar
     private $avatar_url = 'uploads/users/default/avatar.png';
 
 	/**
@@ -98,7 +99,12 @@ class Users
         $stmt->bindValue(":password", $this->m_spassword);
         $stmt->bindValue(":email", $this->m_semail);
         $stmt->bindValue(":avatar", $this->avatar_url);
-        return $stmt->execute();
+        $stmt->execute();
+
+				$stmt = $conn->prepare("SELECT id FROM users WHERE email = :email");
+				$stmt->bindValue(':email', $this->m_semail);
+				$stmt->execute();
+				return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
     public function updateSubscriptions()

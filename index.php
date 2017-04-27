@@ -123,7 +123,7 @@ $u = new Users();
                                     $likes = $pp->getLike();
                                     $dislikes = $pp->getDislike();
                                     echo "<h2>" . $row['Beschrijving'] . "</h2>
-            <a href= http://localhost/GIT/Pinterest_PHP_Project/userprofile.php?user=" . $u->getAllUserSpecific($row['user_id'])['id'] . ">" . $u->getFirstnameUserO($row['user_id'])['0']['firstname'] . "</a>
+            <a href=userprofile.php?user=" . $u->getAllUserSpecific($row['user_id'])['id'] . ">" . $u->getFirstnameUserO($row['user_id'])['0']['firstname'] . "</a>
                            <a href='detail.php?id=" . $row['id'] . "'>
                            
                            
@@ -176,14 +176,7 @@ $u = new Users();
 
 <hr>
 
-<!-- Footer -->
-<footer>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Copyright &copy; IMDterest 2017</p>
-        </div>
-    </div>
-</footer>
+<?php include_once ('includes/footer.php') ?>
 
 </div>
 <!-- /.container -->

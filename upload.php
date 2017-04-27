@@ -88,14 +88,7 @@ if (!empty($_POST)) {
 
 </div>
 
-<!-- Footer -->
-<footer>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Copyright &copy; IMDterest 2017</p>
-        </div>
-    </div>
-</footer>
+<?php include_once ('includes/footer.php') ?>
 
 </div>
 <!-- /.container -->

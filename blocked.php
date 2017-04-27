@@ -29,16 +29,7 @@ session_start();
 
 	<div class="errors"></div>
 
-<!-- Footer -->
-<footer>
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<p>Copyright &copy; IMDterest <?php echo date('Y') ?></p>
-			</div>
-		</div>
-	</div>
-</footer>
+<?php include_once ('includes/footer.php') ?>
 
 <!-- /.container -->
 
