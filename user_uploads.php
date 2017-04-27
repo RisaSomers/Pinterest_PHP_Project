@@ -55,8 +55,23 @@ if (!isset($_SESSION["email"])) {
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
     <?php include("includes/header.php"); ?>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+
+    <!-- Custom CSS -->
+    <link href="css/thumbnail-gallery.css" rel="stylesheet">
+    <link href="css/jquery.modal.css" rel="stylesheet">
+    <script src="js/jquery.modal.js" type="text/javascript" charset="utf-8"></script>
+
+
 
     <title>IMDterest</title>
 
@@ -74,7 +89,7 @@ if (!isset($_SESSION["email"])) {
 
 
     <div class="row">
-        
+
         <div class="col-lg-12">
                 <h1 class="page-header">Profile</h1>
                 <h4>Create your own board!</h4>
@@ -122,9 +137,9 @@ if (!isset($_SESSION["email"])) {
                                     $pp->setId($row["id"]);
                                     $likes = $pp->getLike();
                                     $dislikes = $pp->getDislike();
-                                    echo "<h2>" . $row['Beschrijving'] . "</h2>  
+                                    echo "<h2>" . $row['Beschrijving'] . "</h2>
                            <a href='detail.php?id=" . $row['id'] . "'>
-                           
+
                                <div class='post_img'>
                                    ";
                                     if (!empty($row['Url'])) {
