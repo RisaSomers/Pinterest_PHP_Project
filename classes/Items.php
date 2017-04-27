@@ -219,9 +219,10 @@ class Items
 
         $stmt = $pdo->prepare("SELECT points FROM items WHERE id = :item_id");
         $stmt->bindValue(":item_id", $item_id);
-        $points = $stmt->execute();
+        $stmt->execute();
+        $points = $stmt->fetch(PDO::FETCH_ASSOC)['points'];
 
-        if ($points >= 3) {
+        if ((int)$points >= 3) {
             $this->disableItem($item_id);
         }
 
