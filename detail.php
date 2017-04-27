@@ -55,7 +55,7 @@ $user = $conn->prepare("SELECT * FROM Users WHERE id = $id;");
 $user->execute();
 
 if (!(bool)$item['status']) {
-	header('Location:/blocked.php');
+	header('Location:blocked.php');
 	die(); // dit gaat functie oproepen om te zien of item(id geblokkeerd is)
 }
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: 127.0.0.1
--- Gegenereerd op: 27 apr 2017 om 19:28
+-- Gegenereerd op: 27 apr 2017 om 20:27
 -- Serverversie: 5.6.17
 -- PHP-versie: 5.5.12
 
@@ -173,7 +173,7 @@ INSERT INTO `items` (`id`, `user_id`, `Image`, `Url`, `Beschrijving`, `uploaded`
 (30, 72, 'ef90e803c3051784f66b4bdeb8955e91.jpg', '', 'Twin', 0, 1, 0),
 (32, 72, 'ad69baab1414c422b6927cb2650cd09a.jpg', '', 'red', 0, 1, 0),
 (33, 72, '5abda4b2104625448e7c90834b042ef1.jpg', '', 'Howdy', 0, 1, 0),
-(34, 85, 'e506356dcb01d6a7309939c16d84b751.jpg', '', 'tongetje', 0, 1, 0),
+(34, 85, 'e506356dcb01d6a7309939c16d84b751.jpg', '', 'tongetje', 0, 0, 1),
 (35, 85, '9c92fbcd7d5e5e5d8ea7dca5dc61a37d.jpg', '', 'fat', 0, 1, 0),
 (36, 85, 'e453c430ab60f7818d0b50fe7fb69cf9.jpg', '', 'shy', 0, 1, 0),
 (37, 85, '119f9969cc6dff5280a139ce65e147af.jpg', '', 'got3', 0, 1, 0),
@@ -184,12 +184,12 @@ INSERT INTO `items` (`id`, `user_id`, `Image`, `Url`, `Beschrijving`, `uploaded`
 (42, 85, '02db9cded3eea6ef638358702afae71e.jpg', '', 'lay down', 0, 1, 0),
 (43, 85, '77aad3e37ec154c2326f9c7c8bc50103.jpg', '', 'cool', 0, 1, 0),
 (44, 85, '3a218ad317919028cc0d4262ab057eeb.jpg', '', 'cute', 0, 1, 0),
-(50, 88, NULL, 'https://pbs.twimg.com/profile_images/2631415338/9bce37ad7fe14dd716df81942294348c_400x400.png', 'Gaming logo', 0, 0, 1),
-(51, 88, '228137c5486d6457530b51a441689035.png', NULL, 'This is a picture of myself', 0, 1, 0),
+(50, 88, NULL, 'https://pbs.twimg.com/profile_images/2631415338/9bce37ad7fe14dd716df81942294348c_400x400.png', 'Gaming logo', 0, 1, 1),
+(51, 88, '228137c5486d6457530b51a441689035.png', NULL, 'This is a picture of myself', 0, 1, 1),
 (53, 87, NULL, 'http://vignette3.wikia.nocookie.net/divine-reality/images/b/b8/General_Graardor.png/revision/latest?cb=20140128071535', 'Boss monsters of an MMORPG', 0, 1, 0),
-(58, 89, NULL, 'http://vignette2.wikia.nocookie.net/2007scape/images/0/0b/Shark_detail.png/revision/latest?cb=20160214063425', 'kk', 1492972413, 0, 1),
+(58, 89, NULL, 'http://vignette2.wikia.nocookie.net/2007scape/images/0/0b/Shark_detail.png/revision/latest?cb=20160214063425', 'kk', 1492972413, 1, 1),
 (59, 42, '307c71e8aca5fb58a503669a2e64bbdd.png', NULL, 'jej', 1492980999, 1, 0),
-(62, 42, 'ef7967130ec27de3c6e179dc48b15fea.png', NULL, 'kids', 1493116404, 0, 1);
+(62, 42, 'ef7967130ec27de3c6e179dc48b15fea.png', NULL, 'kids', 1493116404, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -218,11 +218,11 @@ INSERT INTO `items_topics` (`id`, `item`, `topic`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `item_inappropriate` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
