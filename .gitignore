@@ -18,3 +18,5 @@ classes/Db.class.php
 *.png
 
 *.jpg
+
+.idea/

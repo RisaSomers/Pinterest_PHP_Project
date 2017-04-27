@@ -9,6 +9,7 @@ class Items
     private $status;
     private $points;
 
+
     /**
      * @param mixed $id
      */

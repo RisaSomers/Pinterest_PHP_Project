@@ -6,7 +6,7 @@ spl_autoload_register(function ($class) {
 
 session_start();
 
-$conn = Db::getInstance();
+$conn = Db::getInstance(); /* eventueel verwijderen */
 $id = $_GET['id'];
 
 $item = new Items();
