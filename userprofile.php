@@ -31,10 +31,9 @@ $feed = $t->getUserPosts();
 
 
 $statement = $conn->prepare("SELECT userid FROM followlist WHERE userid = :id and followerid = :follower");
-$statement->bindValue(":userid", $_SESSION["id"]);
-$statement->bindValue(":followid", $userid);
-$test = $statement->execute();
-var_dump($test);
+$statement->bindValue(":id", $_SESSION["id"]);
+$statement->bindValue(":follower", $userid);
+$statement->execute();
 $status = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 if(!empty($status)){
@@ -48,16 +47,16 @@ else{
 if(!empty($_POST)){
     if(!empty($status)){
         $statement = $conn->prepare("DELETE FROM followlist where userid = :userid AND followerid = :followerid");
-        $statement->bindValue(":userid", $_GET["id"]);
-        $statement->bindValue(":followerid", $_SESSION["id"]);
+        $statement->bindValue(":userid", $_SESSION["id"]);
+        $statement->bindValue(":followerid", $userid);
         $statement->execute();
         $state = "unfollow";
     }
     
     else{
         $statement = $conn->prepare("INSERT INTO followlist (userid, followerid) VALUES (:userid, :followerid)");
-        $statement->bindValue(":userid", $_GET["id"]);
-        $statement->bindValue(":followerid", $_SESSION["id"]);
+        $statement->bindValue(":userid", $_SESSION["id"]);
+        $statement->bindValue(":followerid", $userid);
         $statement->execute();
         $state = "follow";
     }
