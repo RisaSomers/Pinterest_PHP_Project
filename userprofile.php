@@ -4,8 +4,10 @@ spl_autoload_register(function ($class) {
     include_once("classes/".$class.".php");
 });
 
+include_once("session.php");
 
-session_start();
+
+
 
 if (!empty($_SESSION['email'])) {
 } else {
@@ -24,6 +26,47 @@ $statement->execute();
 $res = $statement->fetchAll(PDO::FETCH_ASSOC);
 $t = new Topics();
 $feed = $t->getUserPosts();
+
+
+
+
+$statement = $conn->prepare("SELECT userid FROM followlist WHERE userid = :id and followerid = :follower");
+$statement->bindValue(":userid", $_SESSION["id"]);
+$statement->bindValue(":followid", $userid);
+$test = $statement->execute();
+var_dump($test);
+$status = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+if(!empty($status)){
+    $state = "unfollow";
+}
+
+else{
+    $state = "follow";
+}
+
+if(!empty($_POST)){
+    if(!empty($status)){
+        $statement = $conn->prepare("DELETE FROM followlist where userid = :userid AND followerid = :followerid");
+        $statement->bindValue(":userid", $_GET["id"]);
+        $statement->bindValue(":followerid", $_SESSION["id"]);
+        $statement->execute();
+        $state = "unfollow";
+    }
+    
+    else{
+        $statement = $conn->prepare("INSERT INTO followlist (userid, followerid) VALUES (:userid, :followerid)");
+        $statement->bindValue(":userid", $_GET["id"]);
+        $statement->bindValue(":followerid", $_SESSION["id"]);
+        $statement->execute();
+        $state = "follow";
+    }
+    
+    header('Refresh:0');
+}
+
+
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -53,7 +96,34 @@ $feed = $t->getUserPosts();
             <h1 class="page-header"><?php echo $user->getFirstnameUserO($userid)["0"]["firstname"] . "'s profile"; ?></h1>
 
        
-       <button id="btnfollow">Follow</button>
+     
+       
+       
+       
+       
+       
+       
+       <form id="follow" class="<?php echo $guest?>" action="" method="post">
+        <input value="<?php echo $userid ?>" name="follower" type="hidden">  
+        <button class="<?php echo $state;?>" type="submit" ><?php echo $state; ?></button>     
+       </form>
+       
+
+
+
+
+
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
         </div>
 
         <form action="" method="post">
@@ -113,35 +183,7 @@ $feed = $t->getUserPosts();
 
 
 <script>
-    $(document).ready(function () {
-        $("#btnfollow").on("click", function (e) {
-            //console.log("clicked");
 
-            // tekst vak uitlezen
-            
-            // via AJAX update naar databank sturen
-            $.ajax({
-                method: "POST",
-                url: "AJAX/follow.php",
-                data: { } //update: is de naam en update is de waarde (value)
-            })
 
-                .done(function (response) {
 
-                    // code + message
-                    if (response.code == 200) {
-
-                        // iets plaatsen?
-                        var li = $("<li style='display: none;'>");
-                        li.html("<img id='avatar' src='" + response.avatar + "' </img>" + "   " + "  " + "<a href='http://localhost/GIT/Pinterest_PHP_Project/userprofile.php?user=" + response.id + "'>" + response.user + "</a>: " + response.message);
-                        // waar?
-                        $("#listupdates").prepend(li);
-                        $("#listupdates li").first().slideDown();
-                        $("#activitymessage").val("").focus();
-                    }
-                });
-
-            e.preventDefault();
-        });
-    });
 </script>

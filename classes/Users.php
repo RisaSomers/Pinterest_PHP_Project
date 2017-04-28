@@ -260,12 +260,12 @@ class Users
         return $allUser;
     }
     
-        public function setFollowers()
+        public function setFollowers($id)
     {
         $conn = Db::getInstance();
         $statement = $conn->prepare("INSERT INTO followlist (userid, followid) VALUES (:userid, :followid)");
-        $statement->bindValue(":id", $_SESSION["id"]);
-        $statement->bindValue(":id", $_SESSION["id"]);
+        $statement->bindValue(":userid", $_SESSION["id"]);
+        $statement->bindValue(":followid", $id);
         $statement->execute();
         $allUser = $statement->fetch(PDO::FETCH_ASSOC);
         
