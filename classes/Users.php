@@ -214,6 +214,7 @@ class Users
         $allposts = $conn->query("SELECT * FROM users");
         return $allposts;
     }
+    
     public function getAllUser()
     {
         $conn = Db::getInstance();
@@ -259,5 +260,16 @@ class Users
         return $allUser;
     }
     
+        public function setFollowers()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("INSERT INTO followlist (userid, followid) VALUES (:userid, :followid)");
+        $statement->bindValue(":id", $_SESSION["id"]);
+        $statement->bindValue(":id", $_SESSION["id"]);
+        $statement->execute();
+        $allUser = $statement->fetch(PDO::FETCH_ASSOC);
+        
+        return $allUser;
+    }
     
 }

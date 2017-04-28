@@ -54,7 +54,6 @@ $feed = $t->getUserPosts();
 
        
        <button id="btnfollow">Follow</button>
-       <button id="btnfriend" >Add friend</button>
         </div>
 
         <form action="" method="post">
@@ -111,3 +110,38 @@ $feed = $t->getUserPosts();
     
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
 <script src="js/addFriend.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $("#btnfollow").on("click", function (e) {
+            //console.log("clicked");
+
+            // tekst vak uitlezen
+            
+            // via AJAX update naar databank sturen
+            $.ajax({
+                method: "POST",
+                url: "AJAX/follow.php",
+                data: { } //update: is de naam en update is de waarde (value)
+            })
+
+                .done(function (response) {
+
+                    // code + message
+                    if (response.code == 200) {
+
+                        // iets plaatsen?
+                        var li = $("<li style='display: none;'>");
+                        li.html("<img id='avatar' src='" + response.avatar + "' </img>" + "   " + "  " + "<a href='http://localhost/GIT/Pinterest_PHP_Project/userprofile.php?user=" + response.id + "'>" + response.user + "</a>: " + response.message);
+                        // waar?
+                        $("#listupdates").prepend(li);
+                        $("#listupdates li").first().slideDown();
+                        $("#activitymessage").val("").focus();
+                    }
+                });
+
+            e.preventDefault();
+        });
+    });
+</script>
