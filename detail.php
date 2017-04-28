@@ -73,6 +73,7 @@ if (!empty($_POST['activitymessage'])) {
 	}
 }
 
+
 //altijd alle laatste activiteiten ophalen
 $recentActivities = $activity->GetRecentActivities();
 
@@ -166,15 +167,24 @@ $recentActivities = $activity->GetRecentActivities();
         <input id="btnSubmit" type="submit" value="Share"/>
 
         <ul id="listupdates">
-					<?php
 
-					if ($recentActivities > 0) {
-						while ($singleActivity = mysqli_fetch_assoc($recentActivities)) {
-							echo "<li><h2>GoodBytes.be</h2> " . htmlspecialchars($singleActivity['activity_description']) . "</li>";
-						}
-					}
-
-					?>
+									
+       <?php $comment = new Activity();
+            $comments = $comment->Comments(); 
+            
+            
+        foreach($comments as $c):?>
+       
+    <li>
+    
+    <img id='avatar' src=' <?php echo $c["avatar"] ?> ' </img>
+    <a href="profile?userid=<?php  echo $c['user_id']?>"><?php echo $c['firstname']?></a>
+    <p><?php echo $c['comments']?></p>
+    
+    <li>  
+            
+            
+        <?php endforeach; ?>    
         </ul>
 
     </div>

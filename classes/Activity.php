@@ -61,4 +61,15 @@ class Activity
         $statement->execute();
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
+    
+    public function Comments()
+    {
+        $conn = Db::getInstance();
+        
+        $statement = $conn->prepare("select c.*, u.firstname as firstname, u.avatar as avatar from comments c inner join users u on u.id = c.id_user where c.id_item = :items");
+        $statement->bindValue(":items", $_GET["id"]);
+        $statement->execute();
+        $comments = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $comments;
+    }
 }
