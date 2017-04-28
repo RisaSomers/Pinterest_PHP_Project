@@ -55,7 +55,7 @@ if (!empty($_GET["filter"])) {
                     GROUP BY l.post_id
                     order by count(l.id) DESC limit 0,20");
             break;
-        case "leastlikes":
+        case "mostdislikes":
             $statement = $conn->prepare("
                     select DISTINCT i.id, i.Image, i.Url, i.Beschrijving, l.post_id,l.user_id, i.uploaded,count(l.id) from items i
                     inner join dislikes l ON i.id = l.post_id
@@ -144,10 +144,10 @@ $u = new Users();
                                     <option value="mostlikes">Most Likes</option>
                                 <?php endif; ?>
 
-                                <?php if($_GET["filter"] == "leastlikes"): ?>
-                                    <option selected="selected" value="leastlikes">Least Likes</option>
+                                <?php if($_GET["filter"] == "mostdislikes"): ?>
+                                    <option selected="selected" value="mostdislikes">Most Dislikes</option>
                                 <?php else: ?>
-                                    <option value="leastlikes">Least Likes</option>
+                                    <option value="mostdislikes">Most Dislikes</option>
                                 <?php endif; ?>
 
                             </select>
