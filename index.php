@@ -124,9 +124,9 @@ $u = new Users();
     <div class="row">
 
         <div class="col-lg-12">
-            <h1 class="page-header">Your feed</h1>
-
-            <div class="container">
+           
+           
+                       <div class="container">
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
@@ -155,6 +155,16 @@ $u = new Users();
                     </div>
                 </div>
             </div>
+           
+           <h1 class="page-header">Inspiration of your followed users</h1>
+           
+           
+           
+           
+           
+            <h1 class="page-header">Your feed</h1>
+
+
 
         </div>
 
