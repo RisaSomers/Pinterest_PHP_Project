@@ -148,45 +148,6 @@ class WebsiteParser
     }
 
     /**
-     * Extract all href links from grab contents
-     * @params boolean $grab, flag to perform real time grab or use class content
-     * @returned array $href_links, an array with extracted hyper links
-     */
-    public function getHrefLinks($grab = true)
-    {
-        if ($grab)
-            $this->grabContent();
-
-        if (!is_null($this->content)) {
-
-            preg_match_all($this->href_expression, $this->content, $match_links);
-            $unique_urls = array_unique($match_links[1]);
-
-            if (count($unique_urls)) {
-                foreach ($unique_urls as $index => $url) {
-                    $title = $this->findLinkTitle($url, $match_links[2][$index]);
-
-                    if (!(preg_match($this->href_filter_pattern, $url, $filter_out_url)
-                        || preg_match($this->href_filter_pattern, $title, $filter_out_link))
-                    ) {
-                        if (!preg_match($this->full_link_pattern, $url, $match))
-                            $url = $this->sanitizeUrl($url);
-
-                        if ($this->link_type !== self::LINK_TYPE_ALL) {
-                            if ($this->getLinkType($url) !== $this->link_type) continue;
-                        }
-
-                        $this->href_links[] = array($url, $title);
-                    }
-                }
-            }
-        }
-
-        return $this->href_links;
-
-    }
-
-    /**
      * Extract all images sources from grabbed contents
      * @param boolean $grab , flag to perform real time grab or use class content
      * @return array, an array of extracted images sources

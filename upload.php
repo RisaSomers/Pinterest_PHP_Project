@@ -146,7 +146,7 @@ if (isset($_GET['target_url'])) {
             echo '<div class="row images">';
 
             foreach($images as $image) {
-                echo '<img src="' . $image . '" />';
+                echo '<a href="' . $image . '" >'.''.'<img src="' . $image . '" />'.''.'</a>';
             }
 
             echo '</div>';
