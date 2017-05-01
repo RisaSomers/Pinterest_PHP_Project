@@ -159,7 +159,7 @@ $u = new Users();
            <h1 class="page-header">Inspiration of your followed users</h1>
            
            
-           
+
            
            
             <h1 class="page-header">Your feed</h1>

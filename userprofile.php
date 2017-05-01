@@ -44,7 +44,7 @@ else{
     $state = "follow";
 }
 
-if(!empty($_POST)){
+if(!empty($_POST) && $userid != $_SESSION['id']){
     if(!empty($status)){
         $statement = $conn->prepare("DELETE FROM followlist where userid = :userid AND followerid = :followerid");
         $statement->bindValue(":userid", $_SESSION["id"]);
@@ -63,6 +63,8 @@ if(!empty($_POST)){
     
     header('Refresh:0');
 }
+
+
 
 
 
@@ -104,7 +106,10 @@ if(!empty($_POST)){
        
        <form id="follow" class="<?php echo $guest?>" action="" method="post">
         <input value="<?php echo $userid ?>" name="follower" type="hidden">  
-        <button class="<?php echo $state;?>" type="submit" ><?php echo $state; ?></button>     
+        <button class="<?php echo $state;?>" type="submit" ><?php echo $state; ?></button> 
+        
+        
+                    
        </form>
        
 
