@@ -191,6 +191,32 @@ if (isset($_GET['target_url'])) {
             </div>
             <br/>
         </form>
+        <?php
+if ($title !== null) {
+    ?>
+    <h3 class="title">Title :: <?= $title ?></h3>
+<?php
+} ?>
+
+<?php
+if (is_array($meta_tags) && count($meta_tags)):
+    echo '<h4>Meta Tags: ' . count($meta_tags) . '</h4>';
+    ?>
+    <table class="meta">
+        <?php
+        foreach ($meta_tags as $meta_tag):
+            ?>
+            <tr>
+                <td><?= ucfirst($meta_tag[0]) ?></td>
+                <td> : </td>
+                <td><?= $meta_tag[1] ?></td>
+            </tr>
+        <?php
+        endforeach;
+        ?>
+    </table>
+<?php
+endif; ?>
 
 
 <script src="js/jquery.js"></script>
