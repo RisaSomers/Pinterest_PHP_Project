@@ -51,6 +51,19 @@ if (!isset($_SESSION["email"])) {
         $feedback2 = "Your changes have been made!";
     }
 
+    if (!empty($_POST)) {
+        try {
+            // create prepared statement
+            $newBoard = new Boards();
+            $newBoard->setBoardName($_POST["boardTitle"]);
+            $newBoard->create();
+            echo "Item is created";
+            header("Location: user_uploads.php?success=true");
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -93,7 +106,7 @@ if (!isset($_SESSION["email"])) {
         <div class="col-lg-12">
                 <h1 class="page-header">Profile</h1>
                 <h4>Create your own board!</h4>
-
+                <?php print_r($boardTitle) ?>
             </div>
             <div class="col-xs-12 no-padding">
                 <a href="#ex1" rel="modal:open"><button type="button" class="btn btn-info btn-lg" >Create Board</button></a>
@@ -103,7 +116,7 @@ if (!isset($_SESSION["email"])) {
                     <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
                     <?php endif; ?></p>
 
-        <form action="board.php" method="post" id="createBoard" enctype="multipart/form-data">
+        <form action="" method="post" id="createBoard" enctype="multipart/form-data">
             <label for="boardTitle">Name</label>
             <input type="text" name="boardTitle" id="boardTitle">
 

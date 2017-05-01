@@ -49,7 +49,8 @@ class Boards
         $conn = Db::getInstance();
         $stmt = $conn->prepare("INSERT INTO board (boardTitle) VALUES (:boardTitle)");
         print_r($this);
-        $stmt->bindValue(":boardTitle", $this->$boardTitle);
+        $stmt->bindValue(":boardTitle", $this->boardTitle);
+        $stmt->bindValue(":user_id", $_SESSION["id"]);
         return $stmt->execute();
     }
 
