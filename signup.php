@@ -185,6 +185,7 @@ if (!empty($_POST)) {
                     selector.html('Emailadres is al geregistreerd');
                     selector.parent('.form-group').removeClass('has-success').addClass('has-error');
                 } else {
+					selector.html('');
                     selector.parent('.form-group').removeClass('has-error').addClass('has-success');
                 }
             }
