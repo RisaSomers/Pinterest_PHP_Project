@@ -27,7 +27,6 @@ if (!empty($_POST)) {
     }
 }
 
-include 'includes/website_parser.php';
 
 $links = $images = array();
 $default_check = 'checked';
@@ -131,27 +130,44 @@ if (isset($_GET['target_url'])) {
 <!-- Page Content -->
 <div class="container">
     <form action="" method="post" id="upload" enctype="multipart/form-data">
-        <label for="fileToUpload">Image</label>
+        <label for="fileToUpload">Afbeelding</label>
         <input type="file" name="fileToUpload" id="fileToUpload">
 
-        <label for="link">Image Link</label>
-        <input type="url" name="link" id="link">
+        <label for="link">Afbeelding URL</label>
+        <input type="url" name="link" id="link" value="<?php echo htmlspecialchars($target_url)?>">
+
+        <?php
+        $count = count($images);
+
+        if ($count) {
+
+            echo '<h4>Multiple Images Found: ' . $count . '</h4>';
+
+            echo '<div class="row images">';
+
+            foreach($images as $image) {
+                echo '<img src="' . $image . '" />';
+            }
+
+            echo '</div>';
+        } ?>
 
         <label for="beschrijving" id="labelbeschrijving">Beschrijving</label>
-        <input type="text" name="beschrijving" id="beschrijving">
+        <input type="text" name="beschrijving" id="beschrijving" value="<?php echo htmlspecialchars($title); ?>">
 
         <label for="country">Land</label>
         <input type="text" name="country" id="country"><a href="#" id="get-country">Waar ben ik?</a>
         <!-- Veld voor land in te steken -->
 
         <input type="submit" value="Upload Item" name="submit" id="submit">
+
     </form>
 </div>
-
+<h1>Or upload trough URL!</h1>
 <div class="container" style="margin-top: 60px;">
     <div>
         <h4>
-            Extract website links
+            Extract data uit URL:
             <small class="error"><?= $parser->message ? ('( ' . $parser->message . ' )') : '' ?></small>
         </h4>
 
@@ -160,39 +176,18 @@ if (isset($_GET['target_url'])) {
             <div class="input-prepend input-append">
                 <input class="span2" type="text" style="width: 550px;height: 20px;"
                        value="<?= $target_url ?>" name="target_url"
-                       placeholder="Enter a public website URL with trailing slash"/>
+                       placeholder="Enter a public website URL to an image/gif"/>
 
-                <span class="add-on">
-                        <input type="checkbox" name="href"
-                               value="1" <?= $href ? 'checked' : $default_check ?> /> Href
-
-                    <select name="link_type" class="link-type">
-                        <option <?= $link_type == WebsiteParser::LINK_TYPE_ALL ? 'selected' : '' ?>
-                            value="<?= WebsiteParser::LINK_TYPE_ALL ?>">All Links
-                        </option>
-                        <option <?= $link_type == WebsiteParser::LINK_TYPE_INTERNAL ? 'selected' : '' ?>
-                            value="<?= WebsiteParser::LINK_TYPE_INTERNAL ?>">Internal
-                        </option>
-                        <option <?= $link_type == WebsiteParser::LINK_TYPE_EXTERNAL ? 'selected' : '' ?>
-                            value="<?= WebsiteParser::LINK_TYPE_EXTERNAL ?>">External
-                        </option>
-                    </select>
-                </span>
 
                 <span class="add-on">
                         <input type="checkbox" name="image"
-                               value="1" <?= $image ? 'checked' : $default_check ?> /> Image
+                               value="1" <?= $image ? 'checked' : $default_check ?> /> Image URL
 
                         <input type="checkbox" name="meta"
-                               value="1" <?= $meta ? 'checked' : $default_check ?> /> Meta Tag
+                               value="1" <?= $meta ? 'checked' : $default_check ?> /> Beschrijving
                 </span>
 
-                <input class="btn btn-primary" type="submit" name="extract" value="Extract Links"/>
-                
-                <?php include 'views/title.html.php'; ?>
-                        <?php include 'views/meta.html.php'; ?>
-                        <?php include 'views/href.html.php'; ?>
-                        <?php include 'views/image.html.php'; ?>
+                <input class="btn btn-primary" type="submit" name="extract" value="Extract Data"/>
             </div>
             <br/>
         </form>
