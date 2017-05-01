@@ -12,6 +12,7 @@ if (!empty($_POST)) {
         // create prepared statement
         $item = new Items();
         $item->setDescription($_POST["beschrijving"]);
+        $item->setCountry($_POST["country"]);
         if (empty($_POST["link"])) {
             $item->setImage($_FILES["fileToUpload"]);
         } else {
@@ -82,11 +83,28 @@ if (!empty($_POST)) {
         <label for="beschrijving" id="labelbeschrijving">Beschrijving</label>
         <input type="text" name="beschrijving" id="beschrijving">
 
+        <label for="country">Land</label>
+        <input type="text" name="country" id="country"><a href="#" id="get-country">Waar ben ik?</a>
+        <!-- Veld voor land in te steken -->
+
         <input type="submit" value="Upload Item" name="submit" id="submit">
     </form>
 </div>
 
 </div>
+<script src="js/jquery.js"></script>
+
+<script>
+    $("#get-country").bind("click", function(e) {
+        e.preventDefault();
+
+        navigator.geolocation.getCurrentPosition(function(location) {
+            $.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + location.coords.latitude +","+ location.coords.longitude + "&result_type=country&key=AIzaSyDHaF6eSbeVHKUauLOTQi9ri6hCbx8B88g", function(data) {
+                $("#country").val(data.results[0].formatted_address);
+            });
+        });
+    });
+</script>
 
 <?php include_once ('includes/footer.php') ?>
 
@@ -94,7 +112,6 @@ if (!empty($_POST)) {
 <!-- /.container -->
 
 <!-- jQuery -->
-<script src="js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>

@@ -146,7 +146,9 @@ $recentActivities = $activity->GetRecentActivities();
 
     <div class="col-lg-3 col-md-4 col-xs-6 thumb">
         <h1 id="post" data-id="<?php echo $item['id'] ?>"><?php echo $item['Beschrijving']; ?></h1>
-
+        <p>
+            Posted in <?php echo $item["country"]; ?>
+        </p>
         <a class="thumbnail" href="">
 					<?php if (empty($item["Image"])): ?>
 

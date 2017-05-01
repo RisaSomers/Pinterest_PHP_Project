@@ -8,6 +8,7 @@ class Items
     private $id;
     private $status;
     private $points;
+    private $country;
 
 
     /**
@@ -16,6 +17,10 @@ class Items
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    public function setCountry($country) {
+        $this->country = $country;
     }
 
 
@@ -87,16 +92,16 @@ class Items
         
         if (empty($this->url)) {
             echo "IMG";
-            $stmt = $conn->prepare("INSERT INTO items (Image,  user_id, Beschrijving, uploaded) VALUES (:image, :user_id, :beschrijving, :uploaded)");
+            $stmt = $conn->prepare("INSERT INTO items (country, Image,  user_id, Beschrijving, uploaded) VALUES (:country, :image, :user_id, :beschrijving, :uploaded)");
             $stmt->bindValue(":image", $this->image);
             $stmt->bindValue(":user_id", $_SESSION["id"]);
         } else {
             echo "URL";
-            $stmt = $conn->prepare("INSERT INTO items (Url, Beschrijving, user_id, uploaded) VALUES (:url, :beschrijving, :user_id, :uploaded)");
+            $stmt = $conn->prepare("INSERT INTO items (country, Url, Beschrijving, user_id, uploaded) VALUES (:country, :url, :beschrijving, :user_id, :uploaded)");
             $stmt->bindValue(":url", $this->url);
             $stmt->bindValue(":user_id", $_SESSION["id"]);
         }
-
+        $stmt->bindValue(":country", $this->country);
         $stmt->bindValue(":beschrijving", $this->description);
         $stmt->bindValue(":uploaded", time());
         $stmt->execute();
