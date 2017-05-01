@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
--- Machine: 127.0.0.1
--- Gegenereerd op: 27 apr 2017 om 20:27
--- Serverversie: 5.6.17
--- PHP-versie: 5.5.12
+-- Host: localhost
+-- Gegenereerd op: 01 mei 2017 om 13:59
+-- Serverversie: 10.1.21-MariaDB
+-- PHP-versie: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,10 +14,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Databank: `pinterest_php`
+-- Database: `Pinterest_PHP`
 --
 
 -- --------------------------------------------------------
@@ -26,8 +26,8 @@ SET time_zone = "+00:00";
 -- Tabelstructuur voor tabel `board`
 --
 
-CREATE TABLE IF NOT EXISTS `board` (
-  `boardID` int(11) unsigned NOT NULL,
+CREATE TABLE `board` (
+  `boardID` int(11) UNSIGNED NOT NULL,
   `userID` int(11) DEFAULT NULL,
   `imageurl` varchar(9999) DEFAULT NULL,
   `private` tinyint(1) DEFAULT NULL,
@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS `board` (
 -- Tabelstructuur voor tabel `boardcontainspost`
 --
 
-CREATE TABLE IF NOT EXISTS `boardcontainspost` (
-  `containsPostID` int(11) unsigned NOT NULL,
+CREATE TABLE `boardcontainspost` (
+  `containsPostID` int(11) UNSIGNED NOT NULL,
   `boardID` int(11) DEFAULT NULL,
   `postID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -52,13 +52,12 @@ CREATE TABLE IF NOT EXISTS `boardcontainspost` (
 -- Tabelstructuur voor tabel `comments`
 --
 
-CREATE TABLE IF NOT EXISTS `comments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `id_item` int(11) NOT NULL,
-  `comments` varchar(200) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
+  `comments` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `comments`
@@ -108,12 +107,11 @@ INSERT INTO `comments` (`id`, `id_user`, `id_item`, `comments`) VALUES
 -- Tabelstructuur voor tabel `dislikes`
 --
 
-CREATE TABLE IF NOT EXISTS `dislikes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `dislikes` (
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `post_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+  `post_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `dislikes`
@@ -124,7 +122,8 @@ INSERT INTO `dislikes` (`id`, `user_id`, `post_id`) VALUES
 (3, 88, 41),
 (4, 88, 39),
 (5, 88, 35),
-(23, 87, 53);
+(23, 87, 53),
+(24, 87, 39);
 
 -- --------------------------------------------------------
 
@@ -132,12 +131,11 @@ INSERT INTO `dislikes` (`id`, `user_id`, `post_id`) VALUES
 -- Tabelstructuur voor tabel `followlist`
 --
 
-CREATE TABLE IF NOT EXISTS `followlist` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `followlist` (
+  `id` int(11) NOT NULL,
   `user_id_a` int(11) NOT NULL,
-  `user_id_b` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT AUTO_INCREMENT=1 ;
+  `user_id_b` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -145,51 +143,52 @@ CREATE TABLE IF NOT EXISTS `followlist` (
 -- Tabelstructuur voor tabel `items`
 --
 
-CREATE TABLE IF NOT EXISTS `items` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `items` (
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `Image` varchar(200) DEFAULT NULL,
-  `Url` longtext,
-  `Beschrijving` varchar(2000) NOT NULL,
+  `Image` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `Url` longtext COLLATE utf8mb4_unicode_ci,
+  `Beschrijving` varchar(2000) COLLATE utf8mb4_unicode_ci NOT NULL,
   `uploaded` int(11) NOT NULL,
   `status` tinyint(1) DEFAULT '1',
   `points` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=63 ;
+  `country` mediumtext COLLATE utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `items`
 --
 
-INSERT INTO `items` (`id`, `user_id`, `Image`, `Url`, `Beschrijving`, `uploaded`, `status`, `points`) VALUES
-(22, 72, '347b70ad4a62a5c5851cace08f36ae65.jpg', '', 'Cute black pug', 0, 1, 0),
-(23, 72, '7131224c59b7973b2b143dc132d0b972.jpeg', '', 'Look the eyes', 0, 1, 0),
-(24, 72, '48b13d221e11869dbc266658c2718e32.jpg', '', 'Yellow', 0, 1, 0),
-(25, 72, '14d8600161fd27aeb8d3cb7198781bf9.jpg', '', 'Blue babedie babeda', 0, 1, 0),
-(26, 72, 'd04ff43b94332890c92c428d26eb7934.jpg', '', 'Black pugles', 0, 1, 0),
-(27, 72, 'c6ac6954a974a2061085d11b830cd0e9.jpg', '', 'smile', 0, 1, 0),
-(28, 72, '5ce5fc7dd2295147b13e73c456645e8a.JPG', '', 'Look up', 0, 1, 0),
-(29, 72, 'f36b420e4d48af97534ef826dda961ea.jpg', '', 'baby', 0, 1, 0),
-(30, 72, 'ef90e803c3051784f66b4bdeb8955e91.jpg', '', 'Twin', 0, 1, 0),
-(32, 72, 'ad69baab1414c422b6927cb2650cd09a.jpg', '', 'red', 0, 1, 0),
-(33, 72, '5abda4b2104625448e7c90834b042ef1.jpg', '', 'Howdy', 0, 1, 0),
-(34, 85, 'e506356dcb01d6a7309939c16d84b751.jpg', '', 'tongetje', 0, 0, 1),
-(35, 85, '9c92fbcd7d5e5e5d8ea7dca5dc61a37d.jpg', '', 'fat', 0, 1, 0),
-(36, 85, 'e453c430ab60f7818d0b50fe7fb69cf9.jpg', '', 'shy', 0, 1, 0),
-(37, 85, '119f9969cc6dff5280a139ce65e147af.jpg', '', 'got3', 0, 1, 0),
-(38, 85, '7477d8c2976c11f55304dcfe7adbb27d.jpg', '', 'black pugles', 0, 1, 0),
-(39, 85, '563cdf9152c527b8b5448be6ec2c2443.jpg', '', 'proud', 0, 1, 0),
-(40, 85, 'c3e1903627d621fd36f6e10cc91e2293.jpg', '', 'cowboy', 0, 1, 0),
-(41, 85, 'e453842484580fadcce87f934aa2c9ec.jpeg', '', 'hello', 0, 1, 0),
-(42, 85, '02db9cded3eea6ef638358702afae71e.jpg', '', 'lay down', 0, 1, 0),
-(43, 85, '77aad3e37ec154c2326f9c7c8bc50103.jpg', '', 'cool', 0, 1, 0),
-(44, 85, '3a218ad317919028cc0d4262ab057eeb.jpg', '', 'cute', 0, 1, 0),
-(50, 88, NULL, 'https://pbs.twimg.com/profile_images/2631415338/9bce37ad7fe14dd716df81942294348c_400x400.png', 'Gaming logo', 0, 1, 1),
-(51, 88, '228137c5486d6457530b51a441689035.png', NULL, 'This is a picture of myself', 0, 1, 1),
-(53, 87, NULL, 'http://vignette3.wikia.nocookie.net/divine-reality/images/b/b8/General_Graardor.png/revision/latest?cb=20140128071535', 'Boss monsters of an MMORPG', 0, 1, 0),
-(58, 89, NULL, 'http://vignette2.wikia.nocookie.net/2007scape/images/0/0b/Shark_detail.png/revision/latest?cb=20160214063425', 'kk', 1492972413, 1, 1),
-(59, 42, '307c71e8aca5fb58a503669a2e64bbdd.png', NULL, 'jej', 1492980999, 1, 0),
-(62, 42, 'ef7967130ec27de3c6e179dc48b15fea.png', NULL, 'kids', 1493116404, 1, 1);
+INSERT INTO `items` (`id`, `user_id`, `Image`, `Url`, `Beschrijving`, `uploaded`, `status`, `points`, `country`) VALUES
+(22, 72, '347b70ad4a62a5c5851cace08f36ae65.jpg', '', 'Cute black pug', 0, 1, 0, NULL),
+(23, 72, '7131224c59b7973b2b143dc132d0b972.jpeg', '', 'Look the eyes', 0, 1, 0, NULL),
+(24, 72, '48b13d221e11869dbc266658c2718e32.jpg', '', 'Yellow', 0, 1, 0, NULL),
+(25, 72, '14d8600161fd27aeb8d3cb7198781bf9.jpg', '', 'Blue babedie babeda', 0, 1, 0, NULL),
+(26, 72, 'd04ff43b94332890c92c428d26eb7934.jpg', '', 'Black pugles', 0, 1, 0, NULL),
+(27, 72, 'c6ac6954a974a2061085d11b830cd0e9.jpg', '', 'smile', 0, 1, 0, NULL),
+(28, 72, '5ce5fc7dd2295147b13e73c456645e8a.JPG', '', 'Look up', 0, 1, 0, NULL),
+(29, 72, 'f36b420e4d48af97534ef826dda961ea.jpg', '', 'baby', 0, 1, 0, NULL),
+(30, 72, 'ef90e803c3051784f66b4bdeb8955e91.jpg', '', 'Twin', 0, 1, 0, NULL),
+(32, 72, 'ad69baab1414c422b6927cb2650cd09a.jpg', '', 'red', 0, 1, 0, NULL),
+(33, 72, '5abda4b2104625448e7c90834b042ef1.jpg', '', 'Howdy', 0, 1, 0, NULL),
+(34, 85, 'e506356dcb01d6a7309939c16d84b751.jpg', '', 'tongetje', 0, 0, 1, NULL),
+(35, 85, '9c92fbcd7d5e5e5d8ea7dca5dc61a37d.jpg', '', 'fat', 0, 1, 0, NULL),
+(36, 85, 'e453c430ab60f7818d0b50fe7fb69cf9.jpg', '', 'shy', 0, 1, 0, NULL),
+(37, 85, '119f9969cc6dff5280a139ce65e147af.jpg', '', 'got3', 0, 1, 0, NULL),
+(38, 85, '7477d8c2976c11f55304dcfe7adbb27d.jpg', '', 'black pugles', 0, 1, 0, NULL),
+(39, 85, '563cdf9152c527b8b5448be6ec2c2443.jpg', '', 'proud', 0, 1, 0, NULL),
+(40, 85, 'c3e1903627d621fd36f6e10cc91e2293.jpg', '', 'cowboy', 0, 1, 0, NULL),
+(41, 85, 'e453842484580fadcce87f934aa2c9ec.jpeg', '', 'hello', 0, 1, 0, NULL),
+(42, 85, '02db9cded3eea6ef638358702afae71e.jpg', '', 'lay down', 0, 1, 0, NULL),
+(43, 85, '77aad3e37ec154c2326f9c7c8bc50103.jpg', '', 'cool', 0, 1, 0, NULL),
+(44, 85, '3a218ad317919028cc0d4262ab057eeb.jpg', '', 'cute', 0, 1, 0, NULL),
+(50, 88, NULL, 'https://pbs.twimg.com/profile_images/2631415338/9bce37ad7fe14dd716df81942294348c_400x400.png', 'Gaming logo', 0, 1, 1, NULL),
+(51, 88, '228137c5486d6457530b51a441689035.png', NULL, 'This is a picture of myself', 0, 1, 1, NULL),
+(53, 87, NULL, 'http://vignette3.wikia.nocookie.net/divine-reality/images/b/b8/General_Graardor.png/revision/latest?cb=20140128071535', 'Boss monsters of an MMORPG', 0, 1, 0, NULL),
+(58, 89, NULL, 'http://vignette2.wikia.nocookie.net/2007scape/images/0/0b/Shark_detail.png/revision/latest?cb=20160214063425', 'kk', 1492972413, 1, 1, 'Amerika'),
+(59, 87, '6263422638f6bcb249dfd41e5f6ac6c3.png', NULL, 'Memes', 1493636906, 1, 0, 'België'),
+(60, 87, 'ddc8e7e99d0cf7c96ee788b5a7c92edd.png', NULL, 'Unicode check', 1493637072, 1, 0, 'BelgiÃ«'),
+(61, 87, '57c83bc0d7757beac56dd28447813c83.png', NULL, 'test', 1493639153, 1, 0, '');
 
 -- --------------------------------------------------------
 
@@ -197,12 +196,11 @@ INSERT INTO `items` (`id`, `user_id`, `Image`, `Url`, `Beschrijving`, `uploaded`
 -- Tabelstructuur voor tabel `items_topics`
 --
 
-CREATE TABLE IF NOT EXISTS `items_topics` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `items_topics` (
+  `id` int(11) NOT NULL,
   `item` int(11) NOT NULL,
-  `topic` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `topic` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `items_topics`
@@ -217,12 +215,11 @@ INSERT INTO `items_topics` (`id`, `item`, `topic`) VALUES
 -- Tabelstructuur voor tabel `item_inappropriate`
 --
 
-CREATE TABLE IF NOT EXISTS `item_inappropriate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `item_inappropriate` (
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `item_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=3 ;
+  `item_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -230,12 +227,11 @@ CREATE TABLE IF NOT EXISTS `item_inappropriate` (
 -- Tabelstructuur voor tabel `likes`
 --
 
-CREATE TABLE IF NOT EXISTS `likes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `likes` (
+  `id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `likes`
@@ -259,12 +255,11 @@ INSERT INTO `likes` (`id`, `post_id`, `user_id`) VALUES
 -- Tabelstructuur voor tabel `topics`
 --
 
-CREATE TABLE IF NOT EXISTS `topics` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `topics` (
+  `id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
-  `image` varchar(2000) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+  `image` varchar(2000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `topics`
@@ -284,15 +279,14 @@ INSERT INTO `topics` (`id`, `name`, `image`) VALUES
 -- Tabelstructuur voor tabel `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
   `firstname` varchar(200) NOT NULL,
   `lastname` varchar(200) NOT NULL,
   `email` varchar(100) NOT NULL,
   `avatar` varchar(500) NOT NULL,
-  `password` varchar(200) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=92 ;
+  `password` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `users`
@@ -351,12 +345,11 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `avatar`, `password
 -- Tabelstructuur voor tabel `users_topics`
 --
 
-CREATE TABLE IF NOT EXISTS `users_topics` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users_topics` (
+  `id` int(11) NOT NULL,
   `email` varchar(200) NOT NULL,
-  `topics_id` varchar(500) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
+  `topics_id` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `users_topics`
@@ -412,6 +405,124 @@ INSERT INTO `users_topics` (`id`, `email`, `topics_id`) VALUES
 (60, 'joske@gmail.com', '4'),
 (61, 'joske@gmail.com', '5');
 
+--
+-- Indexen voor geëxporteerde tabellen
+--
+
+--
+-- Indexen voor tabel `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `dislikes`
+--
+ALTER TABLE `dislikes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `followlist`
+--
+ALTER TABLE `followlist`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `items`
+--
+ALTER TABLE `items`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `items_topics`
+--
+ALTER TABLE `items_topics`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `item_inappropriate`
+--
+ALTER TABLE `item_inappropriate`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `likes`
+--
+ALTER TABLE `likes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `topics`
+--
+ALTER TABLE `topics`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `users_topics`
+--
+ALTER TABLE `users_topics`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT voor geëxporteerde tabellen
+--
+
+--
+-- AUTO_INCREMENT voor een tabel `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+--
+-- AUTO_INCREMENT voor een tabel `dislikes`
+--
+ALTER TABLE `dislikes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+--
+-- AUTO_INCREMENT voor een tabel `followlist`
+--
+ALTER TABLE `followlist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT voor een tabel `items`
+--
+ALTER TABLE `items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+--
+-- AUTO_INCREMENT voor een tabel `items_topics`
+--
+ALTER TABLE `items_topics`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT voor een tabel `item_inappropriate`
+--
+ALTER TABLE `item_inappropriate`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT voor een tabel `likes`
+--
+ALTER TABLE `likes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+--
+-- AUTO_INCREMENT voor een tabel `topics`
+--
+ALTER TABLE `topics`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT voor een tabel `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+--
+-- AUTO_INCREMENT voor een tabel `users_topics`
+--
+ALTER TABLE `users_topics`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
