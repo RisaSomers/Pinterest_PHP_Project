@@ -156,13 +156,38 @@ $u = new Users();
                 </div>
             </div>
            
-           <h1 class="page-header">Inspiration of your followed users</h1>
+           <h1 class="page-header">Followers feed</h1>
            
            
+<?php
+            
+            
+           
+            
+                $follower = new Users();
+                $follower->getFollowFeed();
+            /*var_dump($_SESSION["id"]);*/
+            
 
+                                foreach ($follower as $key => $row) {
+                                   
+                                    echo "<h2>" . $row['Beschrijving'] . "</h2>  
+                           <a href='detail.php?id=" . $row['id'] . "'>
+                           
+                               <div class='post_img'>
+                                   ";
+                                    if (!empty($row['Url'])) {
+                                        echo "<img src='" . $row['Url'] . "' alt='" . $row['id'] . "'>";
+                                    } else {
+                                        echo "<img src='uploads/posts/" . $row['Image'] . "' alt='" . $row['id'] . "'>";
+                                    }
+                                    echo "
+                               </div>
+                           </a>";
+                                }?>
            
            
-            <h1 class="page-header">Your feed</h1>
+            <h1 class="page-header">Inspiration</h1>
 
 
 

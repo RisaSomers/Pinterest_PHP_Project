@@ -243,4 +243,11 @@ class Items
     }
 
     /* end feature 10*/
+    
+    public function getSpecificPost($id){
+        $pdo = Db::getInstance();
+        $stmt = $pdo->prepare("SELECT * FROM items WHERE(user_id = :id)");
+        $stmt->bindValue(":id", $id);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
