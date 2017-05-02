@@ -13,7 +13,7 @@ abstract class Db
 		} else {
 			// er is nog connectie, maak aan en geef terug
 
-			self::$conn = new PDO("mysql:host=localhost;dbname=yoeris1q_Pinterest_PHP", "yoeris1q_yoeri", "123456");
+			self::$conn = new PDO("mysql:host=localhost;dbname=Pinterest_PHP", "root", "");
 
 			return self::$conn;
 		}

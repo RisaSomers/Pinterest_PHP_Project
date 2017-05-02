@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 /**
  * Created by PhpStorm.
  * User: Yoerias
@@ -19,14 +17,14 @@ $error = array(
 
 session_start();
 
-if (!empty($_POST["post_id"])) {
+if (!empty($_GET["post_id"])) {
     $p = new Items();
-    $p->setId($_POST["post_id"]);
+    $p->setId($_GET["post_id"]);
     if (!$p->checkIfInteracted()) {
         $pdo = Db::getInstance();
         $stmt = $pdo->prepare("INSERT INTO likes (user_id, post_id) VALUES (:userid, :postid)");
         $stmt->bindValue("userid", $_SESSION["id"]);
-        $stmt->bindValue("postid", $_POST["post_id"]);
+        $stmt->bindValue("postid", $_GET["post_id"]);
         $stmt->execute();
         $error["success"] = true;
         $error["count"] = $p->getLike();

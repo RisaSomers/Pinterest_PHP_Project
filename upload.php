@@ -116,6 +116,13 @@ if (isset($_GET['target_url'])) {
       h3.title {
           border-bottom: 1px solid #c0c0c0;
       }
+      #country {
+          float: left;
+          margin-right: 10px;
+      }
+        #labelcountry {
+            display: block;
+        }
 
 
     </style>
@@ -130,12 +137,12 @@ if (isset($_GET['target_url'])) {
 <!-- Page Content -->
 <div class="container">
     <form action="" method="post" id="upload" enctype="multipart/form-data">
-        <label for="fileToUpload">Afbeelding</label>
+        <label for="fileToUpload">Afbeelding <br>(Maximumgrootte 3mb)</label>
         <input type="file" name="fileToUpload" id="fileToUpload">
 
-        <label for="link">Afbeelding URL</label>
-        <input type="url" name="link" id="link" value="<?php echo htmlspecialchars($target_url)?>">
-
+        <label for="link">URL</label>
+        <input type="text" name="link" id="link" value="<?php echo htmlspecialchars($target_url)?>">
+            <br>
         <?php
         $count = count($images);
 
@@ -153,10 +160,11 @@ if (isset($_GET['target_url'])) {
         } ?>
 
         <label for="beschrijving" id="labelbeschrijving">Beschrijving</label>
-        <input type="text" name="beschrijving" id="beschrijving" value="<?php echo htmlspecialchars($title); ?>">
-
-        <label for="country">Land</label>
-        <input type="text" name="country" id="country"><a href="#" id="get-country">Waar ben ik?</a>
+        <input type="text" name="beschrijving" id="beschrijving" value="">
+             <br> <br>
+        <label for="country" id="labelcountry">Land</label>
+        <input type="text" name="country" id="country"><a href="#" id="get-country">Verkrijg locatie</a>
+        <br>
         <!-- Veld voor land in te steken -->
 
         <input type="submit" value="Upload Item" name="submit" id="submit">
