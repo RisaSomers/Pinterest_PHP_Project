@@ -42,14 +42,12 @@ class Activity
     
     public function GetRecentActivities()
     {
-        if ($link = mysqli_connect($this->m_sHost, $this->m_sUser, $this->m_sPassword, $this->m_sDatabase)) {
-            $sSql = "select * from comments ORDER BY id DESC LIMIT 5";
-            $rResult = mysqli_query($link, $sSql);
-            return $rResult;
-        } else {
-            // er kon geen connectie gelegd worden met de databank
-            throw new Exception('Ooh my, something terrible happened to the database connection');
-        }
+        $conn = Db::getInstance();
+     
+            $statement = $conn->prepare("select * from comments ORDER BY id DESC LIMIT 5");
+            $statement->execute();
+            return $statement->fetch(PDO::FETCH_ASSOC);
+
     }
     
     public function GetCommentsFromPost()

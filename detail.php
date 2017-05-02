@@ -132,7 +132,7 @@ $recentActivities = $activity->GetRecentActivities();
 <body>
 
 <!-- Navigation -->
-<?php include("includes/menu.php"); ?>
+<?php include_once("includes/menu.php"); ?>
 
 <a href="index.php">Go back to your dashboard</a>
 <p><a href="inappropriate.php?id=<?php print $id ?>">Markeer als ongepast</a></p>
