@@ -2,38 +2,38 @@
 
 function time_elapsed_string($datetime, $full = false)
 {
-    $now = new DateTime;
-    $ago = new DateTime($datetime);
-    $diff = $now->diff($ago);
+	$now = new DateTime;
+	$ago = new DateTime($datetime);
+	$diff = $now->diff($ago);
 
-    $diff->w = floor($diff->d / 7);
-    $diff->d -= $diff->w * 7;
+	$diff->w = floor($diff->d / 7);
+	$diff->d -= $diff->w * 7;
 
-    $string = array(
-        'y' => 'year',
-        'm' => 'month',
-        'w' => 'week',
-        'd' => 'day',
-        'h' => 'hour',
-        'i' => 'minute',
-        's' => 'second',
-    );
-    foreach ($string as $k => &$v) {
-        if ($diff->$k) {
-            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
-        } else {
-            unset($string[$k]);
-        }
-    }
+	$string = array(
+		'y' => 'year',
+		'm' => 'month',
+		'w' => 'week',
+		'd' => 'day',
+		'h' => 'hour',
+		'i' => 'minute',
+		's' => 'second',
+	);
+	foreach ($string as $k => &$v) {
+		if ($diff->$k) {
+			$v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+		} else {
+			unset($string[$k]);
+		}
+	}
 
-    if (!$full) {
-        $string = array_slice($string, 0, 1);
-    }
-    return $string ? implode(', ', $string) . ' ago' : 'just now';
+	if (!$full) {
+		$string = array_slice($string, 0, 1);
+	}
+	return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
 spl_autoload_register(function ($class) {
-    include_once("classes/" . $class . ".php");
+	include_once("classes/" . $class . ".php");
 });
 
 
@@ -41,33 +41,33 @@ session_start();
 
 if (!empty($_SESSION['email'])) {
 } else {
-    header('Location: login.php');
+	header('Location: login.php');
 }
 
 $conn = Db::getInstance();
 
 if (!empty($_GET["filter"])) {
-    switch ($_GET["filter"]) {
-        case "mostlikes":
-            $statement = $conn->prepare("
+	switch ($_GET["filter"]) {
+		case "mostlikes":
+			$statement = $conn->prepare("
                     select DISTINCT i.id, i.Image, i.Url, i.Beschrijving, l.post_id,l.user_id, i.uploaded,count(l.id) from items i
                     inner join likes l ON i.id = l.post_id
                     GROUP BY l.post_id
                     order by count(l.id) DESC limit 0,20");
-            break;
-        case "mostdislikes":
-            $statement = $conn->prepare("
+			break;
+		case "mostdislikes":
+			$statement = $conn->prepare("
                     select DISTINCT i.id, i.Image, i.Url, i.Beschrijving, l.post_id,l.user_id, i.uploaded,count(l.id) from items i
                     inner join dislikes l ON i.id = l.post_id
                     GROUP BY l.post_id
                     order by count(l.id) DESC limit 0,20");
-            break;
-        default:
-            $statement = $conn->prepare("select * from items order by id DESC limit 0,20");
-            break;
-    }
+			break;
+		default:
+			$statement = $conn->prepare("select * from items order by id DESC limit 0,20");
+			break;
+	}
 } else {
-    $statement = $conn->prepare("select * from items order by id DESC limit 0,20");
+	$statement = $conn->prepare("select * from items order by id DESC limit 0,20");
 }
 
 $statement->execute();
@@ -77,13 +77,14 @@ $feed = $t->getUserPosts();
 
 $u = new Users();
 
+$items = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 ?><!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <?php include("includes/header.php"); ?>
+	<?php include("includes/header.php"); ?>
 
     <title>IMDterest</title>
 
@@ -118,77 +119,73 @@ $u = new Users();
 
 <!-- Page Content -->
 
-<div id="container">
+<div class="container">
 
 
     <div class="row">
 
         <div class="col-lg-12">
-           
-           
-                       <div class="container">
+
+
+            <div class="container">
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="filter">Filter:</label>
                             <select name="filter" id="filter" class="form-control">
-                                <?php if(empty($_GET["filter"])): ?>
-                                    <option selected="selected" value="none">None</option>
-                                <?php else: ?>
-                                    <option value="none">None</option>
-                                <?php endif; ?>
+															<?php if (empty($_GET["filter"])): ?>
+                                  <option selected="selected" value="none">None</option>
+															<?php else: ?>
+                                  <option value="none">None</option>
+															<?php endif; ?>
 
-                                <?php if($_GET["filter"] == "mostlikes"): ?>
-                                    <option selected="selected" value="mostlikes">Most Likes</option>
-                                <?php else: ?>
-                                    <option value="mostlikes">Most Likes</option>
-                                <?php endif; ?>
+															<?php if ($_GET["filter"] == "mostlikes"): ?>
+                                  <option selected="selected" value="mostlikes">Most Likes</option>
+															<?php else: ?>
+                                  <option value="mostlikes">Most Likes</option>
+															<?php endif; ?>
 
-                                <?php if($_GET["filter"] == "mostdislikes"): ?>
-                                    <option selected="selected" value="mostdislikes">Most Dislikes</option>
-                                <?php else: ?>
-                                    <option value="mostdislikes">Most Dislikes</option>
-                                <?php endif; ?>
+															<?php if ($_GET["filter"] == "mostdislikes"): ?>
+                                  <option selected="selected" value="mostdislikes">Most Dislikes</option>
+															<?php else: ?>
+                                  <option value="mostdislikes">Most Dislikes</option>
+															<?php endif; ?>
 
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
-           
-           <h1 class="page-header">Followers feed</h1>
-           
-           
-<?php
-            
-            
-           
-            
-                $follower = new Users();
-                $follower->getFollowFeed();
-            /*var_dump($_SESSION["id"]);*/
-            
 
-                                foreach ($follower as $key => $row) {
-                                   
-                                    echo "<h2>" . $row['Beschrijving'] . "</h2>  
+            <h1 class="page-header">Followers feed</h1>
+
+
+					<?php
+					$follower = new Users();
+					$follower->getFollowFeed();
+					/*var_dump($_SESSION["id"]);*/
+
+
+					foreach ($follower as $key => $row) {
+
+						echo "<h2>" . $row['Beschrijving'] . "</h2>  
                            <a href='detail.php?id=" . $row['id'] . "'>
                            
                                <div class='post_img'>
                                    ";
-                                    if (!empty($row['Url'])) {
-                                        echo "<img src='" . $row['Url'] . "' alt='" . $row['id'] . "'>";
-                                    } else {
-                                        echo "<img src='uploads/posts/" . $row['Image'] . "' alt='" . $row['id'] . "'>";
-                                    }
-                                    echo "
+						if (!empty($row['Url'])) {
+							echo "<img src='" . $row['Url'] . "' alt='" . $row['id'] . "'>";
+						} else {
+							echo "<img src='uploads/posts/" . $row['Image'] . "' alt='" . $row['id'] . "'>";
+						}
+						echo "
                                </div>
                            </a>";
-                                }?>
-           
-           
-            <h1 class="page-header">Inspiration</h1>
+					}
+					?>
 
+
+            <h1 class="page-header">Inspiration</h1>
 
 
         </div>
@@ -196,61 +193,53 @@ $u = new Users();
         <form action="" method="post">
 
             <div class="wrapper">
-                <ul id="results">
-
-
-                    <div class="container" style="margin:35px auto;">
+                    <div class="container">
                         <div class="row">
-                            <div id="items" class="col-md-6 col-md-offset-3 results">
+                            <div id="items" class="results">
+                              <?php foreach ($items as $key => $row): ?>
+                                <?php $pp = new Items();
+                                $pp->setId($row["id"]);
+                                $likes = $pp->getLike();
+                                $dislikes = $pp->getDislike(); ?>
 
-                                <?php $items = $statement->fetchAll(PDO::FETCH_ASSOC);
+                                  <div class="col-md-4">
 
-                                foreach ($items as $key => $row) {
-                                    $pp = new Items();
-                                    $pp->setId($row["id"]);
-                                    $likes = $pp->getLike();
-                                    $dislikes = $pp->getDislike();
-                                    echo "<h2>" . $row['Beschrijving'] . "</h2>
-            <a href=userprofile.php?user=" . $u->getAllUserSpecific($row['user_id'])['id'] . ">" . $u->getFirstnameUserO($row['user_id'])['0']['firstname'] . "</a>
-                           <a href='detail.php?id=" . $row['id'] . "'>
-                           
-                           
-                           
-                               <div class='post_img'>
-                                   ";
-                                    if (!empty($row['Url'])) {
-                                        echo "<img src='" . $row['Url'] . "' alt='" . $row['id'] . "'>";
-                                    } else {
-                                        echo "<img src='uploads/posts/" . $row['Image'] . "' alt='" . $row['id'] . "'>";
-                                    }
-                                    echo "
-                               </div>
-                           </a>";
 
-                                    if ($pp->checkIfLiked($row['id'])): ?>
-                                        <a href='#' class='like liked' data-id='<?php echo $row["id"] ?>'>UNLIKE
-                                            - <?php echo $likes ?></a>
-                                    <?php else: ?>
-                                        <a href='#' class='like' data-id='<?php echo $row["id"] ?>'>LIKE
-                                            - <?php echo $likes ?></a>
-                                    <?php endif; ?>
+                                      <h2><?php print $row['Beschrijving'] ?></h2>
+                                      <a href="userprofile.php?user=<?php print $u->getAllUserSpecific($row['user_id'])['id'] ?>"><?php print $u->getFirstnameUserO($row['user_id'])['0']['firstname'] ?></a>
+                                      <a href="detail.php?id=<?php print $row['id'] ?>">
 
-                                    <?php if ($pp->checkIfDisliked($row['id'])): ?>
-                                        <a href='#' class='dislike disliked' data-id='<?php echo $row["id"] ?>'>UNDISLIKE
-                                            - <?php echo $dislikes ?></a>
-                                    <?php else: ?>
-                                        <a href='#' class='dislike' data-id='<?php echo $row["id"] ?>'>DISLIKE
-                                            - <?php echo $dislikes ?></a>
-                                    <?php endif;
-                                    echo "<br>";
-                                    echo time_elapsed_string('@' . $row["uploaded"]);
-                                } ?>
+
+                                          <div class="post_img">
+                                            <?php if (!empty($row['Url'])): ?>
+                                                <img src="<?php print $row['Url'] ?>" alt="<?php print $row['id'] ?>">
+                                            <?php else: ?>
+                                                <img src="uploads/posts/<?php print $row['Image'] ?>"
+                                                     alt="<?php print $row['id'] ?>">
+                                            <?php endif; ?>
+                                          </div>
+                                      </a>
+                                      <?php if ($pp->checkIfLiked($row['id'])): ?>
+                                        <a href="#" class="like liked" data-id="<?php print $row['id'] ?>">UNLIKE- <?php echo $likes ?></a>
+                                      <?php else: ?>
+                                          <a href='#' class='like' data-id='<?php echo $row["id"] ?>'>LIKE- <?php echo $likes ?></a>
+                                      <?php endif; ?>
+
+                                      <?php if ($pp->checkIfDisliked($row['id'])): ?>
+                                        <a href='#' class='dislike disliked' data-id='<?php echo $row["id"] ?>'>UNDISLIKE - <?php echo $dislikes ?></a>
+                                      <?php else: ?>
+                                        <a href='#' class='dislike' data-id='<?php echo $row["id"] ?>'>DISLIKE- <?php echo $dislikes ?></a>
+                                      <?php endif; ?>
+                                      <br>
+                                      <span class="time_elapsed"><?php print time_elapsed_string('@' . $row["uploaded"]); ?></span>
+
+                                  </div>
+
+                              <?php endforeach; ?>
 
                             </div>
                         </div>
                     </div>
-
-                </ul>
             </div>
         </form>
 
@@ -260,7 +249,7 @@ $u = new Users();
 
 
 </div>
-</div>
+    </div>
 
 <hr>
 
@@ -332,7 +321,7 @@ $u = new Users();
             })
         });
 
-        $("#filter").bind("change select", function(e) {
+        $("#filter").bind("change select", function (e) {
             window.location.href = 'index.php?filter=' + $("#filter").find("option:selected").val();
 
         })
