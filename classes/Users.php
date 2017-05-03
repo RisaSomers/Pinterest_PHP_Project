@@ -132,8 +132,7 @@ class Users
         if ($check !== false) {
             $uploadOk = 1;
         } else {
-            echo "file is not an image";
-            $uploadOk = 0;
+            return "File is not an image";
         }
 
 
@@ -141,16 +140,15 @@ class Users
             $uploadOk = 0;
         }
         if ($_FILES["avatar"]["size"] > 500000000000000) {
-            echo "Sorry, your file is too large.";
-            $uploadOk = 0;
+            return "Sorry, your file is too large.";
         }
+        $imageFileType = strtolower($imageFileType);
         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
             && $imageFileType != "gif") {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-            $uploadOk = 0;
+            return "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
         }
         if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
+            return "Sorry, your file was not uploaded.";
         } else {
             if (move_uploaded_file($test["avatar"]["tmp_name"], $target_file)) {
                 $conn = db::getInstance();
@@ -163,6 +161,8 @@ class Users
                 echo "Sorry, there was an error uploading your file.";
             }
         }
+
+        return true;
     }
         
     
