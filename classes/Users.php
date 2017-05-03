@@ -197,7 +197,6 @@ class Users
             $statement->bindValue(":email2", $_POST["email"]);
             $statement->bindValue(":id", $_SESSION["id"]);
             
-            
             $options = ["cost" => 11];
             
             $hash = password_hash($this->password, PASSWORD_DEFAULT, $options);
@@ -206,6 +205,30 @@ class Users
             return $statement->execute();
         }
     }
+
+    public function updatePass($pass1, $pass2, $pass_rep) {
+    	$me = $this->getAllUserSpecific($_SESSION['id']);
+			$validPassword = password_verify($pass1, $me['password']);
+			if ($validPassword == true) {
+				if (strlen($pass2) >= 6) {
+					if ($pass2 == $pass_rep) {
+						$conn = Db::getInstance();
+						$statement = $conn->prepare("UPDATE users SET password = :password WHERE id = :id");
+						$statement->bindValue(":id", $_SESSION["id"]);
+						$options = ["cost" => 11];
+						$hash = password_hash($pass2, PASSWORD_DEFAULT, $options);
+						$statement->bindValue(":password", $hash);
+						return $statement->execute();
+					} else {
+						throw new Exception('Je nieuwe wachtwoorden komen niet overeen');
+					}
+				} else {
+					throw new Exception('Het wachtwoord moet minstens 6 karakters zijn');
+				}
+			} else {
+				throw new Exception('Je oud wachtwoord klopt niet');
+			}
+		}
     
     public function getAll()
     {

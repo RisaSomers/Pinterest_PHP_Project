@@ -32,13 +32,25 @@ if (isset($_FILES['avatar'])) {
 
 if (!empty($_POST['email'])) {
 	$_SESSION['email'] = $_POST['email'];
-	$_SESSION['firstname'] = $_POST['firstname'];
 
 	$update = new Users();
 
 	$update->email = $_SESSION['email'];
 	$update->update();
-	$feedback2 = "Your changes have been made!";
+	$feedback_profile['success'] = true;
+	$feedback_profile['value'] = "Your changes have been made!";
+}
+
+if (!empty($_POST['password']) && !empty($_POST['pass_new']) && !empty($_POST['pass_new_rep'])) {
+    try {
+        $updateUser = new Users();
+        $ret = $updateUser->updatePass($_POST['password'], $_POST['pass_new'], $_POST['pass_new_rep']);
+        $feedback_profile['success'] = true;
+        $feedback_profile['value'] = 'De wijzigingen zijn doorgevoerd!';
+    } catch (Exception $e) {
+        $feedback_profile['success'] = false;
+        $feedback_profile['value'] = $e->getMessage();
+  }
 }
 
 
@@ -154,7 +166,7 @@ if (!empty($_POST['email'])) {
 <div class="container">
     <div class="">
         <h1 class="page-header">Change your profile</h1>
-			<?php if (isset($feedback_image['value'])): ?>
+			<?php if (isset($feedback_image)): ?>
           <div class="alert <?php echo $feedback_image['success'] ? 'alert-success' : 'alert-danger' ?>" role="alert">
               <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
               <span class="sr-only">Error:</span>
@@ -187,11 +199,11 @@ if (!empty($_POST['email'])) {
 
     <div class="row">
         <div class="col-md-8">
-          <?php if (isset($feedback_profile)): ?>
+          <?php if (isset($feedback_profile['value'])): ?>
               <div class="alert <?php echo $feedback_profile['success'] ? 'alert-success' : 'alert-danger' ?>" role="alert">
                   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                   <span class="sr-only">Error:</span>
-                  <?php echo $feedback_profile ?>
+                  <?php echo $feedback_profile['value'] ?>
               </div>
           <?php endif; ?>
             <form action="" method="post" enctype="multipart/form-data">
@@ -205,8 +217,12 @@ if (!empty($_POST['email'])) {
                     <input name="password" type="password" class="form-control" id="pass">
                 </div>
                 <div class="form-group">
-                    <label for="pass_rep">Nieuw wachtwoord</label>
-                    <input type="password" class="form-control" id="pass_rep" name="pass_rep">
+                    <label for="pass_new">Nieuw wachtwoord</label>
+                    <input type="password" class="form-control" id="pass_new" name="pass_new">
+                </div>
+                <div class="form-group">
+                    <label for="pass_new_rep">Herhaal nieuw wachtwoord</label>
+                    <input type="password" class="form-control" id="pass_new_rep" name="pass_new_rep">
                 </div>
                 <button name="submit" type="submit" class="btn btn-default">Change profile</button>
                 <button src="index.php" class="btn btn-default">Cancel changes</button>
