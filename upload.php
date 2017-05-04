@@ -11,17 +11,16 @@ if (!empty($_POST)) {
     try {
         // create prepared statement
         $item = new Items();
-        $item->setDescription($_POST["beschrijving"]);
-        $item->setCountry($_POST["country"]);
+        $item->setDescription(htmlspecialchars($_POST["beschrijving"]));
+        $item->setCountry(htmlspecialchars($_POST["country"]));
         if (empty($_POST["link"])) {
             $item->setImage($_FILES["fileToUpload"]);
         } else {
-            $item->setUrl($_POST["link"]);
+            $item->setUrl(htmlspecialchars($_POST["link"]));
         }
 
         $item->create();
         echo "Item is created";
-        header("Location: index.php?success=true");
     } catch (Exception $e) {
         echo $e->getMessage();
     }

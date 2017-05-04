@@ -49,35 +49,26 @@ $conn = Db::getInstance();
 if (!empty($_GET["filter"])) {
 	switch ($_GET["filter"]) {
 		case "mostlikes":
-			$statement = $conn->prepare("
-                    select DISTINCT i.id, i.Image, i.Url, i.Beschrijving, l.post_id,l.user_id, i.uploaded,count(l.id) from items i
-                    inner join likes l ON i.id = l.post_id
-                    GROUP BY l.post_id
-                    order by count(l.id) DESC limit 0,20");
+            $items = Filter::mostLikes();
 			break;
 		case "mostdislikes":
-			$statement = $conn->prepare("
-                    select DISTINCT i.id, i.Image, i.Url, i.Beschrijving, l.post_id,l.user_id, i.uploaded,count(l.id) from items i
-                    inner join dislikes l ON i.id = l.post_id
-                    GROUP BY l.post_id
-                    order by count(l.id) DESC limit 0,20");
+            $items = Filter::mostDislikes();
 			break;
 		default:
-			$statement = $conn->prepare("select * from items order by id DESC limit 0,20");
+            $items = Filter::getDefault();
 			break;
 	}
 } else {
-	$statement = $conn->prepare("select * from items order by id DESC limit 0,20");
+    $items = Filter::getDefault();
 }
 
-$statement->execute();
 
 $t = new Topics();
 $feed = $t->getUserPosts();
 
 $u = new Users();
 
-$items = $statement->fetchAll(PDO::FETCH_ASSOC);
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -121,7 +112,6 @@ $items = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 <div class="container">
 
-
     <div class="row">
 
         <div class="col-lg-12">
@@ -156,6 +146,18 @@ $items = $statement->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </div>
             </div>
+
+            <?php if(!empty($_GET["success"])): ?>
+                <div class="success" style="float:right;font-weight: bold;">
+                    <?php echo htmlspecialchars($_GET["success"]); ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if(!empty($_GET["error"])): ?>
+                <div class="error" style="float:right;font-weight: bold;>
+                    <?php echo htmlspecialchars($_GET["error"]); ?>
+                </div>
+            <?php endif; ?>
 
             <h1 class="page-header">Followers feed</h1>
 

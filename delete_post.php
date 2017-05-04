@@ -19,8 +19,7 @@ $stmt->bindValue(":userid", $_SESSION["id"]);
 $stmt->bindValue(":postid", $_GET["id"]);
 if ($stmt->execute()) {
     // successvol verwijderd
-    header("Location: index.php");
 } else {
     //  niet verwijderd
-    echo "Item couldn't be deleted";
+    header("Location: index.php?error=Could not delete item");
 }
