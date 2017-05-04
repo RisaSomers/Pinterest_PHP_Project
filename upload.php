@@ -133,15 +133,18 @@ if (isset($_GET['target_url'])) {
 <!-- Navigation -->
 <?php include("includes/menu.php"); ?>
 
-<h1>Upload your item!</h1>
+<h1 class="page-header text-center headersubject">Voeg je werk toe</h1>
 <!-- Page Content -->
 <div class="container">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 text-center profilechangeblock">
     <form action="" method="post" id="upload" enctype="multipart/form-data">
-        <label for="fileToUpload">Afbeelding <br>(Maximumgrootte 3mb)</label>
-        <input type="file" name="fileToUpload" id="fileToUpload">
+        <div class="form-group">
+        <label for="fileToUpload">Voeg je afbeelding toe <br>(Maximumgrootte 3mb)</label>
+        <input type="file"    class="center-block" name="fileToUpload" id="fileToUpload">
 
         <label for="link">URL</label>
-        <input type="text" name="link" id="link" value="<?php echo htmlspecialchars($target_url)?>">
+        <input type="text" name="link" class="form-control" id="link" value="<?php echo htmlspecialchars($target_url)?>">
             <br>
         <?php
         $count = count($images);
@@ -159,17 +162,20 @@ if (isset($_GET['target_url'])) {
             echo '</div>';
         } ?>
 
-        <label for="beschrijving" id="labelbeschrijving">Beschrijving</label>
-        <input type="text" name="beschrijving" id="beschrijving" value="">
-             <br> <br>
+        <label for="beschrijving" id="labelbeschrijving">Titel</label>
+        <input type="text"  class="form-control" name="beschrijving" id="beschrijving" value="">
+             <br>
         <label for="country" id="labelcountry">Land</label>
-        <input type="text" name="country" id="country"><a href="#" id="get-country">Verkrijg locatie</a>
+        <input type="text" class="form-control" name="country" id="country"><a href="#" id="get-country">Verkrijg locatie</a>
         <br>
         <!-- Veld voor land in te steken -->
 
-        <input type="submit" value="Upload Item" name="submit" id="submit">
-
+        <input type="submit" class="btn btn-primary btn-block btn-lg red profilesubmit center-block" value="Upload Item" name="submit" id="submit">
+        </div>
     </form>
+</div>
+    <div class="col-md-2"></div>
+
 </div>
 <h1>Or upload trough URL!</h1>
 <div class="container" style="margin-top: 60px;">
