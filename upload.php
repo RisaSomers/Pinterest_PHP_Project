@@ -21,6 +21,7 @@ if (!empty($_POST)) {
 
         $item->create();
         echo "Item is created";
+        header("Location: index.php?success=Item successfully uploaded!");
     } catch (Exception $e) {
         echo $e->getMessage();
     }
