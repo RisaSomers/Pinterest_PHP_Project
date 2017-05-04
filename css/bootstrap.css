@@ -6823,3 +6823,42 @@ img.profilepic{
   margin: 0 auto;
 
 }
+
+.btn.btn-primary.btn-block.red.profilesubmit {
+   max-width: 200px;
+
+}
+
+.profilechangeblock{
+
+  background-color: whitesmoke;
+  padding: 20px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+  margin-top: 20px;
+
+}
+
+.headersubject{
+
+
+  background:
+    /* top, transparent red, faked with gradient */
+          linear-gradient(
+                  rgba(0, 0, 0, 0.45),
+                  rgba(0, 0, 0, 0.45)
+          ),url("../images/bg_signup.jpg");
+
+  color:white;
+  margin-top: 0;
+  padding: 80px 5px
+
+}
+
+
+footer{
+
+  background-color: #e02825;
+  margin: 0px;
+  padding: 0px;
+
+}

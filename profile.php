@@ -163,20 +163,30 @@ if (!empty($_POST['password']) && !empty($_POST['pass_new']) && !empty($_POST['p
 
 <body>
 
-<div class="container">
-    <div class="">
-        <h1 class="page-header">Change your profile</h1>
-			<?php if (isset($feedback_image)): ?>
-          <div class="alert <?php echo $feedback_image['success'] ? 'alert-success' : 'alert-danger' ?>" role="alert">
-              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-              <span class="sr-only">Error:</span>
-              <?php echo $feedback_image['value'] ?>
-          </div>
-			<?php endif; ?>
+
+
+    <h1 class="page-header text-center headersubject">Change your profile</h1>
+
+    <div class="container">
+    <?php if (isset($feedback_image)): ?>
+        <div class="alert <?php echo $feedback_image['success'] ? 'alert-success' : 'alert-danger' ?>" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            <?php echo $feedback_image['value'] ?>
+        </div>
+    <?php endif; ?>
     </div>
+</div>
+
+<div class="container">
+
+
+
+
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 text-center profilechangeblock">
             <img src="<?php print $user['avatar'] ?>" alt="" class="profilepic">
 
             <form enctype="multipart/form-data" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>"
@@ -184,21 +194,23 @@ if (!empty($_POST['password']) && !empty($_POST['pass_new']) && !empty($_POST['p
 
                 <input type="hidden" name="MAX_FILE_SIZE" value="99999999"/>
                 <div>
-                    <input name="avatar" type="file" id="avatar"/>
+                    <input class="center-block" name="avatar" type="file" id="avatar"/>
                 </div>
                 <br>
                 <div>
-                    <input type="submit" class="btn btn-default" value="Submit"/>
+                    <input type="submit" class="btn btn-primary btn-block btn-lg red profilesubmit center-block" value="wijzig je profielfoto"/>
                 </div>
 
             </form>
         </div>
+        <div class="col-md-2"></div>
     </div>
 
-    <hr>
+
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 text-center profilechangeblock">
           <?php if (isset($feedback_profile['value'])): ?>
               <div class="alert <?php echo $feedback_profile['success'] ? 'alert-success' : 'alert-danger' ?>" role="alert">
                   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -224,10 +236,11 @@ if (!empty($_POST['password']) && !empty($_POST['pass_new']) && !empty($_POST['p
                     <label for="pass_new_rep">Herhaal nieuw wachtwoord</label>
                     <input type="password" class="form-control" id="pass_new_rep" name="pass_new_rep">
                 </div>
-                <button name="submit" type="submit" class="btn btn-default">Change profile</button>
-                <button src="index.php" class="btn btn-default">Cancel changes</button>
+                <button name="submit" type="submit" class="btn btn-primary btn-block btn-lg red profilesubmit center-block">Wijzig je profiel</button>
+
             </form>
         </div>
+        <div class="col-md-2"></div>
     </div>
 </div>
 
