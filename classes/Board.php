@@ -1,12 +1,13 @@
 <?php
-spl_autoload_register(function ($class) {
-    include_once("../classes/".$class.".php");
-});
 
-class Boards
+
+class Board
 {
     private $boardTitle;
     private $privateSwitch;
+    private $boardID;
+    private $postid;
+    private $userID;
 
     public function __construct()
     {
@@ -40,17 +41,21 @@ class Boards
      * @param mixed $privateSwitch
      */
     public function setPrivateSwitch($privateSwitch)
-    {
+    { if($privateSwitch == 1) {
         $this->privateSwitch = $privateSwitch;
+    } else {
+
+    }
+
     }
 
     public function create()
     {
         $conn = Db::getInstance();
-        $stmt = $conn->prepare("INSERT INTO board (boardTitle) VALUES (:boardTitle)");
-        print_r($this);
+        $stmt = $conn->prepare("INSERT INTO board (boardTitle, userID, private) VALUES (:boardTitle, :userID, :private)");
         $stmt->bindValue(":boardTitle", $this->boardTitle);
-        $stmt->bindValue(":user_id", $_SESSION["id"]);
+        $stmt->bindValue(":userID", $_SESSION["id"]);
+        $stmt->bindValue(":private", $this->private);
         return $stmt->execute();
     }
 
