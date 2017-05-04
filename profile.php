@@ -177,7 +177,7 @@ if (!empty($_POST['password']) && !empty($_POST['pass_new']) && !empty($_POST['p
 
     <div class="row">
         <div class="col-md-8">
-            <img src="<?php print $user['avatar'] ?>" alt="" class="">
+            <img src="<?php print $user['avatar'] ?>" alt="" class="profilepic">
 
             <form enctype="multipart/form-data" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>"
                   method="post">

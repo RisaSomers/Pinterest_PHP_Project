@@ -222,7 +222,7 @@ $items = $statement->fetchAll(PDO::FETCH_ASSOC);
                                       <?php if ($pp->checkIfLiked($row['id'])): ?>
                                         <a href="#" class="like liked" data-id="<?php print $row['id'] ?>">UNLIKE- <?php echo $likes ?></a>
                                       <?php else: ?>
-                                          <a href='#' class='like' data-id='<?php echo $row["id"] ?>'>LIKE- <?php echo $likes ?></a>
+                                          <a href='#' class='like' data-id='<?php echo $row["id"] ?>'>LIKE - <?php echo $likes ?></a>
                                       <?php endif; ?>
 
                                       <?php if ($pp->checkIfDisliked($row['id'])): ?>

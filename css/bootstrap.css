@@ -6794,7 +6794,6 @@ p.signup {
 
   background-color: #d70015;
   border: none;
-  color : blue;
   border-radius : 0px;
 }
 
@@ -6813,5 +6812,14 @@ p.signup {
 ul .dropdown-menu{
 
   padding-left: 5px;
+
+}
+
+img.profilepic{
+
+  border-radius:99999px;
+  max-width:200px;
+  padding-bottom: 20px;
+  margin: 0 auto;
 
 }
