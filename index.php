@@ -164,26 +164,27 @@ $u = new Users();
 
 					<?php
 					$follower = new Users();
-					$follower->getFollowFeed();
-					/*var_dump($_SESSION["id"]);*/
+					$followFeed = $follower->getFollowFeed();
+                    
+					?>
 
 
-					foreach ($follower as $key => $row) {
+					<?php foreach ($followFeed as $key) {
 
-						echo "<h2>" . $row['Beschrijving'] . "</h2>  
-                           <a href='detail.php?id=" . $row['id'] . "'>
+						echo "<h2>" . $key['Beschrijving'] . "</h2>  
+                           <a href='detail.php?id=" . $key['id'] . "'>
                            
                                <div class='post_img'>
                                    ";
-						if (!empty($row['Url'])) {
-							echo "<img src='" . $row['Url'] . "' alt='" . $row['id'] . "'>";
+						if (!empty($key['Url'])) {
+							echo "<img src='" . $key['Url'] . "' alt='" . $key['id'] . "'>";
 						} else {
-							echo "<img src='uploads/posts/" . $row['Image'] . "' alt='" . $row['id'] . "'>";
+							echo "<img src='uploads/posts/" . $key['Image'] . "' alt='" . $key['id'] . "'>";
 						}
 						echo "
                                </div>
                            </a>";
-					}
+                               }
 					?>
 
 

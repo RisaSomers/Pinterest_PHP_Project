@@ -298,14 +298,12 @@ class Users
     public function getFollowFeed(){
         $conn = Db::getInstance();
         
-        $statement = $conn->prepare("SELECT * FROM items i INNER JOIN followlist f ON i.user_id = f.userid");
+        $statement = $conn->prepare("SELECT i.* FROM items i INNER JOIN followlist f ON i.user_id = f.followerid WHERE f.userid = :userid");
         $statement->bindValue(":userid", $_SESSION["id"]);
         $statement->execute();
-        $following = $statement->fetchAll(PDO::FETCH_ASSOC);
-        $statement->execute();
-        /*var_dump($statement->execute());*/
+        $followPost = $statement->fetchAll(PDO::FETCH_ASSOC);
         
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $followPost;
     }
     
 }
