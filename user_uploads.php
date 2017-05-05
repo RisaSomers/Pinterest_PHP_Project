@@ -22,43 +22,23 @@ $t = new Topics();
 $feed = $t->getUserPosts();
 
 
-if (!isset($_FILES['avatar'])) {
-    $feedback = "Please select a file";
-    $feedback2 = "Change your information";
-} else {
-    if (!empty($_POST)) {
-        $upload = new Users();
-
-        $upload->upload($_FILES);
-        $feedback = "Your avatar was uploaded!";
-        $feedback2 = "Change your information";
-    }
-}
-
-
-if (!isset($_SESSION["email"])) {
-}
-
-
-    if (!empty($_POST['email'])) {
-        $_SESSION['email'] = $_POST['email'];
-        $_SESSION['firstname'] = $_POST['firstname'];
-
-        $update = new Users();
-
-        $update->email = $_SESSION['email'];
-        $update->update();
-        $feedback2 = "Your changes have been made!";
-    }
 
     if (!empty($_POST)) {
         try {
             // create prepared statement
             $newBoard = new Board();
             $newBoard->setBoardName($_POST["boardTitle"]);
-            $newBoard->create();
-            echo "Item is created";
-            header("Location: user_uploads.php?success=true");
+            if (empty($_POST['status'])){
+                $privateSwitch = 0;
+            } else {
+                $privateSwitch = 1;
+            }
+            $newBoard->setPrivateSwitch($privateSwitch);
+            if ($newBoard->create()){
+                $feedback = "Board saved";
+                header("Location: user_uploads.php?success=true");
+            }
+
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -106,21 +86,25 @@ if (!isset($_SESSION["email"])) {
         <div class="col-lg-12">
                 <h1 class="page-header">Profile</h1>
                 <h4>Create your own board!</h4>
+                <?php if (isset($error)):?>
+        <div class="alert alert-danger"><?php echo $error; ?></div>
+    <?php endif; ?>
+                <?php if (isset($feedback)):?>
+        <div class="alert alert-success"><?php echo $feedback; ?></div>
+    <?php endif; ?>
             </div>
             <div class="col-xs-12 no-padding">
                 <a href="#ex1" rel="modal:open"><button type="button" class="btn btn-info btn-lg" >Create Board</button></a>
 
                 <div id="ex1" style="display:none;">
-    <p>Let's make a board.<?php if (isset($error)): ?>
-                    <div class="error"> <?php echo '<small>' . $error . '</small>' ?> </div>
-                    <?php endif; ?></p>
+    <p>Let's make a board</p>
 
         <form action="" method="post" id="createBoard" enctype="multipart/form-data">
             <label for="boardTitle">Name</label>
             <input type="text" name="boardTitle" id="boardTitle">
 
             <label for="privateSwitch">Private?</label>
-            <input id="privateSwitch" type="checkbox"/>
+            <input id="privateSwitch" name="status" type="checkbox" checked>
             <br>
             <input type="submit" value="Submit" />
         </form>
@@ -177,3 +161,5 @@ if (!isset($_SESSION["email"])) {
 
 
 </div>
+</body>
+</html>

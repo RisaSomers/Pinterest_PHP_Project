@@ -13,8 +13,7 @@ abstract class Db
 		} else {
 			// er is nog connectie, maak aan en geef terug
 
-			self::$conn = new PDO("mysql:host=localhost;dbname=Pinterest_PHP;charset=utf8", "root", "");
-			self::$conn->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES 'utf8'");
+			self::$conn = new PDO("mysql:host=localhost;dbname=Pinterest_PHP", "root", "");
 
 			return self::$conn;
 		}

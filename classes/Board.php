@@ -34,19 +34,15 @@ class Board
      */
     public function getPrivateSwitch()
     {
-        return $this->privateSwitch;
+        return $this->private;
     }
 
     /**
      * @param mixed $privateSwitch
      */
     public function setPrivateSwitch($privateSwitch)
-    { if($privateSwitch == 1) {
-        $this->privateSwitch = $privateSwitch;
-    } else {
-
-    }
-
+    {
+      $this->private = $privateSwitch;
     }
 
     public function create()
@@ -58,6 +54,16 @@ class Board
         $stmt->bindValue(":private", $this->private);
         return $stmt->execute();
     }
+
+    public function loadBoards($userID)
+    {
+            $conn = Db::getInstance();
+            $statementBoards = $conn->prepare("SELECT board.boardID, board.userID, board.private, board.boardTitle, user.firstname, user.lastname FROM
+ board INNER JOIN users ON board.userID=users.id WHERE board.userID = :userID;");
+            $statementBoards->bindValue(':userID', $userID);
+            $statementBoards->execute();
+            return $statementBoards;
+        }
 
     public function setBoardTitle($boardTitle)
     {
