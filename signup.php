@@ -33,6 +33,9 @@ if (!empty($_POST)) {
 		} elseif (strlen($users->password) < $MinLength) {
 			$error = "Your password has to be at least 6 characters long";
 		}
+        elseif(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+            $error = "Invalid email format";
+        }
 
 		$users->setMSfirstname($_POST['firstname']);
 		$users->setMSlastname($_POST['lastname']);

@@ -158,7 +158,19 @@ $u = new Users();
                     <?php echo htmlspecialchars($_GET["error"]); ?>
                 </div>
             <?php endif; ?>
+            
+            
 
+           
+           
+               
+
+        <form action="" method="post">
+
+            <div class="wrapper">
+                    <div class="container">
+                        <div class="row">
+                            <div id="items" class="results">
             <h1 class="page-header">Followers feed</h1>
 
 
@@ -172,6 +184,7 @@ $u = new Users();
 					<?php foreach ($followFeed as $key) {
 
 						echo "<h2>" . $key['Beschrijving'] . "</h2>  
+                        
                            <a href='detail.php?id=" . $key['id'] . "'>
                            
                                <div class='post_img'>
@@ -186,9 +199,15 @@ $u = new Users();
                            </a>";
                                }
 					?>
+					
+					                            </div>
+                        </div>
+                    </div>
+            </div>
+        </form>
 
 
-            <h1 class="page-header">Inspiration</h1>
+            
 
 
         </div>
@@ -199,6 +218,8 @@ $u = new Users();
                     <div class="container">
                         <div class="row">
                             <div id="items" class="results">
+                             
+                             <h1 class="page-header">Inspiration</h1>
                               <?php foreach ($items as $key => $row): ?>
                                 <?php $pp = new Items();
                                 $pp->setId($row["id"]);
