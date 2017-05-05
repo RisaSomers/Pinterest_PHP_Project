@@ -21,6 +21,18 @@ $res = $statement->fetchAll(PDO::FETCH_ASSOC);
 $t = new Topics();
 $feed = $t->getUserPosts();
 
+$userID = session_id();
+
+$stmtb = $conn->prepare("SELECT board.boardID, board.userID, board.private, board.boardTitle, users.firstname, users.lastname FROM
+board INNER JOIN users ON board.userID=users.id");
+$stmtb->execute();
+
+$check = $conn->prepare("SELECT * FROM boards WHERE userID = $userID;");
+$check->execute();
+$boards = $check->fetch(PDO::FETCH_ASSOC);
+
+
+
 
 
     if (!empty($_POST)) {
@@ -33,6 +45,7 @@ $feed = $t->getUserPosts();
             } else {
                 $privateSwitch = 1;
             }
+            $newBoard->setUserID($userID);
             $newBoard->setPrivateSwitch($privateSwitch);
             if ($newBoard->create()){
                 $feedback = "Board saved";
@@ -43,6 +56,7 @@ $feed = $t->getUserPosts();
             echo $e->getMessage();
         }
     }
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -84,8 +98,7 @@ $feed = $t->getUserPosts();
     <div class="row">
 
         <div class="col-lg-12">
-                <h1 class="page-header">Profile</h1>
-                <h4>Create your own board!</h4>
+                <h1 class="page-header">Create your own board!</h1>
                 <?php if (isset($error)):?>
         <div class="alert alert-danger"><?php echo $error; ?></div>
     <?php endif; ?>
@@ -110,6 +123,33 @@ $feed = $t->getUserPosts();
         </form>
         <p><a href="#" rel="modal:close">Close</a> or press ESC</p>
   </div>
+
+  <div class="col-lg-12">
+      <h1 class="page-header">My Boards</h1>
+
+  </div>
+              <div class="container" style="margin:35px auto;">
+                  <?php while( $row = $stmtb->fetch()) : ?>
+                      <div class="row">
+                        <div class="col-md-6 col-md-offset-3 results">
+                            <h2> <?php echo $row['boardTitle']; ?></h2>
+
+
+                              <a href="delete_board.php?id=<?php echo $row['boardID']; ?>">
+                            <button type="button" class="btn btn-default" aria-label="Delete">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+                            </button></a>
+
+
+                            <h6> <?php echo $row['private']; ?></h6>
+                            <a href="./userprofile.php?user=<?php echo $row['userID']; ?>">
+
+                                <?php echo $row['firstname']; ?></a>
+                        </div>
+
+                      </div>
+                          <?php endwhile ?>
+              </div>
 
         <div class="col-lg-12">
             <h1 class="page-header">My uploads</h1>

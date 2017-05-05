@@ -45,6 +45,19 @@ class Board
       $this->private = $privateSwitch;
     }
 
+    public function getUserID()
+    {
+        return $this->userID;
+    }
+
+    /**
+     * @param mixed $userID
+     */
+    public function setUserID($userID)
+    {
+        $this->userID = $userID;
+    }
+
     public function create()
     {
         $conn = Db::getInstance();
@@ -58,7 +71,7 @@ class Board
     public function loadBoards($userID)
     {
             $conn = Db::getInstance();
-            $statementBoards = $conn->prepare("SELECT board.boardID, board.userID, board.private, board.boardTitle, user.firstname, user.lastname FROM
+            $statementBoards = $conn->prepare("SELECT board.boardID, board.userID, board.private, board.boardTitle, users.firstname, users.lastname FROM
  board INNER JOIN users ON board.userID=users.id WHERE board.userID = :userID;");
             $statementBoards->bindValue(':userID', $userID);
             $statementBoards->execute();
