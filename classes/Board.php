@@ -86,4 +86,13 @@ class Board
             $this->boardTitle = $boardTitle;
         }
     }
+    public function savePostToBoard($postID)
+    {
+$conn = db::getInstance();
+$statement = $conn->prepare("INSERT INTO postboard (boardID, postID) VALUES (:boardID, :postID);");
+$statement->bindValue(":boardID", $this->boardID);
+$statement->bindValue(":postID", $postid);
+return $statement->execute();
+
+    }
 }

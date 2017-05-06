@@ -21,7 +21,7 @@ $res = $statement->fetchAll(PDO::FETCH_ASSOC);
 $t = new Topics();
 $feed = $t->getUserPosts();
 
-$userID = session_id();
+$userID = $_SESSION['id'];
 
 $stmtb = $conn->prepare("SELECT board.boardID, board.userID, board.private, board.boardTitle, users.firstname, users.lastname FROM
 board INNER JOIN users ON board.userID=users.id");
@@ -131,8 +131,10 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
               <div class="container" style="margin:35px auto;">
                   <?php while( $row = $stmtb->fetch()) : ?>
                       <div class="row">
-                        <div class="col-md-6 col-md-offset-3 results">
-                            <h2> <?php echo $row['boardTitle']; ?></h2>
+                        <a href="board.php?id=<?php echo $row['boardID']; ?>">
+                        <div class="col-md-6 col-md-offset-3 results well well-lg">
+
+                              <h2> <?php echo $row['boardTitle']; ?></h2>
 
 
                               <a href="delete_board.php?id=<?php echo $row['boardID']; ?>">
@@ -145,7 +147,7 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
                             <a href="./userprofile.php?user=<?php echo $row['userID']; ?>">
 
                                 <?php echo $row['firstname']; ?></a>
-                        </div>
+                        </div></a>
 
                       </div>
                           <?php endwhile ?>
