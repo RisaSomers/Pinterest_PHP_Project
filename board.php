@@ -23,6 +23,8 @@ $stmtb->execute();
 $query = $conn->prepare("SELECT * FROM items WHERE user_id = $userID");
 $query->execute();
 
+
+
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -90,11 +92,12 @@ $query->execute();
 
     var selected = $(this).val();
     makeAjaxRequest(selected);
-    function makeAjaxRequest(opts){
+    function makeAjaxRequest(postID){
       $.ajax({
         type:"POST",
-        data:{opts: opts},
-        url:"views/itemOverview.php",
+        data:{postID},
+        url:"itemOverview.php",
+        datatype: "text/json",
         success:function(res){
           $("#results").html("<p>Uw items : " + res + "</p>");
         }
