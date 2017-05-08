@@ -55,7 +55,7 @@ class Items
         $extension = pathinfo($image["name"], PATHINFO_EXTENSION);
 
         if ($extension != "jpg" && $extension != "png" && $extension != "jpeg" && $extension != "gif")
-            throw new Exception("Only JPG, JPEG, PNG & GIF files are allowed");
+            throw new Exception("Upload a JPG, JPEG, PNG or GIF file");
 
         if ($image["size"] > 3000000)
             throw new Exception("Your file is to big, maximum 3MB");
