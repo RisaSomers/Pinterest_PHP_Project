@@ -56,7 +56,7 @@ $user = $conn->prepare("SELECT * FROM Users WHERE id = $id;");
 $user->execute();
 
 if (!(bool)$item['status']) {
-	header('Location:/blocked.php');
+	header('Location:blocked.php');
 	die();
 }
 
@@ -135,13 +135,13 @@ $recentActivities = $activity->GetRecentActivities();
 <?php include_once("includes/menu.php"); ?>
 
 <a href="index.php">Go back to your dashboard</a>
-<p><a href="inappropriate.php?id=<?php print $id ?>">Markeer als ongepast</a></p>
+<p><a href="inappropriate.php?id=<?php print $id ?>"><span style="color:red" class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Markeer als ongepast</a></p>
 
 <!-- Page Content -->
 <div class="container">
 	<?php echo time_elapsed_string('@' . $item["uploaded"]); ?>
 	<?php if ($item["user_id"] == $_SESSION["id"]): ?>
-      <a href="delete_post.php?id=<?php echo htmlentities($_GET["id"]); ?>">Delete</a>
+      <a href="delete_post.php?id=<?php echo htmlentities($_GET["id"]); ?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
 	<?php endif; ?>
 
     <div class="col-lg-3 col-md-4 col-xs-6 thumb">
@@ -177,7 +177,7 @@ $recentActivities = $activity->GetRecentActivities();
             
         foreach($comments as $c):?>
        
-    <li>
+    </li>
     
     <img id='avatar' src=' <?php echo $c["avatar"] ?> ' </img>
     <a href="profile?userid=<?php  echo $c['user_id']?>"><?php echo $c['firstname']?></a>
