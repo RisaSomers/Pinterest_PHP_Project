@@ -13,7 +13,7 @@ spl_autoload_register(function ($class) {
     $items = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($items as $key => $row) {
-        $pp = new Items();
+        $pp = new Item();
         $pp->setId($row["id"]);
         $likes = $pp->getLike();
         $dislikes = $pp->getDislike();
