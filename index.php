@@ -66,7 +66,7 @@ if (!empty($_GET["filter"])) {
 $t = new Topics();
 $feed = $t->getUserPosts();
 
-$u = new Users();
+$u = new User();
 
 
 
@@ -176,7 +176,7 @@ $u = new Users();
 
 
 					<?php
-					$follower = new Users();
+					$follower = new User();
 					$followFeed = $follower->getFollowFeed();
                     
 					?>

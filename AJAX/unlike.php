@@ -14,7 +14,7 @@ $error = array(
 if (!empty($_GET["post_id"])) {
     $p = new Items();
     $p->setId($_GET["post_id"]);
-    $u = new Users();
+    $u = new User();
     if ($p->checkIfLiked($_GET["post_id"])) {
         $pdo = Db::getInstance();
         $stmt = $pdo->prepare("DELETE FROM likes WHERE user_id = :userid AND post_id = :postid");

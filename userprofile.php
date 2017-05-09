@@ -19,7 +19,7 @@ if (!empty($_GET["user"])) {
 }
 
 $conn = Db::getInstance();
-$user = new Users();
+$user = new User();
 $statement = $conn->prepare("select * from items WHERE user_id = :userid order by id DESC limit 0,20");
 $statement->bindValue(":userid", $userid);
 $statement->execute();

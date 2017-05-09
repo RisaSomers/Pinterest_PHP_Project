@@ -51,7 +51,7 @@ $details = $conn->prepare("SELECT * FROM items WHERE id = $id;");
 $details->execute();
 $item = $details->fetch(PDO::FETCH_ASSOC);
 
-$user = new Users();
+$user = new User();
 $user = $conn->prepare("SELECT * FROM Users WHERE id = $id;");
 $user->execute();
 

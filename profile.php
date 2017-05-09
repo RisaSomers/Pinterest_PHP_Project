@@ -6,12 +6,12 @@ spl_autoload_register(function ($class) {
 
 session_start();
 
-$user = new Users();
+$user = new User();
 $user = $user->getAllUserSpecific($_SESSION['id']);
 
 if (isset($_FILES['avatar'])) {
 	if (!empty($_POST)) {
-		$upload = new Users();
+		$upload = new User();
 		$ret = $upload->upload($_FILES);
 		if ($ret === true) {
 			$feedback_image = [
@@ -25,7 +25,7 @@ if (isset($_FILES['avatar'])) {
             ];
 		}
 
-		$updatedUser = new Users();
+		$updatedUser = new User();
 		$user = $updatedUser->getAllUserSpecific($_SESSION['id']);
 	}
 }
@@ -33,7 +33,7 @@ if (isset($_FILES['avatar'])) {
 if (!empty($_POST['email'])) {
 	$_SESSION['email'] = $_POST['email'];
 
-	$update = new Users();
+	$update = new User();
 
 	$update->email = $_SESSION['email'];
 	$update->update();
@@ -43,7 +43,7 @@ if (!empty($_POST['email'])) {
 
 if (!empty($_POST['password']) && !empty($_POST['pass_new']) && !empty($_POST['pass_new_rep'])) {
     try {
-        $updateUser = new Users();
+        $updateUser = new User();
         $ret = $updateUser->updatePass($_POST['password'], $_POST['pass_new'], $_POST['pass_new_rep']);
         $feedback_profile['success'] = true;
         $feedback_profile['value'] = 'De wijzigingen zijn doorgevoerd!';

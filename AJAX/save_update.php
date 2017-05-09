@@ -6,7 +6,7 @@ spl_autoload_register(function ($class) {
     include_once("../classes/".$class.".php");
 });
         $activity = new Activity();
-        $user = new Users();
+        $user = new User();
 
        
   if (!empty($_POST['update'])) {

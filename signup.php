@@ -14,7 +14,7 @@ if (!empty($_POST)) {
 		];
 
 		//lezen de velden uit en steken die waarden in class user
-		$users = new Users();
+		$users = new User();
 
 		$res = "succes";
 		$MinLength = 6;
@@ -59,7 +59,7 @@ if (!empty($_POST)) {
 			} else {
 				if ($res != false) {
 					$succes = "Welcome, you are registered";
-					$register = new users();
+					$register = new User();
 					$register->setMSfirstname($_POST['firstname']);
 					$register->setMSlastname($_POST['lastname']);
 					$register->setMSemail($_POST['email']);
