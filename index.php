@@ -168,46 +168,7 @@ $u = new User();
            
                
 
-        <form action="" method="post">
 
-            <div class="wrapper">
-                    <div class="container">
-                        <div class="row">
-                            <div id="items" class="results">
-            <h1 class="page-header">Followers feed</h1>
-
-
-					<?php
-					$follower = new User();
-					$followFeed = $follower->getFollowFeed();
-                    
-					?>
-
-
-					<?php foreach ($followFeed as $key) {
-
-						echo "<h2>" . $key['Beschrijving'] . "</h2>  
-                        
-                           <a href='detail.php?id=" . $key['id'] . "'>
-                           
-                               <div class='post_img'>
-                                   ";
-						if (!empty($key['Url'])) {
-							echo "<img src='" . $key['Url'] . "' alt='" . $key['id'] . "'>";
-						} else {
-							echo "<img src='uploads/posts/" . $key['Image'] . "' alt='" . $key['id'] . "'>";
-						}
-						echo "
-                               </div>
-                           </a>";
-                               }
-					?>
-					
-					                            </div>
-                        </div>
-                    </div>
-            </div>
-        </form>
 
 
             
@@ -268,9 +229,10 @@ $u = new User();
                         </div>
                     </div>
             </div>
+            <input type="hidden" id="result_no" value="20">
         </form>
 
-        <input type="hidden" id="result_no" value="20">
+        
     </div>
     <button type='submit' name='more' id='more'>Load more</button>
 
