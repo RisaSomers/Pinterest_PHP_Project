@@ -12,7 +12,7 @@ $error = array(
 );
 
 if (!empty($_GET["post_id"])) {
-    $p = new Items();
+    $p = new Item();
     $p->setId($_GET["post_id"]);
     $u = new User();
     if ($p->checkIfLiked($_GET["post_id"])) {

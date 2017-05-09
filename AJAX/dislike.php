@@ -7,7 +7,7 @@
  */
 header("Content-Type: application/json");
 include_once "../classes/Db.php";
-include_once "../classes/Items.php";
+include_once "../classes/Item.php";
 
 
 $error = array(
@@ -18,7 +18,7 @@ $error = array(
 session_start();
 
 if (!empty($_GET["post_id"])) {
-    $p = new Items();
+    $p = new Item();
     $p->setId($_GET["post_id"]);
     if (!$p->checkIfInteracted()) {
         $pdo = Db::getInstance();
