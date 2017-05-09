@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Gegenereerd op: 01 mei 2017 om 13:59
+-- Gegenereerd op: 09 mei 2017 om 13:14
 -- Serverversie: 10.1.21-MariaDB
 -- PHP-versie: 5.6.30
 
@@ -152,14 +152,14 @@ CREATE TABLE `items` (
   `uploaded` int(11) NOT NULL,
   `status` tinyint(1) DEFAULT '1',
   `points` int(11) NOT NULL DEFAULT '0',
-  `country` mediumtext COLLATE utf8mb4_unicode_ci
+  `city` mediumtext COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `items`
 --
 
-INSERT INTO `items` (`id`, `user_id`, `Image`, `Url`, `Beschrijving`, `uploaded`, `status`, `points`, `country`) VALUES
+INSERT INTO `items` (`id`, `user_id`, `Image`, `Url`, `Beschrijving`, `uploaded`, `status`, `points`, `city`) VALUES
 (22, 72, '347b70ad4a62a5c5851cace08f36ae65.jpg', '', 'Cute black pug', 0, 1, 0, NULL),
 (23, 72, '7131224c59b7973b2b143dc132d0b972.jpeg', '', 'Look the eyes', 0, 1, 0, NULL),
 (24, 72, '48b13d221e11869dbc266658c2718e32.jpg', '', 'Yellow', 0, 1, 0, NULL),
@@ -185,10 +185,7 @@ INSERT INTO `items` (`id`, `user_id`, `Image`, `Url`, `Beschrijving`, `uploaded`
 (50, 88, NULL, 'https://pbs.twimg.com/profile_images/2631415338/9bce37ad7fe14dd716df81942294348c_400x400.png', 'Gaming logo', 0, 1, 1, NULL),
 (51, 88, '228137c5486d6457530b51a441689035.png', NULL, 'This is a picture of myself', 0, 1, 1, NULL),
 (53, 87, NULL, 'http://vignette3.wikia.nocookie.net/divine-reality/images/b/b8/General_Graardor.png/revision/latest?cb=20140128071535', 'Boss monsters of an MMORPG', 0, 1, 0, NULL),
-(58, 89, NULL, 'http://vignette2.wikia.nocookie.net/2007scape/images/0/0b/Shark_detail.png/revision/latest?cb=20160214063425', 'kk', 1492972413, 1, 1, 'Amerika'),
-(59, 87, '6263422638f6bcb249dfd41e5f6ac6c3.png', NULL, 'Memes', 1493636906, 1, 0, 'België'),
-(60, 87, 'ddc8e7e99d0cf7c96ee788b5a7c92edd.png', NULL, 'Unicode check', 1493637072, 1, 0, 'BelgiÃ«'),
-(61, 87, '57c83bc0d7757beac56dd28447813c83.png', NULL, 'test', 1493639153, 1, 0, '');
+(58, 89, NULL, 'http://vignette2.wikia.nocookie.net/2007scape/images/0/0b/Shark_detail.png/revision/latest?cb=20160214063425', 'kk', 1492972413, 1, 1, 'Amerika');
 
 -- --------------------------------------------------------
 
@@ -247,7 +244,9 @@ INSERT INTO `likes` (`id`, `post_id`, `user_id`) VALUES
 (37, 53, 88),
 (38, 53, 89),
 (39, 58, 89),
-(40, 59, 42);
+(40, 59, 42),
+(41, 43, 87),
+(43, 58, 87);
 
 -- --------------------------------------------------------
 
@@ -482,7 +481,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT voor een tabel `dislikes`
 --
 ALTER TABLE `dislikes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT voor een tabel `followlist`
 --
@@ -492,7 +491,7 @@ ALTER TABLE `followlist`
 -- AUTO_INCREMENT voor een tabel `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 --
 -- AUTO_INCREMENT voor een tabel `items_topics`
 --
@@ -507,7 +506,7 @@ ALTER TABLE `item_inappropriate`
 -- AUTO_INCREMENT voor een tabel `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT voor een tabel `topics`
 --
