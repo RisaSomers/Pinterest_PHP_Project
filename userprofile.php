@@ -24,7 +24,7 @@ $statement = $conn->prepare("select * from items WHERE user_id = :userid order b
 $statement->bindValue(":userid", $userid);
 $statement->execute();
 $res = $statement->fetchAll(PDO::FETCH_ASSOC);
-$t = new Topics();
+$t = new Topic();
 $feed = $t->getUserPosts();
 
 
@@ -145,7 +145,7 @@ if(!empty($_POST) && $userid != $_SESSION['id']){
                                 <?php
 
                                 foreach ($res as $key => $row) {
-                                    $pp = new Items();
+                                    $pp = new Item();
                                     $pp->setId($row["id"]);
                                     $likes = $pp->getLike();
                                     $dislikes = $pp->getDislike();

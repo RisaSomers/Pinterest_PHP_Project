@@ -18,7 +18,7 @@ session_start();
 
 
         if (!empty($_POST)) {
-            $topics = new Topics();
+            $topics = new Topic();
             $topics->Description = $_POST['topic'];
             $topics->Username = $_SESSION['email'];
             $topics->updateSubscriptions($_POST["topic"]);

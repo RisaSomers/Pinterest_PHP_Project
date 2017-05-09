@@ -63,7 +63,7 @@ if (!empty($_GET["filter"])) {
 }
 
 
-$t = new Topics();
+$t = new Topic();
 $feed = $t->getUserPosts();
 
 $u = new User();

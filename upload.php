@@ -10,7 +10,7 @@ session_start();
 if (!empty($_POST)) {
     try {
         // create prepared statement
-        $item = new Items();
+        $item = new Item();
         $item->setDescription(htmlspecialchars($_POST["beschrijving"]));
         $item->setCountry(htmlspecialchars($_POST["country"]));
         if (empty($_POST["link"])) {

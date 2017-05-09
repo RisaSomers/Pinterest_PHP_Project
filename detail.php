@@ -45,7 +45,7 @@ if (!empty($_SESSION['email'])) {
 
 
 $conn = Db::getInstance();
-$details = new Items();
+$details = new Item();
 $id = $_GET['id'];
 $details = $conn->prepare("SELECT * FROM items WHERE id = $id;");
 $details->execute();
