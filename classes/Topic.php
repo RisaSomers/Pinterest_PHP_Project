@@ -3,7 +3,7 @@
 
 
 
-class Topics
+class Topic
 {
     private $m_sDescription;
     private $m_sUsername;

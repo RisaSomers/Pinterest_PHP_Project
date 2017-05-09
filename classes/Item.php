@@ -1,6 +1,6 @@
 <?php
 
-class Items
+class Item
 {
     private $url;
     private $image;
