@@ -12,7 +12,7 @@ if (!empty($_POST)) {
         // create prepared statement
         $item = new Item();
         $item->setDescription(htmlspecialchars($_POST["beschrijving"]));
-        $item->setCountry(htmlspecialchars($_POST["country"]));
+        $item->setCity(htmlspecialchars($_POST["city"]));
         if (empty($_POST["link"])) {
             $item->setImage($_FILES["fileToUpload"]);
         } else {
@@ -165,8 +165,8 @@ if (isset($_GET['target_url'])) {
         <label for="beschrijving" id="labelbeschrijving">Titel</label>
         <input type="text"  class="form-control" name="beschrijving" id="beschrijving" value="">
              <br>
-        <label for="country" id="labelcountry">Land</label>
-        <input type="text" class="form-control" name="country" id="country"><a href="#" id="get-country">Verkrijg locatie</a>
+        <label for="city" id="labelcountry">City</label>
+        <input type="text" class="form-control" name="city" id="city"><a href="#" id="get-city">Verkrijg locatie</a>
         <br>
         <!-- Veld voor land in te steken -->
 
@@ -236,12 +236,12 @@ endif; ?>
 <script src="js/jquery.js"></script>
 
 <script>
-    $("#get-country").bind("click", function(e) {
+    $("#get-city").bind("click", function(e) {
         e.preventDefault();
 
         navigator.geolocation.getCurrentPosition(function(location) {
-            $.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + location.coords.latitude +","+ location.coords.longitude + "&result_type=country&key=AIzaSyDHaF6eSbeVHKUauLOTQi9ri6hCbx8B88g", function(data) {
-                $("#country").val(data.results[0].formatted_address);
+            $.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + location.coords.latitude +","+ location.coords.longitude + "&result_type=locality&key=AIzaSyDHaF6eSbeVHKUauLOTQi9ri6hCbx8B88g", function(data) {
+                $("#city").val(data.results[0].formatted_address);
             });
         });
     });
