@@ -1,5 +1,9 @@
 <?php
 
+spl_autoload_register(function ($class) {
+	include_once("classes/" . $class . ".php");
+});
+
 function time_elapsed_string($datetime, $full = false)
 {
 	$now = new DateTime;
@@ -32,9 +36,7 @@ function time_elapsed_string($datetime, $full = false)
 	return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
-spl_autoload_register(function ($class) {
-	include_once("classes/" . $class . ".php");
-});
+
 
 
 session_start();
@@ -222,7 +224,7 @@ $u = new User();
                              
                              <h1 class="page-header">Inspiration</h1>
                               <?php foreach ($items as $key => $row): ?>
-                                <?php $pp = new Items();
+                                <?php $pp = new Item();
                                 $pp->setId($row["id"]);
                                 $likes = $pp->getLike();
                                 $dislikes = $pp->getDislike(); ?>
