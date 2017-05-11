@@ -173,28 +173,7 @@ if (!empty($_POST)) {
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
-
-<script>
-    $('.email-ajax').on('keyup', function () {
-        var val = $(this).val();
-        var selector = $('.email-ajax-result');
-
-        $.ajax({
-            method: "POST",
-            url: "ajax/check_mail.php",
-            data: {'email': val},
-            success: function (data) {
-                if (data.message.val == "1") {
-                    selector.html('Emailadres is al geregistreerd');
-                    selector.parent('.form-group').removeClass('has-success').addClass('has-error');
-                } else {
-					selector.html('');
-                    selector.parent('.form-group').removeClass('has-error').addClass('has-success');
-                }
-            }
-        });
-    })
-</script>
+<script src="js/ajax_check_mail.js"></script>
 
 </body>
 
