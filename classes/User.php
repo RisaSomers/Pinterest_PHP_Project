@@ -1,4 +1,5 @@
 <?php
+
 class User
 {
     private $m_sfirstname;
@@ -122,13 +123,13 @@ class User
         }
     }
 
-    public function upload($test)
+    public function upload($files)
     {
         $target_dir ="uploads/";
         $uploadOk = 1;
-        $imageFileType = pathinfo(basename($test['avatar']['name']), PATHINFO_EXTENSION);
+        $imageFileType = pathinfo(basename($files['avatar']['name']), PATHINFO_EXTENSION);
         $target_file = $target_dir .md5($_SESSION['email'].time()).".". $imageFileType;
-        $check = getimagesize($test['avatar']['tmp_name']);
+        $check = getimagesize($files['avatar']['tmp_name']);
         if ($check !== false) {
             $uploadOk = 1;
         } else {
@@ -150,7 +151,7 @@ class User
         if ($uploadOk == 0) {
             return "Sorry, your file was not uploaded.";
         } else {
-            if (move_uploaded_file($test["avatar"]["tmp_name"], $target_file)) {
+            if (move_uploaded_file($files["avatar"]["tmp_name"], $target_file)) {
                 $conn = db::getInstance();
                 $statement = $conn->prepare("UPDATE users SET avatar = :avatar WHERE id = :id");
                 $statement->bindValue(":avatar", $target_file);
@@ -166,44 +167,20 @@ class User
     }
         
     
-    public function update()
+    public function updateEmail($email)
     {
-        if (empty($this->password) && empty($this->firstname)) {
-            $conn = Db::getInstance();
-            
-            $statement = $conn->prepare("UPDATE users SET email = :email2 WHERE id = :id");
-            $statement->bindValue(":email2", $_SESSION["email"]);
-            $statement->bindValue(":id", $_SESSION["id"]);
-            return $statement->execute();
-        } elseif (empty($this->password) && empty($this->email)) {
-            $conn = Db::getInstance();
-            
-            $statement = $conn->prepare("UPDATE users SET firstname = :firstname WHERE id = :id");
-            $statement->bindValue(":firstname", $_SESSION["firstname"]);
-            $statement->bindValue(":id", $_SESSION["id"]);
-            return $statement->execute();
-        } elseif (empty($this->password)) {
-            $conn = Db::getInstance();
-            
-            $statement = $conn->prepare("UPDATE users SET firstname = :firstname, email = :email2 WHERE id = :id");
-            $statement->bindValue(":firstname", $_SESSION["firstname"]);
-            $statement->bindValue(":email2", $_SESSION["email"]);
-            $statement->bindValue(":id", $_SESSION["id"]);
-            return $statement->execute();
-        } elseif (!empty($_POST["firstname"]) && !empty($_POST["email"])) {
-            $conn = Db::getInstance();
-            $statement = $conn->prepare("UPDATE users SET firstname = :firstname, email = :email2, password = :password WHERE id = :id");
-            $statement->bindValue(":firstname", $_POST['firstname']);
-            $statement->bindValue(":email2", $_POST["email"]);
-            $statement->bindValue(":id", $_SESSION["id"]);
-            
-            $options = ["cost" => 11];
-            
-            $hash = password_hash($this->password, PASSWORD_DEFAULT, $options);
-            $statement->bindValue(":password", $hash);
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return "Foutief e-mailadres";
+      } else {
+        $_SESSION['email'] = $email;
 
-            return $statement->execute();
-        }
+        $conn = Db::getInstance();
+
+        $statement = $conn->prepare("UPDATE users SET email = :email WHERE id = :id");
+        $statement->bindValue(":email", $email);
+        $statement->bindValue(":id", $_SESSION["id"]);
+        return $statement->execute();
+      }
     }
 
     public function updatePass($pass1, $pass2, $pass_rep) {

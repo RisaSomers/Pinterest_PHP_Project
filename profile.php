@@ -24,29 +24,34 @@ if (isset($_FILES['avatar'])) {
                 'value' => $ret
             ];
 		}
-
-		$updatedUser = new User();
-		$user = $updatedUser->getAllUserSpecific($_SESSION['id']);
 	}
 }
 
 if (!empty($_POST['email'])) {
-	$_SESSION['email'] = $_POST['email'];
 
 	$update = new User();
+	$return = $update->updateEmail($_POST['email']);
 
-	$update->email = $_SESSION['email'];
-	$update->update();
-	$feedback_profile['success'] = true;
-	$feedback_profile['value'] = "Your changes have been made!";
+	if ($return === true) {
+      $feedback_profile['success'] = true;
+      $feedback_profile['value'] = "Het e-mailadres is opgeslagen!";
+    } else {
+      $feedback_profile['success'] = false;
+      $feedback_profile['value'] = $return;
+    }
 }
 
 if (!empty($_POST['password']) && !empty($_POST['pass_new']) && !empty($_POST['pass_new_rep'])) {
     try {
         $updateUser = new User();
         $ret = $updateUser->updatePass($_POST['password'], $_POST['pass_new'], $_POST['pass_new_rep']);
-        $feedback_profile['success'] = true;
-        $feedback_profile['value'] = 'De wijzigingen zijn doorgevoerd!';
+        if ($ret === true) {
+          $feedback_profile['success'] = true;
+          $feedback_profile['value'] = 'De wijzigingen zijn doorgevoerd!';
+        } else {
+          $feedback_profile['success'] = false;
+          $feedback_profile['value'] = 'Er ging iets mis';
+        }
     } catch (Exception $e) {
         $feedback_profile['success'] = false;
         $feedback_profile['value'] = $e->getMessage();
