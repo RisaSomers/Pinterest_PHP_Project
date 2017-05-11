@@ -44,16 +44,9 @@ if (!empty($_SESSION['email'])) {
 }
 
 
-$conn = Db::getInstance();
-$details = new Item();
+$detail = new Item();
 $id = $_GET['id'];
-$details = $conn->prepare("SELECT * FROM items WHERE id = $id;");
-$details->execute();
-$item = $details->fetch(PDO::FETCH_ASSOC);
-
-$user = new User();
-$user = $conn->prepare("SELECT * FROM Users WHERE id = $id;");
-$user->execute();
+$item = $detail->getById($id);
 
 if (!(bool)$item['status']) {
 	header('Location:blocked.php');

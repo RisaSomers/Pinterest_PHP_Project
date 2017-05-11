@@ -158,9 +158,6 @@ class Item
         return false;
     }
 
-
-
-
     public function checkIfLiked($post)
     {
         $pdo = Db::getInstance();
@@ -189,6 +186,15 @@ class Item
         }
     }
 
+    public function getById($id) {
+      $conn = Db::getInstance();
+      $details = $conn->prepare("SELECT * FROM items WHERE id = :id");
+      $details->bindValue(':id', $id);
+      $details->execute();
+      $item = $details->fetch(PDO::FETCH_ASSOC);
+      return $item;
+    }
+
     public function makeInappropriate($item_id) {
         $id = $_SESSION['id'];
 
@@ -206,8 +212,9 @@ class Item
             $stmt = $pdo->prepare("INSERT INTO item_inappropriate (user_id, item_id) VALUES (:user_id, :item_id)");
             $stmt->bindValue(":user_id", $id);
             $stmt->bindValue(":item_id", $item_id);
+            $stmt->execute();
             $this->addInappropriatePoint($item_id);
-            return $stmt->execute();
+            return true;
         } else {
             return false;
         }
