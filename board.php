@@ -19,9 +19,13 @@ $conn = Db::getInstance();
 $stmtb = $conn->prepare("SELECT board.boardID, board.userID, board.private, board.boardTitle, users.firstname, users.lastname FROM
 board INNER JOIN users ON board.userID=users.id WHERE board.boardID = $boardID;");
 $stmtb->execute();
+$row = $stmtb->fetch();
+
+
 
 $query = $conn->prepare("SELECT * FROM items WHERE user_id = $userID");
 $query->execute();
+
 
 
 
@@ -50,18 +54,20 @@ $query->execute();
   </ul>
 </nav>
     <?php while( $row = $stmtb->fetch()) : ?>
+
     <h1 class="page-header">Items toevoegen aan board: <?php echo $row['boardTitle']; ?></h1>
+
     <?php endwhile ?>
             <div class="container well well-lg">
 
           </div>
   </div>
 
-
 <div class="container-fluid well well-lg">
 
 
   <div class="form-group">
+    
     <div id="results"></div>
 
   <form action="" method="post">

@@ -27,8 +27,8 @@ print "<table>";
     print '<tr>
             <td class="well well-lg">
             <h4 style="margin-left:5%;">'.$row['Beschrijving'].'</h4>
-            <input type="checkbox" value="" />
             <a href="detail.php?id='.$row['id'].'"><img name="myimage" src="'.$row['Url'].'" alt="Image" style="width:200px;" /></a>
+            <label></label><input type="checkbox" value="" />Add this post to Board</label>
             </td>
           </tr>';
 

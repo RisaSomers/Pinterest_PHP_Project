@@ -44,8 +44,7 @@ if (isset($_GET['target_url'])) {
 
     $title = $parser->getTitle(true);
 
-    if ($href)
-        $links = $parser->getHrefLinks(false);
+
 
     if ($image)
         $images = $parser->getImageSources();
@@ -54,6 +53,7 @@ if (isset($_GET['target_url'])) {
         $meta_tags = $parser->getMetaTags();
 
 }
+
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -123,6 +123,11 @@ if (isset($_GET['target_url'])) {
         #labelcountry {
             display: block;
         }
+        img{
+            cursor: pointer;
+
+
+        }
 
 
     </style>
@@ -144,26 +149,26 @@ if (isset($_GET['target_url'])) {
         <input type="file"    class="center-block" name="fileToUpload" id="fileToUpload">
 
         <label for="link">URL</label>
-        <input type="text" name="link" class="form-control" id="link" value="<?php echo htmlspecialchars($target_url)?>">
+        <input type="text" name="link" class="form-control url_img" id="link url_img">
             <br>
         <?php
         $count = count($images);
 
         if ($count) {
 
-            echo '<h4>Multiple Images Found: ' . $count . '</h4>';
+            echo '<h4>Meerdere afbeeldingen gevonden, selecteer 1 afbeelding: ' . $count . '</h4>';
 
             echo '<div class="row images">';
 
             foreach($images as $image) {
-                echo '<a href="' . $image . '" >'.''.'<img src="' . $image . '" />'.''.'</a>';
+                echo '<img src="' . $image . '" />';
             }
 
             echo '</div>';
         } ?>
 
-        <label for="beschrijving" id="labelbeschrijving">Titel</label>
-        <input type="text"  class="form-control" name="beschrijving" id="beschrijving" value="">
+        <label for="beschrijving" id="labelbeschrijving" >Beschrijving</label>
+        <input type="text"  class="form-control" name="beschrijving" id="beschrijving" value="<?php echo htmlspecialchars($meta_tags['1']['1'])?>">
              <br>
         <label for="city" id="labelcountry">City</label>
         <input type="text" class="form-control" name="city" id="city"><a href="#" id="get-city">Verkrijg locatie</a>
@@ -177,7 +182,7 @@ if (isset($_GET['target_url'])) {
     <div class="col-md-2"></div>
 
 </div>
-<h1>Or upload trough URL!</h1>
+<h1 style="text-align: center;"><small>Of geef een URL om afbeeldingen op te laden van een andere site!</small></h1>
 <div class="container" style="margin-top: 60px;">
     <div>
         <h4>
@@ -205,32 +210,9 @@ if (isset($_GET['target_url'])) {
             </div>
             <br/>
         </form>
-        <?php
-if ($title !== null) {
-    ?>
-    <h3 class="title">Title :: <?= $title ?></h3>
-<?php
-} ?>
 
-<?php
-if (is_array($meta_tags) && count($meta_tags)):
-    echo '<h4>Meta Tags: ' . count($meta_tags) . '</h4>';
-    ?>
-    <table class="meta">
-        <?php
-        foreach ($meta_tags as $meta_tag):
-            ?>
-            <tr>
-                <td><?= ucfirst($meta_tag[0]) ?></td>
-                <td> : </td>
-                <td><?= $meta_tag[1] ?></td>
-            </tr>
-        <?php
-        endforeach;
-        ?>
     </table>
-<?php
-endif; ?>
+
 
 
 <script src="js/jquery.js"></script>
@@ -245,6 +227,13 @@ endif; ?>
             });
         });
     });
+
+    $('img').on('click',function(){
+  //using id
+  $('#url_image').val($(this).attr('src'));
+   //using class
+  $('.url_img').val($(this).attr('src'));
+});
 </script>
 
 <?php include_once ('includes/footer.php') ?>
@@ -256,7 +245,7 @@ endif; ?>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
-
+<script src="js/script.js"></script>
 </body>
 
 </html>
