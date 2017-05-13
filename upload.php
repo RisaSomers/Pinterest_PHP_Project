@@ -195,7 +195,7 @@ if (isset($_GET['target_url'])) {
             <div class="input-prepend input-append">
                 <input class="span2" type="text" style="width: 550px;height: 20px;"
                        value="<?= $target_url ?>" name="target_url"
-                       placeholder="Enter a public website URL to an image/gif"/>
+                       placeholder="Geef de link naar de website en wij zoeken de afbeeldingen voor jouw!"/>
 
 
                 <span class="add-on">

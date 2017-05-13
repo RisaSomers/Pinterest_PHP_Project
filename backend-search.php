@@ -17,7 +17,7 @@ try {
 try {
     if (isset($_REQUEST['term'])) {
         // create prepared statement
-        $sql = "SELECT * FROM items WHERE (Beschrijving LIKE :term OR city LIKE :term)";
+        $sql = "SELECT * FROM items WHERE (Beschrijving LIKE :term)";
         $stmt = $conn->prepare($sql);
         $term = $_REQUEST['term'] . '%';
         // bind parameters to statement

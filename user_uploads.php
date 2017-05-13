@@ -98,7 +98,7 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
     <div class="row">
 
         <div class="col-lg-12">
-                <h1 class="page-header">Create your own board!</h1>
+                <h1 class="page-header text-center headersubject">Maak je eigen bord aan!</h1>
                 <?php if (isset($error)):?>
         <div class="alert alert-danger"><?php echo $error; ?></div>
     <?php endif; ?>
@@ -107,10 +107,10 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
     <?php endif; ?>
             </div>
             <div class="col-xs-12 no-padding">
-                <a href="#ex1" rel="modal:open"><button type="button" class="btn btn-info btn-lg" >Create Board</button></a>
+                <a href="#ex1" rel="modal:open"><button type="button" class="btn btn-danger btn-lg text-center col-md-offset-3 col-md-6" >Maak een bord</button></a>
 
                 <div id="ex1" style="display:none;">
-    <p>Let's make a board</p>
+    <p>Geef een passende naam voor jouw bord:</p>
 
         <form action="" method="post" id="createBoard" enctype="multipart/form-data">
             <label for="boardTitle">Name</label>
@@ -121,11 +121,11 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
             <br>
             <input type="submit" value="Submit" />
         </form>
-        <p><a href="#" rel="modal:close">Close</a> or press ESC</p>
+        <p><a href="#" rel="modal:close">Close</a> of duw ESC</p>
   </div>
 
-  <div class="col-lg-12">
-      <h1 class="page-header">My Boards</h1>
+  <div class="col-lg-12"><br>
+      <h1 class="page-header">Mijn Borden</h1>
 
   </div>
               <div class="container" style="margin:35px auto;">
@@ -154,7 +154,7 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
               </div>
 
         <div class="col-lg-12">
-            <h1 class="page-header">My uploads</h1>
+            <h1 class="page-header">Mijn uploads</h1>
 
         </div>
 
