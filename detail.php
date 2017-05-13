@@ -173,7 +173,7 @@ $recentActivities = $activity->GetRecentActivities();
     </li>
     
     <img id='avatar' src=' <?php echo $c["avatar"] ?> ' </img>
-    <a href="profile?userid=<?php  echo $c['user_id']?>"><?php echo $c['firstname']?></a>
+    <a href="userprofile.php?user=<?php  echo $c['id_user']?>"><?php echo $c['firstname']?></a>
     <p><?php echo $c['comments']?></p>
     
     <li>  

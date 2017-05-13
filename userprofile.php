@@ -30,11 +30,11 @@ $feed = $t->getUserPosts();
 
 
 
-$statement = $conn->prepare("SELECT userid FROM followlist WHERE userid = :id and followerid = :follower");
+$statement = $conn->prepare("SELECT user_id_a FROM followlist WHERE user_id_a = :id and user_id_b = :follower");
 $statement->bindValue(":id", $_SESSION["id"]);
 $statement->bindValue(":follower", $userid);
 $statement->execute();
-$status = $statement->fetchAll(PDO::FETCH_ASSOC);
+$status = $statement->fetch(PDO::FETCH_ASSOC);
 
 if(!empty($status)){
     $state = "unfollow";
@@ -46,7 +46,7 @@ else{
 
 if(!empty($_POST) && $userid != $_SESSION['id']){
     if(!empty($status)){
-        $statement = $conn->prepare("DELETE FROM followlist where userid = :userid AND followerid = :followerid");
+        $statement = $conn->prepare("DELETE FROM followlist where user_id_a = :userid AND user_id_b = :followerid");
         $statement->bindValue(":userid", $_SESSION["id"]);
         $statement->bindValue(":followerid", $userid);
         $statement->execute();
@@ -54,7 +54,7 @@ if(!empty($_POST) && $userid != $_SESSION['id']){
     }
     
     else{
-        $statement = $conn->prepare("INSERT INTO followlist (userid, followerid) VALUES (:userid, :followerid)");
+        $statement = $conn->prepare("INSERT INTO followlist (user_id_a, user_id_b) VALUES (:userid, :followerid)");
         $statement->bindValue(":userid", $_SESSION["id"]);
         $statement->bindValue(":followerid", $userid);
         $statement->execute();
@@ -183,7 +183,7 @@ if(!empty($_POST) && $userid != $_SESSION['id']){
     
     
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
-<script src="js/addFriend.js"></script>
+<!--<script src="js/addFriend.js"></script>-->
 
 
 <script>

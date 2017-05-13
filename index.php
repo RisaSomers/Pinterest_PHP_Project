@@ -157,7 +157,7 @@ $u = new User();
             <?php endif; ?>
 
             <?php if(!empty($_GET["error"])): ?>
-                <div class="error" style="float:right;font-weight: bold;>
+                <div class="error" style="float:right;font-weight: bold;">
                     <?php echo htmlspecialchars($_GET["error"]); ?>
                 </div>
             <?php endif; ?>
