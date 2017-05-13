@@ -27,6 +27,14 @@ try {
         if ($stmt->rowCount() > 0) {
             while ($row = $stmt->fetch()) {
                 echo "<p>";
+
+                if(isset($row['Image'])){
+                echo "<img src=\"uploads/posts/{$row['Image']}" . "\" alt=\"\" />";
+            } else {
+                echo "<img src=\"{$row['Url']}" . "\" alt=\"\" />";
+            }
+
+
                 echo "<a href=\"detail.php?id={$row['id']}\">";
                 echo $row['Beschrijving'] . "</p>";
                 echo "</a>";
