@@ -9,6 +9,9 @@ html {
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
+.col-md-8.text-center.urlBlock{
+  margin-left: 17%;
+}
 .search-box{
       width: 300px;
       position: relative;

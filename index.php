@@ -111,7 +111,7 @@ $u = new User();
 
 
 <!-- Page Content -->
-<h1 class="page-header text-center headersubject">Homepage</h1>
+<h1 class="page-header text-center headersubject">Startpagina</h1>
 <div class="container">
 
     <div class="row">
@@ -161,17 +161,17 @@ $u = new User();
                     <?php echo htmlspecialchars($_GET["error"]); ?>
                 </div>
             <?php endif; ?>
-            
-            
-
-           
-           
-               
 
 
 
 
-            
+
+
+
+
+
+
+
 
 
         </div>
@@ -182,7 +182,7 @@ $u = new User();
                     <div class="container">
                         <div class="row">
                             <div id="items" class="results">
-                             
+
                              <h1 class="page-header">Inspiration</h1>
                               <?php foreach ($items as $key => $row): ?>
                                 <?php $pp = new Item();
@@ -232,7 +232,7 @@ $u = new User();
             <input type="hidden" id="result_no" value="20">
         </form>
 
-        
+
     </div>
     <button type='submit' name='more' id='more'>Load more</button>
 

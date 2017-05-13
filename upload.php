@@ -63,11 +63,6 @@ if (isset($_GET['target_url'])) {
 
     <style>
 
-        h1 {
-            margin-left: 10%;
-            margin-bottom: 30px;
-        }
-
         #fileToUpload {
             margin-bottom: 25px;
         }
@@ -175,45 +170,47 @@ if (isset($_GET['target_url'])) {
         <br>
         <!-- Veld voor land in te steken -->
 
-        <input type="submit" class="btn btn-primary btn-block btn-lg red profilesubmit center-block" value="Upload Item" name="submit" id="submit">
+        <input type="submit" class="btn btn-danger btn-block btn-lg center-block" value="Upload Item" name="submit" id="submit">
         </div>
     </form>
 </div>
-    <div class="col-md-2"></div>
 
-</div>
-<h1 style="text-align: center;"><small>Of geef een URL om afbeeldingen op te laden van een andere site!</small></h1>
-<div class="container" style="margin-top: 60px;">
-    <div>
+<div class="col-md-2"></div>
+<div class="col-md-8 text-center profilechangeblock urlBlock">
+<h1 style="text-align: center; color:black;"><small>Of geef een URL om afbeeldingen op te laden van een andere site!</small></h1>
+
+    <div class="form-group">
         <h4>
-            Extract data uit URL:
             <small class="error"><?= $parser->message ? ('( ' . $parser->message . ' )') : '' ?></small>
         </h4>
 
         <form method="get" action="">
 
             <div class="input-prepend input-append">
-                <input class="span2" type="text" style="width: 550px;height: 20px;"
+                <input class="span2 form-control" type="text"
                        value="<?= $target_url ?>" name="target_url"
-                       placeholder="Geef de link naar de website en wij zoeken de afbeeldingen voor jouw!"/>
+                       placeholder="Geef de link naar de website en wij zoeken de afbeeldingen voor jouw!" style="margin-bottom:5%; margin-top:5%;"/>
 
 
                 <span class="add-on">
-                        <input type="checkbox" name="image"
-                               value="1" <?= $image ? 'checked' : $default_check ?> /> Image URL
-
+                        <label for="checkbox-inline" >Website URL
+                        <input type="checkbox"  name="image"
+                        value="1" <?= $image ? 'checked' : $default_check ?> /></label>
+                               <label for="checkbox-inline" >Beschrijving
                         <input type="checkbox" name="meta"
-                               value="1" <?= $meta ? 'checked' : $default_check ?> /> Beschrijving
+                               value="1" <?= $meta ? 'checked' : $default_check ?> /></label>
                 </span>
 
-                <input class="btn btn-primary" type="submit" name="extract" value="Extract Data"/>
+                <input class="btn btn-danger btn-block btn-lg center-block" type="submit" name="extract" value="Zoek afbeelding via URL" style="margin-top:5%;"/>
             </div>
             <br/>
         </form>
 
     </table>
-
-
+</div>
+</div>
+<div class="col-md-2"></div>
+</div>
 
 <script src="js/jquery.js"></script>
 
@@ -239,9 +236,7 @@ if (isset($_GET['target_url'])) {
 <?php include_once ('includes/footer.php') ?>
 
 </div>
-<!-- /.container -->
 
-<!-- jQuery -->
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>

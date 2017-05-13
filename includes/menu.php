@@ -14,10 +14,10 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <form class="navbar-form navbar-left">
                 <div class="search-box">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text" class="form-control" placeholder="Zoek naar items!">
                     <div class="result"></div>
                 </div>
-                <button type="submit" class="btn btn-danger">Submit</button>
+                <button type="submit" class="btn btn-danger">Zoek!</button>
             </form>
             <ul class="nav navbar-nav pull-right">
 
@@ -32,10 +32,10 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="profile.php">Mijn profiel</a></li>
-                        <li><a href="user_uploads.php">Mijn uploads</a></li>
+                        <li><a href="profile.php">Wijzig je profiel</a></li>
+                        <li><a href="user_uploads.php">Mijn collectie</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="logout.php">Logout</a></li>
+                        <li><a href="logout.php">Uitloggen</a></li>
                     </ul>
                 </div>
 

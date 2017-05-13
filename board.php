@@ -67,7 +67,7 @@ $query->execute();
 
 
   <div class="form-group">
-    
+
     <div id="results"></div>
 
   <form action="" method="post">
@@ -90,30 +90,9 @@ $query->execute();
 
 
 </div>
-<script type="text/javascript">
-  $("#sel1").on("change", function(){
-    function clearpost(){
-      $("#results").val("");
-    }
-
-    var selected = $(this).val();
-    makeAjaxRequest(selected);
-    function makeAjaxRequest(postID){
-      $.ajax({
-        type:"POST",
-        data:{postID},
-        url:"itemOverview.php",
-        datatype: "text/json",
-        success:function(res){
-          $("#results").html("<p>Uw items : " + res + "</p>");
-        }
-      })
-    }
-
-  })
-</script>
 
 <!-- Bootstrap Core JavaScript -->
+<script src="js/script.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
