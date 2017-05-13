@@ -107,21 +107,21 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
     <?php endif; ?>
             </div>
             <div class="col-xs-12 no-padding">
-                <a href="#ex1" rel="modal:open"><button type="button" class="btn btn-danger btn-lg text-center col-md-offset-3 col-md-6" >Maak een bord</button></a>
+                <a href="#ex1" rel="modal:open"><button type="button" class="btn btn-danger btn-lg" style="text-decoration: none;width: 75%;margin-left: 13%;">Maak een bord</button></a>
 
                 <div id="ex1" style="display:none;">
-    <p>Geef een passende naam voor jouw bord:</p>
 
         <form action="" method="post" id="createBoard" enctype="multipart/form-data">
-            <label for="boardTitle">Name</label>
-            <input type="text" name="boardTitle" id="boardTitle">
+            <label for="boardTitle">Geef een passende naam voor jouw bord:</label>
+            <input type="text" class="form-control" name="boardTitle" id="boardTitle">
 
-            <label for="privateSwitch">Private?</label>
             <input id="privateSwitch" name="status" type="checkbox" checked>
+            <label for="privateSwitch" class="checkbox-inline" style="margin-bottom:2%; margin-top:2%;">Private?</label>
+
             <br>
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" class="btn btn-danger btn-lg"/>
         </form>
-        <p><a href="#" rel="modal:close">Close</a> of duw ESC</p>
+        <br><p><a href="#" rel="modal:close">Sluit</a> of duw op ESC</p>
   </div>
 
   <div class="col-lg-12"><br>
@@ -143,7 +143,13 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
                             </button></a>
 
 
-                            <h6> <?php echo $row['private']; ?></h6>
+                            <h6> <?php if($row['private'] == 1){
+                                  echo "Enkel zichtbaar voor jouw";
+                            } else {
+                              echo "Zichtbaar voor iedereen";
+                            }
+
+                            ; ?></h6>
                             <a href="./userprofile.php?user=<?php echo $row['userID']; ?>">
 
                                 <?php echo $row['firstname']; ?></a>
