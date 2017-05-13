@@ -17,17 +17,17 @@
                     <input type="text" class="form-control" placeholder="Search">
                     <div class="result"></div>
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" class="btn btn-danger">Submit</button>
             </form>
             <ul class="nav navbar-nav pull-right">
 
                 <li>
-                    <a href="upload.php"><span class="glyphicon glyphicon-plus-sign inverse" style="font-size: 20px;" aria-hidden="true"></span></a>
+                    <a href="upload.php"><span class="glyphicon glyphicon-plus-sign inverse" style="font-size: 20px;" aria-hidden="true" style="color:#D9534F;"></span></a>
                 </li>
 
 
                 <div class="dropdown pull-right menu-dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         <span class="caret"></span>
                     </button>

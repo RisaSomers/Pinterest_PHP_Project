@@ -49,6 +49,16 @@ html {
       background: #f2f2f2;
   }
 
+span.glyphicon.glyphicon-plus-sign.inverse{
+  color: #D9534F;
+}
+span.glyphicon.glyphicon-user{
+  color: #fefefe;
+}
+button#dropdownMenu1{
+  margin-top: 8px;
+}
+
 body {
   margin: 0;
 }

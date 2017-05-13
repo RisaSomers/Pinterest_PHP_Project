@@ -203,5 +203,6 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
 
 
 </div>
+<?php include("includes/footer.php") ?>
 </body>
 </html>
