@@ -211,7 +211,7 @@ $recentActivities = $activity->GetRecentActivities();
             // via AJAX update naar databank sturen
             $.ajax({
                 method: "POST",
-                url: "AJAX/save_update.php",
+                url: "ajax/save_update.php",
                 data: {update: update, postID: postID} //update: is de naam en update is de waarde (value)
             })
 

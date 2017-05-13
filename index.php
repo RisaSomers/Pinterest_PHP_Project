@@ -334,7 +334,7 @@ $u = new User();
         var val = document.getElementById("result_no").value;
         $.ajax({
             type: 'post',
-            url: 'AJAX/loadMore.php',
+            url: 'ajax/loadMore.php',
             data: {getresult: val},
             success: function (response) {
                 var content = document.getElementById("items");
