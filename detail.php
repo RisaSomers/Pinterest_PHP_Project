@@ -58,16 +58,6 @@ $b = new Board();
 $userID = $_SESSION['id'];
 $boards= $b->loadBoards($userID);
 
-if(isset($_POST['addBoard'])){
-	try{
-		$sB = new Board();
-		$boardID = $_POST['option'];
-		$postID = $id;
-		$sBoard = $sB->savePostToBoard($postID);
-	} catch (Exception $e) {
-			$error = $e->getMessage();
-	}
-}
 
 
 //Eerst bouwen we onze applicatie uit zodat ze werkt, ook zonder JavaScript
@@ -154,7 +144,7 @@ $recentActivities = $activity->GetRecentActivities();
       <a href="delete_post.php?id=<?php echo htmlentities($_GET["id"]); ?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
 	<?php endif; ?>
 
-    <div class="col-lg-3">
+    <div class="col-lg-3" style="width:50%;">
         <h1 id="post" data-id="<?php echo $item['id'] ?>"><?php echo $item['Beschrijving']; ?></h1>
         <p>
             Posted in <?php echo $item["city"]; ?>
@@ -168,21 +158,29 @@ $recentActivities = $activity->GetRecentActivities();
               <img src="uploads/posts/<?php echo $item['Image']; ?>" class="thumbnail" alt="">
 					<?php endif; ?>
         </a>
-				<label for="Boards">Voeg toe aan uw bord(en):</label><br>
 
 
 
-					<form method="post">
-						<div class="btn-group" data-toggle="buttons">
-						<?php foreach($boards as $key) : ?>
 
-								  <label class="btn btn-primary active">
-								    <input type="radio" name="option[]" value="<?php echo $key['boardID']; ?>"> <?php echo $key['boardTitle']; ?>
-								  </label>
-								<?php endforeach ?>
-									<input class="btn btn-danger" type="submit" value="Toevoegen" id="addBoard" name="addBoard">
-									</div>
-					</form>
+										<!--Item toevoegen aan Bord-->
+										<form method="post" action="update.php">
+											<input type="text" name="id" value="<?php echo $id?>" style="visibility:hidden;">
+											<div class="btn-group">
+												<?php foreach($boards as $key) : ?>
+												<label class="btn btn-primary">
+
+													<input type="radio" name="option" value="<?php echo $key['boardID']; ?>">
+
+														<?php echo $key['boardTitle']; ?>
+														</label>
+
+													<?php endforeach ?>
+
+															<br/><br/>
+
+																				<input class="btn btn-danger" type="submit" id="addBoard" name="addBoard" value="Toevoegen">
+																				</div>
+										 </form>
 
 
     </div>

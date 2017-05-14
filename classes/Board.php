@@ -6,7 +6,7 @@ class Board
     private $boardTitle;
     private $privateSwitch;
     private $boardID;
-    private $postid;
+    private $postID;
     private $userID;
 
     public function __construct()
@@ -87,27 +87,49 @@ class Board
             $this->boardTitle = $boardTitle;
         }
     }
+    public function savePostToBoard($postID, $boardID) {
+    try {
+    $sql = "UPDATE board SET postID=:postID WHERE boardID=:boardID";
+    $statement = $this->getConnection()->prepare($sql);
+
+    if (!$statement) {
+    throw new Exception('The SQL statement can not be prepared!');
+    }
+
+    $statement->bindValue(':postID', $postID, PDO::PARAM_STR);
+    $statement->bindValue(':boardID', $boardID, $this->getInputParameterDataType($boardID));
+
+    if (!$statement->execute()) {
+    throw new Exception('The PDO statement can not be executed!');
+    }
+
+    return $statement->rowCount() > 0 ? TRUE : FALSE;
+    } catch (PDOException $pdoException) {
+    echo '<pre>' . print_r($pdoException, true) . '</pre>';
+    exit();
+    } catch (Exception $exception) {
+    echo '<pre>' . print_r($exception, true) . '</pre>';
+    exit();
+    }
+    }
 
     private function getInputParameterDataType($value) {
     $dataType = PDO::PARAM_STR;
     if (is_int($value)) {
-        $dataType = PDO::PARAM_INT;
+    $dataType = PDO::PARAM_INT;
     } elseif (is_bool($value)) {
-        $dataType = PDO::PARAM_BOOL;
+    $dataType = PDO::PARAM_BOOL;
     }
     return $dataType;
-}
-    public function savePostToBoard($postID)
-    {
-$conn = Db::getInstance();
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    }
 
-$statement = $conn->prepare("UPDATE board (postID) SET postID='$postid' WHERE boardID = :boardID;");
-$statement->bindValue(":boardID",$boardID, $this->getInputParameterDataType($boardID));
-$statement->bindValue(":postID", $postid);
-return $statement->execute();
 
+    public function getConnection() {
+    $conn = Db::getInstance();
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    $conn->setAttribute(PDO::ATTR_PERSISTENT, true);
+    return $conn;
     }
 
 

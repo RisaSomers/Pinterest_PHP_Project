@@ -27,15 +27,19 @@ $stmtb = $conn->prepare("SELECT board.boardID, board.userID, board.private, boar
 board INNER JOIN users ON board.userID=users.id");
 $stmtb->execute();
 
-$check = $conn->prepare("SELECT * FROM boards WHERE userID = $userID;");
+$check = $conn->prepare("SELECT * FROM board WHERE userID = $userID;");
 $check->execute();
 $boards = $check->fetch(PDO::FETCH_ASSOC);
 
+$boardID =93;
+$getPosts = $conn->prepare("SELECT DISTINCT board.boardID, board.userID, board.postID, items.Url, items.Image
+FROM board
+JOIN items on postID = items.id
+WHERE board.userID = $userID, board.boardID = $boardID");
+$getPosts->execute();
 
 
-
-
-    if (!empty($_POST)) {
+    if (!empty($_POST['boardTitle'])) {
         try {
             // create prepared statement
             $newBoard = new Board();
@@ -56,7 +60,6 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
             echo $e->getMessage();
         }
     }
-
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -99,8 +102,9 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
 
         <div class="col-lg-12">
                 <h1 class="page-header text-center headersubject">Maak je eigen bord aan!</h1>
-                <?php if (isset($error)):?>
-        <div class="alert alert-danger"><?php echo $error; ?></div>
+
+                <?php if (isset($e)):?>
+        <div class="alert alert-danger"><?php echo $e; ?></div>
     <?php endif; ?>
                 <?php if (isset($feedback)):?>
         <div class="alert alert-success"><?php echo $feedback; ?></div>
@@ -135,6 +139,10 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
                         <div class="col-md-6 col-md-offset-3 results well well-lg">
 
                               <h2> <?php echo $row['boardTitle']; ?></h2>
+
+                                <?php while ($pics = $getPosts->fetch()) : ?>
+                                <img src="uploads/posts/<?php echo $pics['Image'] ?>" alt="">
+                                <?php endwhile ?>
 
 
                               <a href="delete_board.php?id=<?php echo $row['boardID']; ?>">

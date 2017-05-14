@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.5.5-10.1.21-MariaDB)
 # Database: Pinterest_PHP
-# Generation Time: 2017-05-13 23:24:49 +0000
+# Generation Time: 2017-05-14 21:47:20 +0000
 # ************************************************************
 
 
@@ -32,7 +32,8 @@ CREATE TABLE `board` (
   `boardTitle` varchar(999) NOT NULL,
   `postID` int(11) NOT NULL,
   PRIMARY KEY (`boardID`),
-  KEY `userID` (`userID`)
+  KEY `userID` (`userID`),
+  CONSTRAINT `board_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `board` WRITE;
@@ -40,10 +41,44 @@ LOCK TABLES `board` WRITE;
 
 INSERT INTO `board` (`boardID`, `userID`, `private`, `boardTitle`, `postID`)
 VALUES
-	(1,92,0,'Mijn Collectie',0),
-	(3,92,1,'Prive Bord',0);
+	(1,92,0,'Mijn Collectie',36),
+	(3,92,1,'Prive Bord',36),
+	(4,92,1,'Verzameling Design',37),
+	(5,92,1,'Verzameling Games',29),
+	(6,92,1,'Verzameling School',43),
+	(7,92,1,'Verzameling Cadeautjes',29),
+	(12,92,1,'Mijn Verzameling',35);
 
 /*!40000 ALTER TABLE `board` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table boardPost
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `boardPost`;
+
+CREATE TABLE `boardPost` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL,
+  `postID` int(11) DEFAULT NULL,
+  `boardID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userID` (`userID`),
+  KEY `postID` (`postID`),
+  KEY `boardID` (`boardID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `boardPost` WRITE;
+/*!40000 ALTER TABLE `boardPost` DISABLE KEYS */;
+
+INSERT INTO `boardPost` (`id`, `userID`, `postID`, `boardID`)
+VALUES
+	(1,92,61,1),
+	(2,92,62,1),
+	(5,92,60,1);
+
+/*!40000 ALTER TABLE `boardPost` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -100,7 +135,8 @@ VALUES
 	(33,42,59,'jhshlfjldshjhldfs'),
 	(34,42,59,'hjkdhjdhjd'),
 	(35,42,59,'dsdlkjdjkl'),
-	(36,42,62,'kljjkdfsklj');
+	(36,42,62,'kljjkdfsklj'),
+	(37,92,62,'Nice!');
 
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -151,7 +187,8 @@ LOCK TABLES `followlist` WRITE;
 
 INSERT INTO `followlist` (`id`, `user_id_a`, `user_id_b`)
 VALUES
-	(1,92,89);
+	(1,92,89),
+	(2,92,85);
 
 /*!40000 ALTER TABLE `followlist` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -378,7 +415,7 @@ VALUES
 	(89,'karel','schoeter','schoeter.karel@hotmail.com','','$2y$12$IhMg6SoM9TB/4q5fChAX1OmhTFceS085kanSu2y1Pn2ptrtbBEaju'),
 	(90,'Bryan','Verlinden','bryan.verlinden@gmail.com','','$2y$12$/qTPzcUIePNVgUxrvvHIxeacYwH5VPb..bO5kXgaoffgdXjD0eZCW'),
 	(91,'Joske','vermeulen','joske@gmail.com','','$2y$12$csRP0Gmpwiy6eIYZdaOtKuOWkMDn8yA6Q3x/NmjHC.krAb2EAQQU2'),
-	(92,'Kevin','Boone','kevin.boone@me.com','uploads/users/default/avatar.png','$2y$12$xwvk1B33O.pN/KRnrBmMQ.eopE42HO5hMlVmU1adH5PBq2zecwjtK');
+	(92,'Kevin','Boone','hello@moyadesign.be','uploads/082efff54db191a2340e421da649c7c8.jpg','$2y$12$xwvk1B33O.pN/KRnrBmMQ.eopE42HO5hMlVmU1adH5PBq2zecwjtK');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
