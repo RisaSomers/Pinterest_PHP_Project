@@ -31,25 +31,31 @@ session_start();
 <?php include("includes/header.php") ?>
 
     <style>
+        
+        .flex-item{
+            flex-grow: 1;     
+        }
 
         .vierkant{
-            background-color: cadetblue;
+            background-color: #D9534F;
             text-align: center;
-            border-radius: 5%;
-            margin: 20%;
-            margin-top: 15%;
+            border-radius: 1%;
+            margin: 5%;
+            margin-top: 5%;
             padding-top: 5%;
+            
         }
         
         ul{
             text-decoration: none;
             list-style-type: none;
+           
             
         }
         
         a{
             text-decoration: none;
-            color: white;
+            color: #D9534F;
         }
         
         img{
@@ -58,16 +64,43 @@ session_start();
         }
         
         .flex-container{
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            display: flex;
-            justify-content: space-around;
+        display: flex;
         }
         
-        .flex-item{
-            
-        }
+        
+        @import url(http://fonts.googleapis.com/css?family=Gudea);
+
+body {
+  font-family: 'Gudea', Helvetica, sans-serif;
+  margin: 0;
+  paddong: 0;
+  color: #333;
+}
+
+*, *:before, *:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.main {
+  padding: 2em;
+  margin: 0 auto;
+  width: 100%;
+  min-width: 460px;
+  max-width: 700px;
+}
+
+h1 {
+  text-align: center;
+  margin: 0 0 1.2em 0;
+  line-height: 150%;
+    color: white;
+}
+
+
+
+
 
     </style>
 
@@ -76,22 +109,26 @@ session_start();
 <?php include("includes/menu.php"); ?>
 
 <body>
+ 
+
 
  <div class="vierkant">
 
  <div class="tekst">
 
-     <h1>Like 5 topics</h1>
-     <h2>Then we'll build a custom home feed for you</h2>
+     <h1>Like 5 posts zodat we jouw inspiratie kunnen opbouwen!</h1>
+     
 
  </div>
+ 
+    </div>
 
-  <div class="search">
-    <input type="search" id="filter" placeholder='Search' />
-  </div>
+
   <form action="" method="post">
 <article class='content'>
   <div id='slats'>
+  
+  <div class="main">
 
 <ul class="flex-cntainer">
 	<?php foreach ($topics as $row) :?>
@@ -101,6 +138,8 @@ session_start();
 			<li class="flex-item"><img src="<?php echo $row['image'] ?>" alt=""></li>
 			
 			<li class="flex-item"><div class='photo'><input class="check" type="checkbox" name="topic[]" value=<?php echo $row['id'] ?>></div></li>
+			
+			<br>
 
 			<li class="flex-item"><p class='topicname'><?php echo $row['name'] ?></p></li>
 			
@@ -112,13 +151,25 @@ session_start();
       </ul>
 
       <button>Get started</button>
+      
+    </div>
 
   </div>
+  
+  
 </article>
 
      </form>
 
+    
+    
     </div>
+
+
+</div>
+   
+
+    
 
 </body>
 </html>

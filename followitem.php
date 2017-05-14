@@ -201,23 +201,25 @@ $followFeed = $follower->getFollowFeed();
                                   <div class="col-md-4">
 
 
-                                      <h2><?php print $key['Beschrijving'] ?></h2>
-                                      <a href="userprofile.php?user=<?php print $u->getAllUserSpecific($key['user_id'])['id'] ?>"><?php print $u->getFirstnameUserO($key['user_id'])['0']['firstname'] ?></a>
-                                      <a href="detail.php?id=<?php print $key['id'] ?>">
+                                      <h2><?php echo $key['Beschrijving'] ?></h2>
+                                      <a href="userprofile.php?user=<?php echo $u->getAllUserSpecific($key['user_id'])['id'] ?>"><?php echo $u->getFirstnameUserO($key['user_id'])['0']['firstname'] ?></a>
+                                      <a href="detail.php?id=<?php echo $key['id'] ?>">
 
 
                                           <div class="post_img">
                                             <?php if (!empty($key['Url'])): ?>
-                                                <img src="<?php print $key['Url'] ?>" alt="<?php print $key['id'] ?>">
+                                                <img src="<?php echo $key['Url'] ?>" alt="<?php echo $key['id'] ?>">
                                             <?php else: ?>
-                                                <img src="uploads/posts/<?php print $key['Image'] ?>"
-                                                     alt="<?php print $key['id'] ?>">
+                                                <img src="uploads/posts/<?php echo $key['Image'] ?>"
+                                                     alt="<?php echo $key['id'] ?>">
                                             <?php endif; ?>
                                           </div>
                                       </a>
+                                               
+                                      
                                      
                                       <br>
-                                      <span class="time_elapsed"><?php print time_elapsed_string('@' . $key["uploaded"]); ?></span>
+                                      <span class="time_elapsed"><?php echo time_elapsed_string('@' . $key["uploaded"]); ?></span>
 
                                   </div>
                                   <?php endforeach; ?>
