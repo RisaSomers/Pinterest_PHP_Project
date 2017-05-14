@@ -53,6 +53,23 @@ if (!(bool)$item['status']) {
 	die();
 }
 
+//Add Board
+$b = new Board();
+$userID = $_SESSION['id'];
+$boards= $b->loadBoards($userID);
+
+if(isset($_POST['addBoard'])){
+	try{
+		$sB = new Board();
+		$boardID = $_POST['option'];
+		$postID = $id;
+		$sBoard = $sB->savePostToBoard($postID);
+	} catch (Exception $e) {
+			$error = $e->getMessage();
+	}
+}
+
+
 //Eerst bouwen we onze applicatie uit zodat ze werkt, ook zonder JavaScript
 $activity = new Activity();
 
@@ -137,7 +154,7 @@ $recentActivities = $activity->GetRecentActivities();
       <a href="delete_post.php?id=<?php echo htmlentities($_GET["id"]); ?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
 	<?php endif; ?>
 
-    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+    <div class="col-lg-3">
         <h1 id="post" data-id="<?php echo $item['id'] ?>"><?php echo $item['Beschrijving']; ?></h1>
         <p>
             Posted in <?php echo $item["city"]; ?>
@@ -151,8 +168,25 @@ $recentActivities = $activity->GetRecentActivities();
               <img src="uploads/posts/<?php echo $item['Image']; ?>" class="thumbnail" alt="">
 					<?php endif; ?>
         </a>
+				<label for="Boards">Voeg toe aan uw bord(en):</label><br>
+
+
+
+					<form method="post">
+						<div class="btn-group" data-toggle="buttons">
+						<?php foreach($boards as $key) : ?>
+
+								  <label class="btn btn-primary active">
+								    <input type="radio" name="option[]" value="<?php echo $key['boardID']; ?>"> <?php echo $key['boardTitle']; ?>
+								  </label>
+								<?php endforeach ?>
+									<input class="btn btn-danger" type="submit" value="Toevoegen" id="addBoard" name="addBoard">
+									</div>
+					</form>
+
+
     </div>
-</div>
+	</div>
 
 <div class="errors"></div>
 <form method="post" action="">
@@ -163,23 +197,23 @@ $recentActivities = $activity->GetRecentActivities();
 
         <ul id="listupdates">
 
-									
+
        <?php $comment = new Activity();
-            $comments = $comment->Comments(); 
-            
-            
+            $comments = $comment->Comments();
+
+
         foreach($comments as $c):?>
-       
+
     </li>
-    
+
     <img id='avatar' src=' <?php echo $c["avatar"] ?> ' </img>
     <a href="userprofile.php?user=<?php  echo $c['id_user']?>"><?php echo $c['firstname']?></a>
     <p><?php echo $c['comments']?></p>
-    
-    <li>  
-            
-            
-        <?php endforeach; ?>    
+
+    <li>
+
+
+        <?php endforeach; ?>
         </ul>
 
     </div>

@@ -144,9 +144,9 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
 
 
                             <h6> <?php if($row['private'] == 1){
-                                  echo "Enkel zichtbaar voor jouw";
+                                  echo "Prive: Enkel zichtbaar voor jouw";
                             } else {
-                              echo "Zichtbaar voor iedereen";
+                              echo "Openbaar: Zichtbaar voor je volgers";
                             }
 
                             ; ?></h6>

@@ -40,7 +40,7 @@ $("#sel1").on("change", function(){
       type:"POST",
       data:{postID},
       url:"itemOverview.php",
-      datatype: "text/json",
+      datatype: "application/json",
       success:function(res){
         $("#results").html("<p>Uw items : " + res + "</p>");
       }

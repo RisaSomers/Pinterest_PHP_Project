@@ -75,7 +75,8 @@ class Board
  board INNER JOIN users ON board.userID=users.id WHERE board.userID = :userID;");
             $statementBoards->bindValue(':userID', $userID);
             $statementBoards->execute();
-            return $statementBoards;
+            $boards = $statementBoards->fetchAll(PDO::FETCH_ASSOC);
+            return $boards;
         }
 
     public function setBoardTitle($boardTitle)
@@ -86,13 +87,29 @@ class Board
             $this->boardTitle = $boardTitle;
         }
     }
+
+    private function getInputParameterDataType($value) {
+    $dataType = PDO::PARAM_STR;
+    if (is_int($value)) {
+        $dataType = PDO::PARAM_INT;
+    } elseif (is_bool($value)) {
+        $dataType = PDO::PARAM_BOOL;
+    }
+    return $dataType;
+}
     public function savePostToBoard($postID)
     {
-$conn = db::getInstance();
-$statement = $conn->prepare("INSERT INTO postboard (boardID, postID) VALUES (:boardID, :postID);");
-$statement->bindValue(":boardID", $this->boardID);
+$conn = Db::getInstance();
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+$statement = $conn->prepare("UPDATE board (postID) SET postID='$postid' WHERE boardID = :boardID;");
+$statement->bindValue(":boardID",$boardID, $this->getInputParameterDataType($boardID));
 $statement->bindValue(":postID", $postid);
 return $statement->execute();
 
     }
+
+
+
 }

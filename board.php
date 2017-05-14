@@ -28,7 +28,6 @@ $query->execute();
 
 
 
-
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -50,7 +49,9 @@ $query->execute();
 <div id="container-fluid">
   <nav aria-label="...">
   <ul class="pager">
-    <li class="previous"><a href="user_uploads.php"><span aria-hidden="true">&larr;</span> Terug naar je overzicht</a></li>
+    <a href="user_uploads.php"><button type="button" class="btn btn-danger btn-lg">
+  <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Terug naar uw overzicht
+</button></a>
   </ul>
 </nav>
     <?php while( $row = $stmtb->fetch()) : ?>
@@ -83,7 +84,6 @@ $query->execute();
 
       </select><br>
 
-      <button type="button" class="btn btn-success" name="submit">Toevoegen aan board</button>
 </form>
 
 </div>
