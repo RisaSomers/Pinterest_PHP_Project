@@ -275,7 +275,7 @@ class User
     public function getFollowFeed(){
         $conn = Db::getInstance();
         
-        $statement = $conn->prepare("SELECT i.* FROM items i INNER JOIN followlist f ON i.user_id = f.followerid WHERE f.userid = :userid");
+        $statement = $conn->prepare("SELECT i.* FROM items i INNER JOIN followlist f ON i.user_id = f.user_id_b WHERE f.user_id_a = :userid");
         $statement->bindValue(":userid", $_SESSION["id"]);
         $statement->execute();
         $followPost = $statement->fetchAll(PDO::FETCH_ASSOC);

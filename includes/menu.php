@@ -34,6 +34,7 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="profile.php">Wijzig je profiel</a></li>
                         <li><a href="user_uploads.php">Mijn collectie</a></li>
+                        <li><a href="followitem.php">Vriendencollectie</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="logout.php">Uitloggen</a></li>
                     </ul>
