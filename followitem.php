@@ -70,6 +70,9 @@ $feed = $t->getUserPosts();
 
 $u = new User();
 
+$follower = new User();
+
+$followFeed = $follower->getFollowFeed();
 
 
 ?><!DOCTYPE html>
@@ -176,31 +179,49 @@ $u = new User();
             <h1 class="page-header">Followers feed</h1>
 
 
-					<?php
-					$follower = new User();
-					$followFeed = $follower->getFollowFeed();
-                    
-					?>
+					
 
 
-					<?php foreach ($followFeed as $key) {
+					<?php foreach ($followFeed as $key): ?>
 
-						echo "<h2>" . $key['Beschrijving'] . "</h2>  
-                        
-                           <a href='detail.php?id=" . $key['id'] . "'>
-                           
-                               <div class='post_img'>
-                                   ";
-						if (!empty($key['Url'])) {
-							echo "<img src='" . $key['Url'] . "' alt='" . $key['id'] . "'>";
-						} else {
-							echo "<img src='uploads/posts/" . $key['Image'] . "' alt='" . $key['id'] . "'>";
-						}
-						echo "
-                               </div>
-                           </a>";
-                               }
-					?>
+						<?php 
+                                
+                               $followerid = new Item();
+                                $likes = new Item();
+                                $dislikes = new Item();
+                                
+                            
+                               
+                                $followerid->setId($key["id"]);
+                                $likes->getLike();
+                                $dislikes->getDislike(); 
+                                
+                                ?>
+
+                                  <div class="col-md-4">
+
+
+                                      <h2><?php print $key['Beschrijving'] ?></h2>
+                                      <a href="userprofile.php?user=<?php print $u->getAllUserSpecific($key['user_id'])['id'] ?>"><?php print $u->getFirstnameUserO($key['user_id'])['0']['firstname'] ?></a>
+                                      <a href="detail.php?id=<?php print $key['id'] ?>">
+
+
+                                          <div class="post_img">
+                                            <?php if (!empty($key['Url'])): ?>
+                                                <img src="<?php print $key['Url'] ?>" alt="<?php print $key['id'] ?>">
+                                            <?php else: ?>
+                                                <img src="uploads/posts/<?php print $key['Image'] ?>"
+                                                     alt="<?php print $key['id'] ?>">
+                                            <?php endif; ?>
+                                          </div>
+                                      </a>
+                                     
+                                      <br>
+                                      <span class="time_elapsed"><?php print time_elapsed_string('@' . $key["uploaded"]); ?></span>
+
+                                  </div>
+                                  <?php endforeach; ?>
+
 					
 					                            </div>
                         </div>
