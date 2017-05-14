@@ -11,10 +11,8 @@ session_start();
         header('Location: login.php');
     }
 
-        $conn= Db::getInstance();
-        $sth = $conn->prepare("SELECT * FROM Topics;");
-
-        $sth->execute();
+        $ts = new Topic();
+        $topics = $ts->getAllTopics();
 
 
         if (!empty($_POST)) {
@@ -96,7 +94,7 @@ session_start();
   <div id='slats'>
 
 <ul class="flex-cntainer">
-	<?php while ($row = $sth->fetch()):?>
+	<?php foreach ($topics as $row) :?>
     <li class="flex-item"><a href='topics.php?Name=<?php echo $row['id'] ?>'></li>
 			<div class='topics'>
 			
@@ -109,7 +107,7 @@ session_start();
 			</div>
 			</a>
 
-	<?php endwhile; ?>
+	<?php endforeach; ?>
       
       </ul>
 

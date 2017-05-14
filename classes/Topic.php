@@ -53,6 +53,16 @@ class Topic
         return $stateAllTopics;
     }
     
+    public function getAllTopics()
+    {
+        $conn = Db::getInstance();
+        
+        $stateAllTopics = $conn->prepare("SELECT * FROM Topics");
+        $stateAllTopics->execute();
+        return $stateAllTopics->fetchAll();
+    }
+    
+    
     public function updateSubscriptions($subscriptions)
     {
         $conn = Db::getInstance();
