@@ -25,7 +25,7 @@ $userID = $_SESSION['id'];
 
 
 $stmtb = $conn->prepare("SELECT board.boardID, board.userID, board.private, board.boardTitle, users.firstname, users.lastname FROM
-board INNER JOIN users ON board.userID=users.id");
+board INNER JOIN users ON board.userID=users.id WHERE board.userID = $userID");
 $stmtb->execute();
 
 $check = $conn->prepare("SELECT * FROM board WHERE userID = $userID;");

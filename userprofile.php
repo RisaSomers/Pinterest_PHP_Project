@@ -27,6 +27,17 @@ $res = $statement->fetchAll(PDO::FETCH_ASSOC);
 $t = new Topic();
 $feed = $t->getUserPosts();
 
+$userContent = $conn->prepare("SELECT * FROM followlist
+JOIN users
+on user_id_b = users.id
+JOIN board on user_id_a = board.userID
+WHERE user_id_a = $userid
+AND board.private = 0");
+$userContent->execute();
+$c = $userContent->fetchAll(PDO::FETCH_ASSOC);
+
+
+
 
 
 
@@ -52,7 +63,7 @@ if(!empty($_POST) && $userid != $_SESSION['id']){
         $statement->execute();
         $state = "unfollow";
     }
-    
+
     else{
         $statement = $conn->prepare("INSERT INTO followlist (user_id_a, user_id_b) VALUES (:userid, :followerid)");
         $statement->bindValue(":userid", $_SESSION["id"]);
@@ -60,7 +71,7 @@ if(!empty($_POST) && $userid != $_SESSION['id']){
         $statement->execute();
         $state = "follow";
     }
-    
+
     header('Refresh:0');
 }
 
@@ -93,54 +104,61 @@ if(!empty($_POST) && $userid != $_SESSION['id']){
 
     <div class="row">
 
-        <div class="col-lg-12">
+        <div class="col-lg-12 text-center">
             <h1 class="page-header"><?php echo $user->getFirstnameUserO($userid)["0"]["firstname"] . "'s profile"; ?></h1>
 
-       
-     
-       
-       
-       
-       
-       
-       
+
+            <img src="<?php echo $user->getAllUserSpecific($userid)["avatar"]  ?>" alt="" class="img-circle img-thumbnail" style="width:200px; margin-bottom:5%;">
+
+            <pre> <h3><?php echo $user->getFirstnameUserO($userid)["0"]["firstname"] . "'s boards"; ?></h3>
+
+                <a href="board.php?id=<?php echo $c["0"]['boardID'] ?>"><h4> <small><?php echo $c["0"]['boardTitle'] ?></small></h4></a>
+
+        </pre>
+
+
+
+
        <form id="follow" class="<?php echo $guest?>" action="" method="post">
-        <input value="<?php echo $userid ?>" name="follower" type="hidden">  
-        <button class="<?php echo $state;?>" type="submit" ><?php echo $state; ?></button> 
-        
-        
-                    
+        <input value="<?php echo $userid ?>" name="follower" type="hidden">
+        <button class="<?php echo $state;?>" type="submit" ><?php echo $state; ?></button>
+
+
+
        </form>
-       
 
 
 
 
 
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
 
         <form action="" method="post">
 
             <div class="wrapper">
+                <div class="container-fluid" >
+                    <h1 class="page-header"><?php echo $user->getFirstnameUserO($userid)["0"]["firstname"] . "'s items"; ?></h1>
+                </div>
                 <ul id="results">
 
 
-                    <div class="container" style="margin:35px auto;"> 
+                    <div class="container" style="margin:35px auto;">
                         <div class="row">
                             <div class="col-md-6 col-md-offset-3 results">
-                                
-                                
+
+
 
                                 <?php
 
@@ -149,9 +167,9 @@ if(!empty($_POST) && $userid != $_SESSION['id']){
                                     $pp->setId($row["id"]);
                                     $likes = $pp->getLike();
                                     $dislikes = $pp->getDislike();
-                                    echo "<h2>" . $row['Beschrijving'] . "</h2>  
+                                    echo "<h2>" . $row['Beschrijving'] . "</h2>
                            <a href='detail.php?id=" . $row['id'] . "'>
-                           
+
                                <div class='post_img'>
                                    ";
                                     if (!empty($row['Url'])) {
@@ -180,8 +198,8 @@ if(!empty($_POST) && $userid != $_SESSION['id']){
 
 
 <script src="js/jquery.js"></script>
-    
-    
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
 <!--<script src="js/addFriend.js"></script>-->
 
