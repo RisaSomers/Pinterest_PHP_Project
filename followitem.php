@@ -1,39 +1,39 @@
 <?php
 
 spl_autoload_register(function ($class) {
-	include_once("classes/" . $class . ".php");
+    include_once("classes/" . $class . ".php");
 });
 
 function time_elapsed_string($datetime, $full = false)
 {
-	$now = new DateTime;
-	$ago = new DateTime($datetime);
-	$diff = $now->diff($ago);
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
 
-	$diff->w = floor($diff->d / 7);
-	$diff->d -= $diff->w * 7;
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
 
-	$string = array(
-		'y' => 'year',
-		'm' => 'month',
-		'w' => 'week',
-		'd' => 'day',
-		'h' => 'hour',
-		'i' => 'minute',
-		's' => 'second',
-	);
-	foreach ($string as $k => &$v) {
-		if ($diff->$k) {
-			$v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
-		} else {
-			unset($string[$k]);
-		}
-	}
+    $string = array(
+        'y' => 'year',
+        'm' => 'month',
+        'w' => 'week',
+        'd' => 'day',
+        'h' => 'hour',
+        'i' => 'minute',
+        's' => 'second',
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
 
-	if (!$full) {
-		$string = array_slice($string, 0, 1);
-	}
-	return $string ? implode(', ', $string) . ' ago' : 'just now';
+    if (!$full) {
+        $string = array_slice($string, 0, 1);
+    }
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
 
@@ -43,23 +43,23 @@ session_start();
 
 if (!empty($_SESSION['email'])) {
 } else {
-	header('Location: login.php');
+    header('Location: login.php');
 }
 
 $conn = Db::getInstance();
 
 if (!empty($_GET["filter"])) {
-	switch ($_GET["filter"]) {
-		case "mostlikes":
+    switch ($_GET["filter"]) {
+        case "mostlikes":
             $items = Filter::mostLikes();
-			break;
-		case "mostdislikes":
+            break;
+        case "mostdislikes":
             $items = Filter::mostDislikes();
-			break;
-		default:
+            break;
+        default:
             $items = Filter::getDefault();
-			break;
-	}
+            break;
+    }
 } else {
     $items = Filter::getDefault();
 }
@@ -153,13 +153,13 @@ $followFeed = $follower->getFollowFeed();
                 </div>
             </div>
 
-            <?php if(!empty($_GET["success"])): ?>
+            <?php if (!empty($_GET["success"])): ?>
                 <div class="success" style="float:right;font-weight: bold;">
                     <?php echo htmlspecialchars($_GET["success"]); ?>
                 </div>
             <?php endif; ?>
 
-            <?php if(!empty($_GET["error"])): ?>
+            <?php if (!empty($_GET["error"])): ?>
                 <div class="error" style="float:right;font-weight: bold;">
                     <?php echo htmlspecialchars($_GET["error"]); ?>
                 </div>
@@ -194,7 +194,7 @@ $followFeed = $follower->getFollowFeed();
                                
                                 $followerid->setId($key["id"]);
                                 $likes->getLike();
-                                $dislikes->getDislike(); 
+                                $dislikes->getDislike();
                                 
                                 ?>
 
@@ -251,7 +251,7 @@ $followFeed = $follower->getFollowFeed();
 
 <hr>
 
-<?php include_once ('includes/footer.php') ?>
+<?php include_once('includes/footer.php') ?>
 
 </div>
 <!-- /.container -->

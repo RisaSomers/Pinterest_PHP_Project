@@ -79,7 +79,7 @@ $query->execute();
   </div>
 
 <div class="container-fluid well well-lg">
-  <?php while( $row = $stmtb->fetch()) : ?>
+  <?php while ($row = $stmtb->fetch()) : ?>
 
   <h1 class="page-header">Items toevoegen aan board: <?php echo $row['boardTitle']; ?></h1>
 
@@ -95,8 +95,8 @@ $query->execute();
       <select class="form-control" id="sel1"multiple>
 
         <?php
-            while ($q = $query->fetch()){
-              echo '<option value="' . $q['id'] . '">' . $q['Beschrijving'] . '</option>';
+            while ($q = $query->fetch()) {
+                echo '<option value="' . $q['id'] . '">' . $q['Beschrijving'] . '</option>';
             }
         ?>
 

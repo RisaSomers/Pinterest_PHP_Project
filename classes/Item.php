@@ -19,7 +19,8 @@ class Item
         $this->id = $id;
     }
 
-    public function setCity($city) {
+    public function setCity($city)
+    {
         $this->city = $city;
     }
 
@@ -54,18 +55,19 @@ class Item
 
         $extension = pathinfo($image["name"], PATHINFO_EXTENSION);
 
-        if ($extension != "jpg" && $extension != "png" && $extension != "jpeg" && $extension != "gif")
+        if ($extension != "jpg" && $extension != "png" && $extension != "jpeg" && $extension != "gif") {
             throw new Exception("Upload a JPG, JPEG, PNG or GIF file");
+        }
 
-        if ($image["size"] > 3000000)
+        if ($image["size"] > 3000000) {
             throw new Exception("Your file is to big, maximum 3MB");
+        }
 
         if (move_uploaded_file($image["tmp_name"], "uploads/posts/" . $filename)) {
             $this->image = $filename;
         } else {
             throw new Exception("File could not be uploaded");
         }
-
     }
 
     /**
@@ -186,16 +188,18 @@ class Item
         }
     }
 
-    public function getById($id) {
-      $conn = Db::getInstance();
-      $details = $conn->prepare("SELECT * FROM items WHERE id = :id");
-      $details->bindValue(':id', $id);
-      $details->execute();
-      $item = $details->fetch(PDO::FETCH_ASSOC);
-      return $item;
+    public function getById($id)
+    {
+        $conn = Db::getInstance();
+        $details = $conn->prepare("SELECT * FROM items WHERE id = :id");
+        $details->bindValue(':id', $id);
+        $details->execute();
+        $item = $details->fetch(PDO::FETCH_ASSOC);
+        return $item;
     }
 
-    public function makeInappropriate($item_id) {
+    public function makeInappropriate($item_id)
+    {
         $id = $_SESSION['id'];
 
         $pdo = Db::getInstance();
@@ -222,7 +226,8 @@ class Item
 
     /* Deel feature 10 */
 
-    private function addInappropriatePoint($item_id) {
+    private function addInappropriatePoint($item_id)
+    {
         $pdo = Db::getInstance();
 
         $stmt = $pdo->prepare("UPDATE items SET points = points + 1 WHERE id = :item_id");
@@ -241,7 +246,8 @@ class Item
         return $ret;
     }
 
-    private function disableItem($item_id) {
+    private function disableItem($item_id)
+    {
         $pdo = Db::getInstance();
 
         $stmt = $pdo->prepare("UPDATE items SET status = false WHERE id = :item_id");
@@ -251,7 +257,8 @@ class Item
 
     /* end feature 10*/
     
-    public function getSpecificPost($id){
+    public function getSpecificPost($id)
+    {
         $pdo = Db::getInstance();
         $stmt = $pdo->prepare("SELECT * FROM items WHERE(user_id = :id)");
         $stmt->bindValue(":id", $id);

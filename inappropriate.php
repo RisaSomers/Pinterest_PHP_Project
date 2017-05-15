@@ -1,7 +1,7 @@
 <?php
 
 spl_autoload_register(function ($class) { //zoekt alle classes die je nodig heeft autoload
-	include_once("classes/" . $class . ".php");
+    include_once("classes/" . $class . ".php");
 });
 
 session_start();

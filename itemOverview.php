@@ -21,8 +21,8 @@ $result = $sql->execute();
 
 
 print "<table>";
-while($row = $sql->fetch()){
- print '<tr>
+while ($row = $sql->fetch()) {
+    print '<tr>
        <td class="well well-lg">
        <form action="" method="post">
        <h4 style="margin-left:5%;">'.$row['Beschrijving'].'</h4>

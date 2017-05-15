@@ -47,24 +47,20 @@ $statement->bindValue(":follower", $userid);
 $statement->execute();
 $status = $statement->fetch(PDO::FETCH_ASSOC);
 
-if(!empty($status)){
+if (!empty($status)) {
     $state = "unfollow";
-}
-
-else{
+} else {
     $state = "follow";
 }
 
-if(!empty($_POST) && $userid != $_SESSION['id']){
-    if(!empty($status)){
+if (!empty($_POST) && $userid != $_SESSION['id']) {
+    if (!empty($status)) {
         $statement = $conn->prepare("DELETE FROM followlist where user_id_a = :userid AND user_id_b = :followerid");
         $statement->bindValue(":userid", $_SESSION["id"]);
         $statement->bindValue(":followerid", $userid);
         $statement->execute();
         $state = "unfollow";
-    }
-
-    else{
+    } else {
         $statement = $conn->prepare("INSERT INTO followlist (user_id_a, user_id_b) VALUES (:userid, :followerid)");
         $statement->bindValue(":userid", $_SESSION["id"]);
         $statement->bindValue(":followerid", $userid);
@@ -112,7 +108,19 @@ if(!empty($_POST) && $userid != $_SESSION['id']){
 
             <pre> <h3><?php echo $user->getFirstnameUserO($userid)["0"]["firstname"] . "'s boards"; ?></h3>
 
-                <a href="board.php?id=<?php echo $c["0"]['boardID'] ?>"><h4> <small><?php echo $c["0"]['boardTitle'] ?></small></h4></a>
+<?php if(isset($c["0"]['boardTitle'])){
+$link= $c["0"]['boardID'];
+
+    echo "<a href='board.php?id=" . $link . "'>";
+    echo $c["0"]['boardTitle'];
+    echo "</a>";
+
+
+} else {
+  echo "<p>
+  Geen Publieke borden
+  </p>";
+}?>
 
         </pre>
 

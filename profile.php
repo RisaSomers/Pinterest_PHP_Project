@@ -1,7 +1,7 @@
 <?php
 
 spl_autoload_register(function ($class) {
-	include_once("classes/" . $class . ".php");
+    include_once("classes/" . $class . ".php");
 });
 
 session_start();
@@ -10,34 +10,33 @@ $user = new User();
 $user = $user->getAllUserSpecific($_SESSION['id']);
 
 if (isset($_FILES['avatar'])) {
-	if (!empty($_POST)) {
-		$upload = new User();
-		$ret = $upload->upload($_FILES);
-		if ($ret === true) {
-			$feedback_image = [
+    if (!empty($_POST)) {
+        $upload = new User();
+        $ret = $upload->upload($_FILES);
+        if ($ret === true) {
+            $feedback_image = [
               'success' => true,
               'value' => "Your avatar was uploaded!"
             ];
-		} else {
+        } else {
             $feedback_image = [
                 'success' => false,
                 'value' => $ret
             ];
-		}
-	}
+        }
+    }
 }
 
 if (!empty($_POST['email'])) {
+    $update = new User();
+    $return = $update->updateEmail($_POST['email']);
 
-	$update = new User();
-	$return = $update->updateEmail($_POST['email']);
-
-	if ($return === true) {
-      $feedback_profile['success'] = true;
-      $feedback_profile['value'] = "Het e-mailadres is opgeslagen!";
+    if ($return === true) {
+        $feedback_profile['success'] = true;
+        $feedback_profile['value'] = "Het e-mailadres is opgeslagen!";
     } else {
-      $feedback_profile['success'] = false;
-      $feedback_profile['value'] = $return;
+        $feedback_profile['success'] = false;
+        $feedback_profile['value'] = $return;
     }
 }
 
@@ -46,16 +45,16 @@ if (!empty($_POST['password']) && !empty($_POST['pass_new']) && !empty($_POST['p
         $updateUser = new User();
         $ret = $updateUser->updatePass($_POST['password'], $_POST['pass_new'], $_POST['pass_new_rep']);
         if ($ret === true) {
-          $feedback_profile['success'] = true;
-          $feedback_profile['value'] = 'De wijzigingen zijn doorgevoerd!';
+            $feedback_profile['success'] = true;
+            $feedback_profile['value'] = 'De wijzigingen zijn doorgevoerd!';
         } else {
-          $feedback_profile['success'] = false;
-          $feedback_profile['value'] = 'Er ging iets mis';
+            $feedback_profile['success'] = false;
+            $feedback_profile['value'] = 'Er ging iets mis';
         }
     } catch (Exception $e) {
         $feedback_profile['success'] = false;
         $feedback_profile['value'] = $e->getMessage();
-  }
+    }
 }
 
 

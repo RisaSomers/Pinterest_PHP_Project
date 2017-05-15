@@ -115,7 +115,7 @@ class WebsiteParser
      * @param string $url Target Url to parse
      * @param string $link_type Link type to grab
      */
-    function __construct($url, $link_type = 'all')
+    public function __construct($url, $link_type = 'all')
     {
         $this->_isCurl();
 
@@ -141,8 +141,9 @@ class WebsiteParser
      */
     public function getContent($grab = false)
     {
-        if ($grab)
+        if ($grab) {
             $this->grabContent();
+        }
 
         return $this->content;
     }
@@ -154,11 +155,11 @@ class WebsiteParser
      */
     public function getImageSources($grab = false)
     {
-        if ($grab)
+        if ($grab) {
             $this->grabContent();
+        }
 
         if (!is_null($this->content)) {
-
             preg_match_all($this->img_expression, $this->content, $match_images);
 
             if (isset($match_images[2]) && count($match_images[2])) {
@@ -166,9 +167,9 @@ class WebsiteParser
                     $match_image = trim($match_image);
 
                     if ($match_image) {
-
-                        if (!preg_match($this->full_link_pattern, $match_image, $match))
+                        if (!preg_match($this->full_link_pattern, $match_image, $match)) {
                             $match_image = $this->sanitizeUrl($match_image);
+                        }
 
                         $this->image_sources[] = $match_image;
                     }
@@ -179,7 +180,6 @@ class WebsiteParser
         $this->image_sources = array_values(array_unique(array_filter($this->image_sources)));
 
         return $this->image_sources;
-
     }
 
     /**
@@ -191,14 +191,13 @@ class WebsiteParser
     {
         $title = '';
 
-        if ($grab)
+        if ($grab) {
             $this->grabContent();
+        }
 
         if (!is_null($this->content)) {
-
             preg_match($this->title_expression, $this->content, $match_title);
             $title = empty($match_title[1]) ? '' : $match_title[1];
-
         }
 
         return $title;
@@ -213,16 +212,15 @@ class WebsiteParser
     {
         $metatags = array();
 
-        if ($grab)
+        if ($grab) {
             $this->grabContent();
+        }
 
         if (!is_null($this->content)) {
-
             preg_match_all($this->metatags_expression, $this->content, $match_tags);
 
             if (isset($match_tags[2]) && count($match_tags[2])) {
                 foreach ($match_tags[2] as $key => $match_tag) {
-
                     $key = trim($match_tags[1][$key]);
                     $match_tag = trim($match_tag);
 
@@ -287,7 +285,6 @@ class WebsiteParser
      */
     private function grabContent()
     {
-
         try {
             $ch = curl_init($this->target_url);
 
@@ -295,10 +292,9 @@ class WebsiteParser
 
             $this->content = curl_exec($ch);
 
-            if ($this->content === FALSE) {
+            if ($this->content === false) {
                 throw new Exception();
             }
-
         } catch (Exception $e) {
             $this->message = 'Unable to grab site contents';
         }
@@ -318,10 +314,11 @@ class WebsiteParser
 
     private function getLinkType($url)
     {
-        if (preg_match($this->internal_link_pattern, $url))
+        if (preg_match($this->internal_link_pattern, $url)) {
             return self::LINK_TYPE_INTERNAL;
-        else if (preg_match($this->external_link_pattern, $url))
+        } elseif (preg_match($this->external_link_pattern, $url)) {
             return self::LINK_TYPE_EXTERNAL;
+        }
 
         return self::LINK_TYPE_UNKNOWN;
     }

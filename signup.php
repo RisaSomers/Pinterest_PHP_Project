@@ -1,87 +1,86 @@
 <?php
 
 spl_autoload_register(function ($class) {
-	include_once("classes/" . $class . ".php");
+    include_once("classes/" . $class . ".php");
 });
 
 session_start();
 
 // als we submitten gaan we velden uitlezen
 if (!empty($_POST)) {
-	try {
-		$options = [
-			'cost' => 12
-		];
+    try {
+        $options = [
+            'cost' => 12
+        ];
 
-		//lezen de velden uit en steken die waarden in class user
-		$users = new User();
+        //lezen de velden uit en steken die waarden in class user
+        $users = new User();
 
-		$res = "succes";
-		$MinLength = 6;
+        $res = "succes";
+        $MinLength = 6;
 
-		//error voor legen velden
-		if (empty($users->firstname = $_POST['firstname'])) {
-			$error = "Firstname can not be empty.";
-		} elseif (empty($users->lastname = $_POST['lastname'])) {
-			$error = "Lastname can not be empty";
-		} elseif (empty($users->email = $_POST['email'])) {
-			$error = "Email can not be empty";
-		} elseif (empty($users->password = $_POST['password'])) {
-			$error = "Password can not be empty";
-		} elseif (empty($users->passwordcon = $_POST['password_confirmation'])) {
-			$error = "Password confirmation can not be empty";
-		} elseif (strlen($users->password) < $MinLength) {
-			$error = "Your password has to be at least 6 characters long";
-		}
-        elseif(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+        //error voor legen velden
+        if (empty($users->firstname = $_POST['firstname'])) {
+            $error = "Firstname can not be empty.";
+        } elseif (empty($users->lastname = $_POST['lastname'])) {
+            $error = "Lastname can not be empty";
+        } elseif (empty($users->email = $_POST['email'])) {
+            $error = "Email can not be empty";
+        } elseif (empty($users->password = $_POST['password'])) {
+            $error = "Password can not be empty";
+        } elseif (empty($users->passwordcon = $_POST['password_confirmation'])) {
+            $error = "Password confirmation can not be empty";
+        } elseif (strlen($users->password) < $MinLength) {
+            $error = "Your password has to be at least 6 characters long";
+        } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             $error = "Invalid email format";
         }
 
-		$users->setMSfirstname($_POST['firstname']);
-		$users->setMSlastname($_POST['lastname']);
-		$users->setMSemail($_POST['email']);
-		$users->setMSpassword(password_hash($_POST['password'], PASSWORD_DEFAULT, $options));
+        $users->setMSfirstname($_POST['firstname']);
+        $users->setMSlastname($_POST['lastname']);
+        $users->setMSemail($_POST['email']);
+        $users->setMSpassword(password_hash($_POST['password'], PASSWORD_DEFAULT, $options));
 
-		if ($_POST['password'] != $_POST['password_confirmation']) {
-			throw new exception("Password and confirmation password are not the same!");
-		}
+        if ($_POST['password'] != $_POST['password_confirmation']) {
+            throw new exception("Password and confirmation password are not the same!");
+        }
 
-		$conn = Db::getInstance();
+        $conn = Db::getInstance();
 
-		if (!isset($error)) {
-			$statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
-			$statement->bindValue(":email", $users->getMSemail());
+        if (!isset($error)) {
+            $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
+            $statement->bindValue(":email", $users->getMSemail());
 
-			if ($statement->execute() && $statement->rowCount() != 0) {
-				$resultaat = $statement->fetch(PDO::FETCH_ASSOC);
-				$error = "Mail is already used";
-				$res = false;
-			} else {
-				if ($res != false) {
-					$succes = "Welcome, you are registered";
-					$register = new User();
-					$register->setMSfirstname($_POST['firstname']);
-					$register->setMSlastname($_POST['lastname']);
-					$register->setMSemail($_POST['email']);
-					$register->setMSpassword(password_hash($_POST['password'], PASSWORD_DEFAULT, $options));
-					$result = $register->save();
+            if ($statement->execute() && $statement->rowCount() != 0) {
+                $resultaat = $statement->fetch(PDO::FETCH_ASSOC);
+                $error = "Mail is already used";
+                $res = false;
+            } else {
+                if ($res != false) {
+                    $succes = "Welcome, you are registered";
+                    $register = new User();
+                    $register->setMSfirstname($_POST['firstname']);
+                    $register->setMSlastname($_POST['lastname']);
+                    $register->setMSemail($_POST['email']);
+                    $register->setMSpassword(password_hash($_POST['password'], PASSWORD_DEFAULT, $options));
+                    $result = $register->save();
 
-					$_SESSION['email'] = $users->email;
-					$_SESSION['lastName'] = $users->lastname;
-					$_SESSION['firstName'] = $users->firstname;
-					$_SESSION['id'] = $result['id'];
+                    $_SESSION['email'] = $users->email;
+                    $_SESSION['lastName'] = $users->lastname;
+                    $_SESSION['firstName'] = $users->firstname;
+                    $_SESSION['id'] = $result['id'];
 
 
-					header("Location: topics.php");
-				} else {
-					$fail = "oops, something went wrong! try again!";
-					header("Location: signup.php");
-				}
-			}
-		}
-	} catch (Exception $e) {
-		$error = $e->getMessage();
-	}
+                    header("Location: topics.php");
+                } else {
+                    $fail = "oops, something went wrong! try again!";
+                    header("Location: signup.php");
+                }
+            }
+        }
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    }
 }
 
 

@@ -44,10 +44,9 @@ class Activity
     {
         $conn = Db::getInstance();
      
-            $statement = $conn->prepare("select * from comments ORDER BY id DESC LIMIT 5");
-            $statement->execute();
-            return $statement->fetch(PDO::FETCH_ASSOC);
-
+        $statement = $conn->prepare("select * from comments ORDER BY id DESC LIMIT 5");
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
     
     public function GetCommentsFromPost()

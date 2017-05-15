@@ -38,18 +38,17 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
             // create prepared statement
             $newBoard = new Board();
             $newBoard->setBoardName($_POST["boardTitle"]);
-            if (empty($_POST['status'])){
+            if (empty($_POST['status'])) {
                 $privateSwitch = 0;
             } else {
                 $privateSwitch = 1;
             }
             $newBoard->setUserID($userID);
             $newBoard->setPrivateSwitch($privateSwitch);
-            if ($newBoard->create()){
+            if ($newBoard->create()) {
                 $feedback = "Board saved";
                 header("Location: user_uploads.php?success=true");
             }
-
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -127,7 +126,7 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
 
   </div>
               <div class="container" style="margin:35px auto;">
-                  <?php while( $row = $stmtb->fetch()) : ?>
+                  <?php while ($row = $stmtb->fetch()) : ?>
                       <div class="row">
                         <a href="board.php?id=<?php echo $row['boardID']; ?>">
                         <div class="col-md-6 col-md-offset-3 results well well-lg">
@@ -143,11 +142,11 @@ $boards = $check->fetch(PDO::FETCH_ASSOC);
                             </button></a>
 
 
-                            <h6> <?php if($row['private'] == 1){
-                                  echo "Prive: Enkel zichtbaar voor jouw";
-                            } else {
-                              echo "Openbaar: Zichtbaar voor je volgers";
-                            }
+                            <h6> <?php if ($row['private'] == 1) {
+    echo "Prive: Enkel zichtbaar voor jouw";
+} else {
+    echo "Openbaar: Zichtbaar voor je volgers";
+}
 
                             ; ?></h6>
                             <a href="./userprofile.php?user=<?php echo $row['userID']; ?>">

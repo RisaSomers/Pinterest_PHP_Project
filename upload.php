@@ -46,12 +46,13 @@ if (isset($_GET['target_url'])) {
 
 
 
-    if ($image)
+    if ($image) {
         $images = $parser->getImageSources();
+    }
 
-    if ($meta)
+    if ($meta) {
         $meta_tags = $parser->getMetaTags();
-
+    }
 }
 
 ?><!DOCTYPE html>
@@ -150,12 +151,11 @@ if (isset($_GET['target_url'])) {
         $count = count($images);
 
         if ($count) {
-
             echo '<h4>Meerdere afbeeldingen gevonden, selecteer 1 afbeelding: ' . $count . '</h4>';
 
             echo '<div class="row images">';
 
-            foreach($images as $image) {
+            foreach ($images as $image) {
                 echo '<img src="' . $image . '" />';
             }
 
@@ -233,7 +233,7 @@ if (isset($_GET['target_url'])) {
 });
 </script>
 
-<?php include_once ('includes/footer.php') ?>
+<?php include_once('includes/footer.php') ?>
 
 </div>
 

@@ -28,11 +28,11 @@ try {
             while ($row = $stmt->fetch()) {
                 echo "<p>";
 
-                if(isset($row['Image'])){
-                echo "<img src=\"uploads/posts/{$row['Image']}" . "\" alt=\"\" />";
-            } else {
-                echo "<img src=\"{$row['Url']}" . "\" alt=\"\" />";
-            }
+                if (isset($row['Image'])) {
+                    echo "<img src=\"uploads/posts/{$row['Image']}" . "\" alt=\"\" />";
+                } else {
+                    echo "<img src=\"{$row['Url']}" . "\" alt=\"\" />";
+                }
 
 
                 echo "<a href=\"detail.php?id={$row['id']}\">";

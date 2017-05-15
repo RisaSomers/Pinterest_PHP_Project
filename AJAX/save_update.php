@@ -31,5 +31,5 @@ spl_autoload_register(function ($class) {
             ];
       }
 
-      echo json_encode($feedback); 
+      echo json_encode($feedback);
   }

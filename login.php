@@ -12,7 +12,7 @@ if (isset($_POST['SignIn'])) {
 
     //Retrieve the field values from our login form.
     $email = $_POST['email'];
-    $passwordAttempt = $_POST['password'];
+        $passwordAttempt = $_POST['password'];
 
     //Retrieve the user account information for the given username.
     $conn = Db::getInstance();
@@ -124,7 +124,7 @@ if (isset($_POST['SignIn'])) {
 
 </div>
 
-<?php include_once ('includes/footer.php') ?>
+<?php include_once('includes/footer.php') ?>
 
 </div>
 <!-- /.container -->

@@ -2,45 +2,44 @@
 
 function time_elapsed_string($datetime, $full = false)
 {
-	$now = new DateTime;
-	$ago = new DateTime($datetime);
-	$diff = $now->diff($ago);
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
 
-	$diff->w = floor($diff->d / 7);
-	$diff->d -= $diff->w * 7;
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
 
-	$string = array(
-		'y' => 'year',
-		'm' => 'month',
-		'w' => 'week',
-		'd' => 'day',
-		'h' => 'hour',
-		'i' => 'minute',
-		's' => 'second',
-	);
-	foreach ($string as $k => &$v) {
-		if ($diff->$k) {
-			$v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
-		} else {
-			unset($string[$k]);
-		}
-	}
+    $string = array(
+        'y' => 'year',
+        'm' => 'month',
+        'w' => 'week',
+        'd' => 'day',
+        'h' => 'hour',
+        'i' => 'minute',
+        's' => 'second',
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
 
-	if (!$full) {
-		$string = array_slice($string, 0, 1);
-	}
-	return $string ? implode(', ', $string) . ' ago' : 'just now';
+    if (!$full) {
+        $string = array_slice($string, 0, 1);
+    }
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
 
 spl_autoload_register(function ($class) {
-	include_once("classes/" . $class . ".php");
+    include_once("classes/" . $class . ".php");
 });
 
 
 session_start();
 
 if (!empty($_SESSION['email'])) {
-
 }
 
 
@@ -49,8 +48,8 @@ $id = $_GET['id'];
 $item = $detail->getById($id);
 
 if (!(bool)$item['status']) {
-	header('Location:blocked.php');
-	die();
+    header('Location:blocked.php');
+    die();
 }
 
 //Add Board
@@ -65,12 +64,12 @@ $activity = new Activity();
 
 //controleer of er een update wordt verzonden
 if (!empty($_POST['activitymessage'])) {
-	$activity->Text = $_POST['activitymessage'];
-	try {
-		$activity->Save();
-	} catch (Exception $e) {
-		$feedback = $e->getMessage();
-	}
+    $activity->Text = $_POST['activitymessage'];
+    try {
+        $activity->Save();
+    } catch (Exception $e) {
+        $feedback = $e->getMessage();
+    }
 }
 
 
@@ -166,7 +165,7 @@ $recentActivities = $activity->GetRecentActivities();
 										<form method="post" action="update.php">
 											<input type="text" name="id" value="<?php echo $id?>" style="visibility:hidden;">
 											<div class="btn-group">
-												<?php foreach($boards as $key) : ?>
+												<?php foreach ($boards as $key) : ?>
 												<label class="btn btn-primary">
 
 													<input type="radio" name="option" value="<?php echo $key['boardID']; ?>">
@@ -200,7 +199,7 @@ $recentActivities = $activity->GetRecentActivities();
             $comments = $comment->Comments();
 
 
-        foreach($comments as $c):?>
+        foreach ($comments as $c):?>
 
     </li>
 
@@ -217,7 +216,7 @@ $recentActivities = $activity->GetRecentActivities();
     </div>
 </form>
 
-<?php include_once ('includes/footer.php') ?>
+<?php include_once('includes/footer.php') ?>
 
 
 <!-- /.container -->

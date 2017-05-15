@@ -1,6 +1,8 @@
 <?php
-abstract class Filter {
-    public static function mostLikes() {
+abstract class Filter
+{
+    public static function mostLikes()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("
                     select DISTINCT i.id, i.Image, i.Url, i.Beschrijving, l.post_id,l.user_id, i.uploaded,count(l.id) from items i
@@ -12,7 +14,8 @@ abstract class Filter {
         return $statement->fetchAll();
     }
 
-    public static function mostDislikes() {
+    public static function mostDislikes()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("
                     select DISTINCT i.id, i.Image, i.Url, i.Beschrijving, l.post_id,l.user_id, i.uploaded,count(l.id) from items i
@@ -24,7 +27,8 @@ abstract class Filter {
         return $statement->fetchAll();
     }
 
-    public static function getDefault() {
+    public static function getDefault()
+    {
         $conn = Db::getInstance();
         $statement = $conn->prepare("select * from items WHERE status = true order by id DESC limit 0,20");
         $statement->execute();

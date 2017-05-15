@@ -2,7 +2,7 @@
 header("Content-Type: application/json");
 session_start();
 spl_autoload_register(function ($class) {
-	include_once("../classes/" . $class . ".php");
+    include_once("../classes/" . $class . ".php");
 });
 
 $pdo = Db::getInstance();
@@ -11,8 +11,8 @@ $stmt->bindValue(":email", $_POST['email']);
 $stmt->execute();
 $val = $stmt->fetch(PDO::FETCH_ASSOC);
 $return = array(
-	"success" => true,
-	'message' => $val
+    "success" => true,
+    'message' => $val
 );
 
 echo json_encode($return);

@@ -11,21 +11,21 @@ class User
     // link naar default avatar
     private $avatar_url = 'uploads/users/default/avatar.png';
 
-	/**
-	 * @return mixed
-	 */
-	public function getMSavatar()
-	{
-		return $this->m_savatar;
-	}
+    /**
+     * @return mixed
+     */
+    public function getMSavatar()
+    {
+        return $this->m_savatar;
+    }
 
-	/**
-	 * @param mixed $m_savatar
-	 */
-	public function setMSavatar($m_savatar)
-	{
-		$this->m_savatar = $m_savatar;
-	}
+    /**
+     * @param mixed $m_savatar
+     */
+    public function setMSavatar($m_savatar)
+    {
+        $this->m_savatar = $m_savatar;
+    }
 
     public function getMSfirstname()
     {
@@ -102,10 +102,10 @@ class User
         $stmt->bindValue(":avatar", $this->avatar_url);
         $stmt->execute();
 
-				$stmt = $conn->prepare("SELECT id FROM users WHERE email = :email");
-				$stmt->bindValue(':email', $this->m_semail);
-				$stmt->execute();
-				return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email = :email");
+        $stmt->bindValue(':email', $this->m_semail);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
     public function updateSubscriptions()
@@ -169,43 +169,44 @@ class User
     
     public function updateEmail($email)
     {
-      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        return "Foutief e-mailadres";
-      } else {
-        $_SESSION['email'] = $email;
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return "Foutief e-mailadres";
+        } else {
+            $_SESSION['email'] = $email;
 
-        $conn = Db::getInstance();
+            $conn = Db::getInstance();
 
-        $statement = $conn->prepare("UPDATE users SET email = :email WHERE id = :id");
-        $statement->bindValue(":email", $email);
-        $statement->bindValue(":id", $_SESSION["id"]);
-        return $statement->execute();
-      }
+            $statement = $conn->prepare("UPDATE users SET email = :email WHERE id = :id");
+            $statement->bindValue(":email", $email);
+            $statement->bindValue(":id", $_SESSION["id"]);
+            return $statement->execute();
+        }
     }
 
-    public function updatePass($pass1, $pass2, $pass_rep) {
-    	$me = $this->getAllUserSpecific($_SESSION['id']);
-			$validPassword = password_verify($pass1, $me['password']);
-			if ($validPassword == true) {
-				if (strlen($pass2) >= 6) {
-					if ($pass2 == $pass_rep) {
-						$conn = Db::getInstance();
-						$statement = $conn->prepare("UPDATE users SET password = :password WHERE id = :id");
-						$statement->bindValue(":id", $_SESSION["id"]);
-						$options = ["cost" => 11];
-						$hash = password_hash($pass2, PASSWORD_DEFAULT, $options);
-						$statement->bindValue(":password", $hash);
-						return $statement->execute();
-					} else {
-						throw new Exception('Je nieuwe wachtwoorden komen niet overeen');
-					}
-				} else {
-					throw new Exception('Het wachtwoord moet minstens 6 karakters zijn');
-				}
-			} else {
-				throw new Exception('Je oud wachtwoord klopt niet');
-			}
-		}
+    public function updatePass($pass1, $pass2, $pass_rep)
+    {
+        $me = $this->getAllUserSpecific($_SESSION['id']);
+        $validPassword = password_verify($pass1, $me['password']);
+        if ($validPassword == true) {
+            if (strlen($pass2) >= 6) {
+                if ($pass2 == $pass_rep) {
+                    $conn = Db::getInstance();
+                    $statement = $conn->prepare("UPDATE users SET password = :password WHERE id = :id");
+                    $statement->bindValue(":id", $_SESSION["id"]);
+                    $options = ["cost" => 11];
+                    $hash = password_hash($pass2, PASSWORD_DEFAULT, $options);
+                    $statement->bindValue(":password", $hash);
+                    return $statement->execute();
+                } else {
+                    throw new Exception('Je nieuwe wachtwoorden komen niet overeen');
+                }
+            } else {
+                throw new Exception('Het wachtwoord moet minstens 6 karakters zijn');
+            }
+        } else {
+            throw new Exception('Je oud wachtwoord klopt niet');
+        }
+    }
     
     public function getAll()
     {
@@ -260,7 +261,7 @@ class User
         return $allUser;
     }
     
-        public function setFollowers($id)
+    public function setFollowers($id)
     {
         $conn = Db::getInstance();
         $statement = $conn->prepare("INSERT INTO followlist (userid, followid) VALUES (:userid, :followid)");
@@ -272,7 +273,8 @@ class User
         return $allUser;
     }
     
-    public function getFollowFeed(){
+    public function getFollowFeed()
+    {
         $conn = Db::getInstance();
         
         $statement = $conn->prepare("SELECT i.* FROM items i INNER JOIN followlist f ON i.user_id = f.user_id_b WHERE f.user_id_a = :userid");
@@ -282,5 +284,4 @@ class User
         
         return $followPost;
     }
-    
 }
