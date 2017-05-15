@@ -32,8 +32,10 @@ session_start();
 
     <style>
         
-        .flex-item{
-            flex-grow: 1;     
+        
+        
+        .topics{
+            margin: 5px;
         }
 
         .vierkant{
@@ -63,9 +65,7 @@ session_start();
             margin-top: 5px;
         }
         
-        .flex-container{
-        display: flex;
-        }
+      
         
         
         @import url(http://fonts.googleapis.com/css?family=Gudea);
@@ -99,7 +99,11 @@ h1 {
 }
 
 
-
+  .flex-container{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        }
 
 
     </style>
@@ -129,10 +133,12 @@ h1 {
   <div id='slats'>
   
   <div class="main">
+  
+  
 
-<ul class="flex-cntainer">
+<ul class="flex-container">
 	<?php foreach ($topics as $row) :?>
-    <li class="flex-item"><a href='topics.php?Name=<?php echo $row['id'] ?>'></li>
+    <li class="flex-container"><a href='topics.php?Name=<?php echo $row['id'] ?>'></li>
 			<div class='topics'>
 			
 			<li class="flex-item"><img src="<?php echo $row['image'] ?>" alt=""></li>
@@ -149,6 +155,8 @@ h1 {
 	<?php endforeach; ?>
       
       </ul>
+      
+     
 
       <button>Get started</button>
       

@@ -51,7 +51,7 @@ if (isset($_POST['SignIn'])) {
             $_SESSION['avatar'] = $user['avatar'];
 
 
-            header('Location: index.php');
+            header('Location: followitem.php');
             exit;
         } else {
             //$validPassword was FALSE. Passwords do not match.

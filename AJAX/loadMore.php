@@ -21,6 +21,9 @@ spl_autoload_register(function ($class) {
                            <a href='detail.php?id=" . $row['id'] . "'>
                            
                                <div class='post_img'>
+                               
+                               
+                               
                                    ";
         if (!empty($row['Url'])) {
             echo "<img src='" . $row['Url'] . "' alt='" . $row['id'] . "'>";
