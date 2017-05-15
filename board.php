@@ -16,6 +16,16 @@ $boardID = $_GET['id'];
 $userID = $_SESSION['id'];
 
 $conn = Db::getInstance();
+$getPosts = $conn->prepare("SELECT DISTINCT board.boardID, board.userID, board.postID, items.Url, items.Image
+FROM board
+JOIN items on postID = items.id
+WHERE board.userID = $userID AND board.boardID = $boardID");
+$getPosts->execute();
+$p = $getPosts->fetch();
+
+
+
+$conn = Db::getInstance();
 $stmtb = $conn->prepare("SELECT board.boardID, board.userID, board.private, board.boardTitle, users.firstname, users.lastname FROM
 board INNER JOIN users ON board.userID=users.id WHERE board.boardID = $boardID;");
 $stmtb->execute();
@@ -25,7 +35,6 @@ $row = $stmtb->fetch();
 
 $query = $conn->prepare("SELECT * FROM items WHERE user_id = $userID");
 $query->execute();
-
 
 
 ?><!DOCTYPE html>
@@ -54,18 +63,27 @@ $query->execute();
 </button></a>
   </ul>
 </nav>
-    <?php while( $row = $stmtb->fetch()) : ?>
 
-    <h1 class="page-header">Items toevoegen aan board: <?php echo $row['boardTitle']; ?></h1>
-
-    <?php endwhile ?>
             <div class="container well well-lg">
+                <h1><?php echo $row['boardTitle']; ?></h1>
 
+                <a href="detail.php?id=<?php echo $p['postID']?>">
+                  <?php if (!empty($p['Url'])): ?>
+                      <img src="<?php print $p['Url'] ?>" alt="<?php print $p['postID'] ?>">
+                  <?php else: ?>
+                      <img src="uploads/posts/<?php print $p['Image'] ?>"
+                           alt="<?php print $row['postID'] ?>">
+                  <?php endif; ?>
+                </a>
           </div>
   </div>
 
 <div class="container-fluid well well-lg">
+  <?php while( $row = $stmtb->fetch()) : ?>
 
+  <h1 class="page-header">Items toevoegen aan board: <?php echo $row['boardTitle']; ?></h1>
+
+  <?php endwhile ?>
 
   <div class="form-group">
 

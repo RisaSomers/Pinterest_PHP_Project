@@ -23,6 +23,7 @@ $feed = $t->getUserPosts();
 
 $userID = $_SESSION['id'];
 
+
 $stmtb = $conn->prepare("SELECT board.boardID, board.userID, board.private, board.boardTitle, users.firstname, users.lastname FROM
 board INNER JOIN users ON board.userID=users.id");
 $stmtb->execute();
@@ -30,13 +31,6 @@ $stmtb->execute();
 $check = $conn->prepare("SELECT * FROM board WHERE userID = $userID;");
 $check->execute();
 $boards = $check->fetch(PDO::FETCH_ASSOC);
-
-$boardID =93;
-$getPosts = $conn->prepare("SELECT DISTINCT board.boardID, board.userID, board.postID, items.Url, items.Image
-FROM board
-JOIN items on postID = items.id
-WHERE board.userID = $userID, board.boardID = $boardID");
-$getPosts->execute();
 
 
     if (!empty($_POST['boardTitle'])) {
@@ -140,9 +134,7 @@ $getPosts->execute();
 
                               <h2> <?php echo $row['boardTitle']; ?></h2>
 
-                                <?php while ($pics = $getPosts->fetch()) : ?>
-                                <img src="uploads/posts/<?php echo $pics['Image'] ?>" alt="">
-                                <?php endwhile ?>
+
 
 
                               <a href="delete_board.php?id=<?php echo $row['boardID']; ?>">
